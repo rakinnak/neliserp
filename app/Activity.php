@@ -10,6 +10,7 @@ use App\User;
 class Activity extends Model
 {
     protected $fillable = [
+        'uuid',
         'user_id',
         'type',
         'subject_id',

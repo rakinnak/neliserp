@@ -8,6 +8,8 @@ use App\Filters\ItemFilter;
 
 class Item extends Model
 {
+    use RecordsActivity;
+
     protected $fillable = [
         'uuid',
         'code',

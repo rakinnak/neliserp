@@ -34,6 +34,7 @@ trait RecordsActivity
             $diff = $this->getUpdatingDiffFields();
 
             return $this->activity()->create([
+                'uuid' => uuid(),
                 'user_id' => auth()->id(),
                 'type' => $this->getActivityType($event),
                 'before' => $diff['before'],
@@ -42,6 +43,7 @@ trait RecordsActivity
         }
 
         return $this->activity()->create([
+            'uuid' => uuid(),
             'user_id' => auth()->id(),
             'type' => $this->getActivityType($event),
         ]);
