@@ -13,14 +13,10 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            'items.index',
+            'items.view',
             'items.create',
-            'items.store',
-            'items.show',
-            'items.edit',
             'items.update',
             'items.delete',
-            'items.destroy',
         ];
 
         foreach ($permissions as $permission) {

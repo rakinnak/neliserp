@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Item;
+use App\Policies\ItemPolicy;
 
 class ItemApiTest extends TestCase
 {

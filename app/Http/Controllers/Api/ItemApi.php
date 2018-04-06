@@ -20,6 +20,8 @@ class ItemApi extends ApiController
 
     public function show(Item $item)
     {
+        //$this->authorize('view', $item);
+
         return new ItemResource($item);
     }
 
