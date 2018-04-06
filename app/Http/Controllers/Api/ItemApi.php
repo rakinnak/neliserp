@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Item;
 use App\Http\Requests\ItemRequest;
+use App\Http\Resources\ItemResource;
+use App\Http\Resources\ItemCollection;
 
 class ItemApi extends ApiController
 {
@@ -11,18 +13,18 @@ class ItemApi extends ApiController
     {
         $items = Item::paginate();
 
-        return $items;
+        return ItemResource::collection($items);
     }
 
     public function show(Item $item)
     {
-        return $item;
+        return new ItemResource($item);
     }
 
     public function store(ItemRequest $request)
     {
         $created = Item::create([
-            'uuid' => $request->uuid,
+            'uuid' => uuid(),
             'code' => $request->code,
             'name' => $request->name,
         ]);

@@ -7,14 +7,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Item;
 
-use Illuminate\Support\Str;
-
 class ItemApiTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function guest_cannot_view_items()
+    public function unauthorized_user_cannot_view_items()
     {
         $this->json('GET', route('api.items.index'))
             ->assertStatus(401);
@@ -47,7 +45,7 @@ class ItemApiTest extends TestCase
     }
 
     /** @test */
-    public function guest_cannot_view_an_item()
+    public function unauthorized_user_cannot_view_an_item()
     {
         $item1 = factory(Item::class)->create();
 
@@ -65,19 +63,41 @@ class ItemApiTest extends TestCase
         $this->json('GET', route('api.items.show', $item1->uuid))
             ->assertStatus(200)
             ->assertJson([
-                'uuid' => $item1->uuid,
-                'code' => $item1->code,
-                'name' => $item1->name,
+                'data' => [
+                    'uuid' => $item1->uuid,
+                    'code' => $item1->code,
+                    'name' => $item1->name,
+                ],
             ]);
     }
 
     /** @test */
-    public function guest_cannot_create_an_item()
+    public function unauthorized_user_cannot_create_an_item()
     {
         $item1 = factory(Item::class)->make();
 
         $this->json('POST', route('api.items.store'), $item1->toArray())
             ->assertStatus(401);
+    }
+
+    /**  @test */
+    public function create_an_item_requires_valid_fields()
+    {
+        $this->signIn();
+
+        $this->json('POST', route('api.items.store'))
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'code' => [
+                        'The code field is required.'
+                    ],
+                    'name' => [
+                        'The name field is required.'
+                    ],
+                ],
+            ]);
     }
 
     /** @test */
@@ -87,25 +107,54 @@ class ItemApiTest extends TestCase
 
         $item1 = factory(Item::class)->make();
 
-        $this->json('POST', route('api.items.store'), $item1->toArray())
+        $this->json('POST', route('api.items.store'),
+            [
+                'code' => $item1->code,
+                'name' => $item1->name,
+            ])
             ->assertStatus(201);
 
         $this->assertDatabaseHas('items', [
-            'uuid' => $item1->uuid,
             'code' => $item1->code,
             'name' => $item1->name,
         ]);
     }
 
     /** @test */
-    public function guest_cannot_update_an_item()
+    public function unauthorized_user_cannot_update_an_item()
     {
         $item1 = factory(Item::class)->create();
 
         $item_updated = factory(Item::class)->make();
 
-        $this->json('PATCH', route('api.items.update', $item1->uuid), $item_updated->toArray())
+        $this->json('PATCH', route('api.items.update', $item1->uuid),
+            [
+                'code' => $item_updated->code,
+                'name' => $item_updated->name,
+            ])
             ->assertStatus(401);
+    }
+
+    /**  @test */
+    public function update_an_item_requires_valid_fields()
+    {
+        $this->signIn();
+
+        $item1 = factory(Item::class)->create();
+
+        $this->json('PATCH', route('api.items.update', $item1->uuid))
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'code' => [
+                        'The code field is required.'
+                    ],
+                    'name' => [
+                        'The name field is required.'
+                    ],
+                ],
+            ]);
     }
 
     /** @test */
@@ -117,7 +166,11 @@ class ItemApiTest extends TestCase
 
         $item_updated = factory(Item::class)->make();
 
-        $this->json('PATCH', route('api.items.update', $item1->uuid), $item_updated->toArray())
+        $this->json('PATCH', route('api.items.update', $item1->uuid),
+            [
+                'code' => $item_updated->code,
+                'name' => $item_updated->name,
+            ])
             ->assertStatus(200);
 
         $this->assertDatabaseHas('items', [
@@ -129,7 +182,7 @@ class ItemApiTest extends TestCase
     }
 
     /** @test */
-    public function guest_cannot_delete_an_item()
+    public function unauthorized_user_cannot_delete_an_item()
     {
         $item1 = factory(Item::class)->create();
 
