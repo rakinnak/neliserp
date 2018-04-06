@@ -15,16 +15,25 @@ class ItemApiTest extends TestCase
     // *** items.index ***
 
     /** @test */
-    public function unauthorized_user_cannot_view_items()
+    public function guest_user_cannot_index_items()
     {
         $this->json('GET', route('api.items.index'))
             ->assertStatus(401);
     }
 
     /** @test */
-    public function authorized_user_can_view_items()
+    public function unauthorized_user_denied_to_index_items()
     {
         $this->signIn();
+
+        $this->json('GET', route('api.items.index'))
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function authorized_user_can_index_items()
+    {
+        $this->signInWithPermission('items.index');
 
         $item1 = factory(Item::class)->create();
         $item2 = factory(Item::class)->create();
@@ -50,7 +59,7 @@ class ItemApiTest extends TestCase
     /** @test */
     public function authorized_user_can_filter_items_by_code()
     {
-        $this->signIn();
+        $this->signInWithPermission('items.index');
 
         $item_a1 = factory(Item::class)->create(['code' => 'a-001']);
         $item_a2 = factory(Item::class)->create(['code' => 'a-002']);
@@ -87,7 +96,7 @@ class ItemApiTest extends TestCase
     /** @test */
     public function authorized_user_can_filter_items_by_name()
     {
-        $this->signIn();
+        $this->signInWithPermission('items.index');
 
         $item_a1 = factory(Item::class)->create(['name' => 'a-001']);
         $item_a2 = factory(Item::class)->create(['name' => 'a-002']);
@@ -123,7 +132,7 @@ class ItemApiTest extends TestCase
     // *** items.show ***
 
     /** @test */
-    public function unauthorized_user_cannot_view_an_item()
+    public function guest_user_cannot_view_an_item()
     {
         $item1 = factory(Item::class)->create();
 
@@ -132,9 +141,20 @@ class ItemApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_view_an_item()
+    public function unauthorized_user_denied_to_view_an_item()
     {
         $this->signIn();
+
+        $item1 = factory(Item::class)->create();
+
+        $this->json('GET', route('api.items.show', $item1->uuid))
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function authorized_user_can_view_an_item()
+    {
+        $this->signInWithPermission('items.show');
 
         $item1 = factory(Item::class)->create();
 
@@ -152,7 +172,7 @@ class ItemApiTest extends TestCase
     // *** items.store ***
 
     /** @test */
-    public function unauthorized_user_cannot_create_an_item()
+    public function guest_user_cannot_create_an_item()
     {
         $item1 = factory(Item::class)->make();
 
@@ -160,10 +180,21 @@ class ItemApiTest extends TestCase
             ->assertStatus(401);
     }
 
+    /** @test */
+    public function unauthorized_user_denied_to_create_an_item()
+    {
+        $this->signIn();
+
+        $item1 = factory(Item::class)->make();
+
+        $this->json('POST', route('api.items.store'), $item1->toArray())
+            ->assertStatus(403);
+    }
+
     /**  @test */
     public function create_an_item_requires_valid_fields()
     {
-        $this->signIn();
+        $this->signInWithPermission('items.create');
 
         $this->json('POST', route('api.items.store'))
             ->assertStatus(422)
@@ -183,7 +214,7 @@ class ItemApiTest extends TestCase
     /** @test */
     public function authorized_user_can_create_an_item()
     {
-        $this->signIn();
+        $this->signInWithPermission('items.create');
 
         $item1 = factory(Item::class)->make();
 
@@ -203,7 +234,7 @@ class ItemApiTest extends TestCase
     // *** items.update ***
 
     /** @test */
-    public function unauthorized_user_cannot_update_an_item()
+    public function guest_user_cannot_update_an_item()
     {
         $item1 = factory(Item::class)->create();
 
@@ -217,10 +248,27 @@ class ItemApiTest extends TestCase
             ->assertStatus(401);
     }
 
+    /** @test */
+    public function unauthorized_user_denied_to_update_an_item()
+    {
+        $this->signIn();
+
+        $item1 = factory(Item::class)->create();
+
+        $item_updated = factory(Item::class)->make();
+
+        $this->json('PATCH', route('api.items.update', $item1->uuid),
+            [
+                'code' => $item_updated->code,
+                'name' => $item_updated->name,
+            ])
+            ->assertStatus(403);
+    }
+
     /**  @test */
     public function update_an_item_requires_valid_fields()
     {
-        $this->signIn();
+        $this->signInWithPermission('items.update');
 
         $item1 = factory(Item::class)->create();
 
@@ -242,7 +290,7 @@ class ItemApiTest extends TestCase
     /** @test */
     public function authorized_user_can_update_an_item()
     {
-        $this->signIn();
+        $this->signInWithPermission('items.update');
 
         $item1 = factory(Item::class)->create();
 
@@ -266,7 +314,7 @@ class ItemApiTest extends TestCase
     // *** items.delete ***
 
     /** @test */
-    public function unauthorized_user_cannot_delete_an_item()
+    public function guest_user_cannot_delete_an_item()
     {
         $item1 = factory(Item::class)->create();
 
@@ -275,9 +323,20 @@ class ItemApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_delete_an_item()
+    public function unauthorized_user_denied_to_delete_an_item()
     {
         $this->signIn();
+
+        $item1 = factory(Item::class)->create();
+
+        $this->json('DELETE', route('api.items.destroy', $item1->uuid))
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function authorized_user_can_delete_an_item()
+    {
+        $this->signInWithPermission('items.delete');
 
         $item1 = factory(Item::class)->create();
 

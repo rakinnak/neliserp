@@ -19,11 +19,6 @@ class Permission extends Model
         return $this->belongsToMany(Role::class);
     }
 
-    public function path()
-    {
-        return "/permissions/{$this->id}";
-    }
-
     public function scopeFilter($builder, PermissionFilter $filter)
     {
         return $filter->apply($builder);

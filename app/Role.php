@@ -24,11 +24,6 @@ class Role extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function path()
-    {
-        return "/roles/{$this->id}";
-    }
-
     public function scopeFilter($builder, RoleFilter $filter)
     {
         return $filter->apply($builder);

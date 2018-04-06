@@ -12,6 +12,8 @@ class ItemApi extends ApiController
 {
     public function index(ItemFilter $filter)
     {
+        $this->authorize('index', Item::class);
+
         $items = Item::filter($filter)
             ->paginate();
 
@@ -20,13 +22,15 @@ class ItemApi extends ApiController
 
     public function show(Item $item)
     {
-        //$this->authorize('view', $item);
+        $this->authorize('show', $item);
 
         return new ItemResource($item);
     }
 
     public function store(ItemRequest $request)
     {
+        $this->authorize('create', Item::class);
+
         $created = Item::create([
             'uuid' => uuid(),
             'code' => $request->code,
@@ -38,6 +42,8 @@ class ItemApi extends ApiController
 
     public function update(ItemRequest $request, Item $item)
     {
+        $this->authorize('update', $item);
+
         $item->code = $request->code;
         $item->name = $request->name;
 
@@ -48,6 +54,8 @@ class ItemApi extends ApiController
 
     public function destroy(Item $item)
     {
+        $this->authorize('delete', $item);
+
         $item->delete();
     }
 }

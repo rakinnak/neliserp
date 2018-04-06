@@ -13,7 +13,8 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            'items.view',
+            'items.index',
+            'items.show',
             'items.create',
             'items.update',
             'items.delete',
