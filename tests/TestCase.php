@@ -16,7 +16,7 @@ abstract class TestCase extends BaseTestCase
     {
         $user = $user ?: factory(User::class)->create();
 
-        $this->actingAs($user);
+        $this->actingAs($user, 'api');
 
         return $this;
     }
@@ -31,6 +31,6 @@ abstract class TestCase extends BaseTestCase
         $user = factory(User::class)->create();
         $user->assignRole($role->name);
 
-        $this->actingAs($user);
+        $this->actingAs($user, 'api');
     }
 }

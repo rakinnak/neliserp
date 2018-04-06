@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -58,5 +57,13 @@
             </div>
         </main>
     </div>
+    <script>
+    @auth
+        var api_token = '{{ auth()->user()->api_token }}';
+    @elseauth
+        var api_token = '';
+    @endauth
+    </script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>
