@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Filters\ItemFilter;
 use App\Item;
 use App\Http\Requests\ItemRequest;
 use App\Http\Resources\ItemResource;
@@ -9,9 +10,10 @@ use App\Http\Resources\ItemCollection;
 
 class ItemApi extends ApiController
 {
-    public function index()
+    public function index(ItemFilter $filter)
     {
-        $items = Item::paginate();
+        $items = Item::filter($filter)
+            ->paginate();
 
         return ItemResource::collection($items);
     }

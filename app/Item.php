@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Filters\ItemFilter;
+
 class Item extends Model
 {
     protected $fillable = [
@@ -15,5 +17,10 @@ class Item extends Model
     public function getRouteKeyName()
     {
         return 'uuid';
+    }
+
+    public function scopeFilter($builder, ItemFilter $filter)
+    {
+        return $filter->apply($builder);
     }
 }

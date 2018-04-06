@@ -45,6 +45,42 @@ class ItemApiTest extends TestCase
     }
 
     /** @test */
+    public function authorized_user_can_filter_items_by_name()
+    {
+        $this->signIn();
+
+        $item_a1 = factory(Item::class)->create(['name' => 'a-001']);
+        $item_a2 = factory(Item::class)->create(['name' => 'a-002']);
+        $item_b1 = factory(Item::class)->create(['name' => 'b-001']);
+
+        $this->json('GET', route('api.items.index') . '?name=a-00')
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    [
+                        'uuid' => $item_a1->uuid,
+                        'code' => $item_a1->code,
+                        'name' => $item_a1->name,
+                    ],
+                    [
+                        'uuid' => $item_a2->uuid,
+                        'code' => $item_a2->code,
+                        'name' => $item_a2->name,
+                    ],
+                ]
+            ])
+            ->assertJsonMissing([
+                'data' => [
+                    [
+                        'uuid' => $item_b1->uuid,
+                        'code' => $item_b1->code,
+                        'name' => $item_b1->name,
+                    ]
+                ]
+            ]);
+    }
+
+    /** @test */
     public function unauthorized_user_cannot_view_an_item()
     {
         $item1 = factory(Item::class)->create();
