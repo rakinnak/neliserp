@@ -31,11 +31,7 @@ class ItemApi extends ApiController
     {
         $this->authorize('create', Item::class);
 
-        $created = Item::create([
-            'uuid' => uuid(),
-            'code' => $request->code,
-            'name' => $request->name,
-        ]);
+        $created = Item::create($request->toArray());
 
         return $created;
     }
@@ -44,8 +40,9 @@ class ItemApi extends ApiController
     {
         $this->authorize('update', $item);
 
-        $item->code = $request->code;
-        $item->name = $request->name;
+        foreach ($request->toArray() as $field => $value) {
+            $item->$field = $value;
+        }
 
         $item->save();
 
