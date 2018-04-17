@@ -13929,6 +13929,9 @@ if (token) {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+axios.defaults.params = {};
+axios.defaults.params['api_token'] = document.head.querySelector('meta[name="api-token"]').content;
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -47283,7 +47286,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
 
-        axios.get('/api/items?api_token=' + api_token).then(function (response) {
+        axios.get('/api/items').then(function (response) {
             _this.items = response.data.data;
         });
     }

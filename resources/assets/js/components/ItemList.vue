@@ -25,7 +25,7 @@
         },
 
         mounted() {
-            axios.get('/api/items?api_token=' + api_token)
+            axios.get('/api/items')
                 .then(response => {
                     this.items = response.data.data;
                 })

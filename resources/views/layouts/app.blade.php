@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="api-token" content="{{ auth()->user() ? auth()->user()->api_token : '' }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -57,13 +58,6 @@
             </div>
         </main>
     </div>
-    <script>
-    @auth
-        var api_token = '{{ auth()->user()->api_token }}';
-    @elseauth
-        var api_token = '';
-    @endauth
-    </script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>

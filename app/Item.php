@@ -6,12 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Filters\ItemFilter;
 
-class Item extends CrudModel
+class Item extends Model
 {
+    use RecordsActivity;
+
     protected $fillable = [
         'code',
         'name',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            $model->uuid = uuid();
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 
     public function scopeFilter($builder, ItemFilter $filter)
     {
