@@ -15,7 +15,7 @@ class ItemApi extends ApiController
         $this->authorize('index', Item::class);
 
         $items = Item::filter($filter)
-            ->paginate();
+            ->paginate(10); // TODO: per page configuration
 
         return ItemResource::collection($items);
     }

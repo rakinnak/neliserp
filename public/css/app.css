@@ -1,0 +1,11 @@
+.table th {
+    padding: .6rem;
+}
+
+.table td {
+    padding: .6rem;
+}
+
+.pagination {
+    margin-bottom: 0;
+}
