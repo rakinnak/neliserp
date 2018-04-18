@@ -7,7 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="api-token" content="{{ auth()->user() ? auth()->user()->api_token : '' }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
