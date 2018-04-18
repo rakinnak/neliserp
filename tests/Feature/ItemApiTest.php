@@ -52,7 +52,22 @@ class ItemApiTest extends TestCase
                         'code' => $item2->code,
                         'name' => $item2->name,
                     ]
-                ]
+                ],
+                'links' => [
+                    'first' => 'http://localhost/api/items?page=1',
+                    'last' => 'http://localhost/api/items?page=1',
+                    'prev' => null,
+                    'next' => null
+                ],
+                'meta' => [
+                    'current_page' => 1,
+                    'from' => 1,
+                    'last_page' => 1,
+                    'path' => 'http://localhost/api/items',
+                    'per_page' => 10,
+                    'to' => 2,
+                    'total' => 2
+                ],
             ]);
     }
 

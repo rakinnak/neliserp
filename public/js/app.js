@@ -1669,6 +1669,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            dataSet: false,
+            items: []
+        };
+    },
+    created: function created() {
+        this.fetch();
+    },
+
+
+    methods: {
+        fetch: function fetch(page) {
+            axios.get(this.url(page)).then(this.refresh);
+        },
+        url: function url(page) {
+            if (!page) {
+                var query = location.search.match(/page=(\d+)/);
+
+                page = query ? query[1] : 1;
+            }
+
+            return '/api' + location.pathname + '?page=' + page;
+        },
+        refresh: function refresh(response) {
+            this.dataSet = response.data;
+            this.items = response.data.data;
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Pagination.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1679,17 +1732,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['dataSet'],
+
     data: function data() {
         return {
-            items: []
+            page: 1,
+            prevUrl: false,
+            nextUrl: false,
+            metaFrom: 1,
+            metaTo: 1,
+            metaTotal: 1
         };
     },
-    mounted: function mounted() {
-        var _this = this;
 
-        axios.get('/api/items').then(function (response) {
-            _this.items = response.data.data;
-        });
+
+    watch: {
+        dataSet: function dataSet() {
+            this.page = this.dataSet.meta.current_page;
+            this.prevUrl = this.dataSet.links.prev;
+            this.nextUrl = this.dataSet.links.next;
+            this.metaFrom = this.dataSet.meta.from;
+            this.metaTo = this.dataSet.meta.to;
+            this.metaTotal = this.dataSet.meta.total;
+        },
+        page: function page() {
+            this.broadcast();
+
+            this.updateUrl();
+        }
+    },
+
+    computed: {
+        hasPagination: function hasPagination() {
+            return !!this.prevUrl || !!this.nextUrl;
+        }
+    },
+
+    methods: {
+        broadcast: function broadcast() {
+            this.$emit('changed', this.page);
+        },
+        updateUrl: function updateUrl() {
+            history.pushState(null, null, '?page=' + this.page);
+        }
     }
 });
 
@@ -36227,6 +36312,83 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3895afde\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Pagination.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass:
+        "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center"
+    },
+    [
+      _vm._v(
+        "\n    from " +
+          _vm._s(_vm.metaFrom) +
+          "\n    to " +
+          _vm._s(_vm.metaTo) +
+          ",\n    total " +
+          _vm._s(_vm.metaTotal) +
+          " items.\n    "
+      ),
+      _vm.hasPagination
+        ? _c("ul", { staticClass: "pagination mb-2 mb-md-0" }, [
+            _vm.prevUrl
+              ? _c("li", { staticClass: "page-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "page-link",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          _vm.page--
+                        }
+                      }
+                    },
+                    [_vm._v("«")]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.nextUrl
+              ? _c("li", { staticClass: "page-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "page-link",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          _vm.page++
+                        }
+                      }
+                    },
+                    [_vm._v("»")]
+                  )
+                ])
+              : _vm._e()
+          ])
+        : _vm._e()
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3895afde", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-5f2ec708\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/ItemList.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -36234,26 +36396,33 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("table", { staticClass: "table table-bordered table-hover" }, [
-      _vm._m(1),
+  return _c(
+    "div",
+    [
+      _vm._m(0),
       _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.items, function(item) {
-          return _c("tr", { key: item.uuid }, [
-            _c("td", [_vm._v(_vm._s(item.code))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(item.name))])
-          ])
-        })
-      )
-    ]),
-    _vm._v(" "),
-    _vm._m(2)
-  ])
+      _c("table", { staticClass: "table table-bordered table-hover" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.items, function(item) {
+            return _c("tr", { key: item.uuid }, [
+              _c("td", [_vm._v(_vm._s(item.code))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.name))])
+            ])
+          })
+        )
+      ]),
+      _vm._v(" "),
+      _c("pagination", {
+        attrs: { dataSet: _vm.dataSet },
+        on: { changed: _vm.fetch }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -36270,7 +36439,7 @@ var staticRenderFns = [
         _c("h5", [_vm._v("items")]),
         _vm._v(" "),
         _c("div", { staticClass: "btn-toolbar mb-2 mb-md-0" }, [
-          _c("div", { staticClass: "btn-group mr-2" }, [
+          _c("div", { staticClass: "btn-group" }, [
             _c("button", { staticClass: "btn btn-sm btn-outline-secondary" }, [
               _vm._v("create")
             ]),
@@ -36294,46 +36463,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("name")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center"
-      },
-      [
-        _vm._v("\n        10 items\n        "),
-        _c("ul", { staticClass: "pagination mb-2 mb-md-0" }, [
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("« Previous")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("1")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("2")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("Next »")
-            ])
-          ])
-        ])
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -47393,6 +47522,7 @@ window.Vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('item-list', __webpack_require__("./resources/assets/js/components/ItemList.vue"));
+Vue.component('pagination', __webpack_require__("./resources/assets/js/components/Pagination.vue"));
 
 var app = new Vue({
   el: '#app'
@@ -47502,6 +47632,54 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-5f2ec708", Component.options)
   } else {
     hotAPI.reload("data-v-5f2ec708", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/Pagination.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Pagination.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3895afde\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Pagination.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Pagination.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3895afde", Component.options)
+  } else {
+    hotAPI.reload("data-v-3895afde", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
