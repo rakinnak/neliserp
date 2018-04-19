@@ -18,6 +18,11 @@
                 </tr>
             </thead>
             <tbody>
+                <tr v-if="items.length == 0">
+                    <td colspan="2">
+                        <i class="fa fa-spinner fa-spin"></i> loading data...
+                    </td>
+                </tr>
                 <tr v-for="item in items" :key="item.uuid">
                     <td>{{ item.code }}</td>
                     <td>{{ item.name }}</td>

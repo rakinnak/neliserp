@@ -1669,6 +1669,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -36406,13 +36411,18 @@ var render = function() {
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.items, function(item) {
-            return _c("tr", { key: item.uuid }, [
-              _c("td", [_vm._v(_vm._s(item.code))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(item.name))])
-            ])
-          })
+          [
+            _vm.items.length == 0 ? _c("tr", [_vm._m(2)]) : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.items, function(item) {
+              return _c("tr", { key: item.uuid }, [
+                _c("td", [_vm._v(_vm._s(item.code))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.name))])
+              ])
+            })
+          ],
+          2
         )
       ]),
       _vm._v(" "),
@@ -36462,6 +36472,15 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("name")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { attrs: { colspan: "2" } }, [
+      _c("i", { staticClass: "fa fa-spinner fa-spin" }),
+      _vm._v(" loading data...\n                ")
     ])
   }
 ]
@@ -47520,7 +47539,6 @@ window.Vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-//Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('item-list', __webpack_require__("./resources/assets/js/components/ItemList.vue"));
 Vue.component('pagination', __webpack_require__("./resources/assets/js/components/Pagination.vue"));
 
