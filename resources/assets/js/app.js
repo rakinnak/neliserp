@@ -30,7 +30,6 @@ class Errors {
 
     any() {
         return Object.keys(this.errors).length > 0;
-
     }
 
     has(field) {
@@ -44,29 +43,87 @@ class Errors {
     }
 
     clear(field) {
-        delete this.errors[field];
+        if (field) {
+            delete this.errors[field];
+
+            return;
+        }
+
+        this.errors = {};
+    }
+}
+
+class Form {
+    constructor(data) {
+        this.originalData = data;
+
+        for (let field in data) {
+            this[field] = data[field];
+        }
+
+        this.errors = new Errors();
+    }
+
+    reset() {
+        for (let field in this.originalData) {
+            this[field] = '';
+        }
+
+        this.errors.clear();
+    }
+
+    data() {
+        let data = {};
+
+        for (let property in this.originalData) {
+            data[property] = this[property];
+        }
+
+        return data;
+    }
+
+    submit(requestType, url) {
+        return new Promise((resolve, reject) => {
+            axios[requestType](url, this.data())
+                .then(response => {
+                    this.onSuccess(response.data);
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    this.onFail(error.response.data.errors)
+                    reject(error.response.data.errors)
+                })
+        });
+    }
+
+    onSuccess(data) {
+        alert('onSuccess');
+
+        this.reset();
+    }
+
+    onFail(errors) {
+        this.errors.record(errors);
     }
 }
 
 const app = new Vue({
     el: '#app',
     data: {
-        code: '',
-        name: '',
-        errors: new Errors(),
+        form: new Form({
+            code: '',
+            name: '',
+        }),
     },
     methods: {
         onSubmit() {
-            axios.post('/api/items', this.$data)
-                .then(this.onSuccess)
-                .catch(error => {
-                    this.errors.record(error.response.data.errors);
+            this.form.submit('post', '/api/items')
+                .then(data => {
+                    console.log(data);
                 })
-        },
-
-        onSuccess(response) {
-            this.code = '';
-            this.name = '';
+                .catch(error => {
+                    console.log(error);
+                })
         }
     }
 });

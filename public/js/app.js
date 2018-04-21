@@ -47583,31 +47583,99 @@ var Errors = function () {
     }, {
         key: 'clear',
         value: function clear(field) {
-            delete this.errors[field];
+            if (field) {
+                delete this.errors[field];
+
+                return;
+            }
+
+            this.errors = {};
         }
     }]);
 
     return Errors;
 }();
 
+var Form = function () {
+    function Form(data) {
+        _classCallCheck(this, Form);
+
+        this.originalData = data;
+
+        for (var field in data) {
+            this[field] = data[field];
+        }
+
+        this.errors = new Errors();
+    }
+
+    _createClass(Form, [{
+        key: 'reset',
+        value: function reset() {
+            for (var field in this.originalData) {
+                this[field] = '';
+            }
+
+            this.errors.clear();
+        }
+    }, {
+        key: 'data',
+        value: function data() {
+            var data = {};
+
+            for (var property in this.originalData) {
+                data[property] = this[property];
+            }
+
+            return data;
+        }
+    }, {
+        key: 'submit',
+        value: function submit(requestType, url) {
+            var _this = this;
+
+            return new Promise(function (resolve, reject) {
+                axios[requestType](url, _this.data()).then(function (response) {
+                    _this.onSuccess(response.data);
+                    resolve(response.data);
+                }).catch(function (error) {
+                    _this.onFail(error.response.data.errors);
+                    reject(error.response.data.errors);
+                });
+            });
+        }
+    }, {
+        key: 'onSuccess',
+        value: function onSuccess(data) {
+            alert('onSuccess');
+
+            this.reset();
+        }
+    }, {
+        key: 'onFail',
+        value: function onFail(errors) {
+            this.errors.record(errors);
+        }
+    }]);
+
+    return Form;
+}();
+
 var app = new Vue({
     el: '#app',
     data: {
-        code: '',
-        name: '',
-        errors: new Errors()
+        form: new Form({
+            code: '',
+            name: ''
+        })
     },
     methods: {
         onSubmit: function onSubmit() {
-            var _this = this;
-
-            axios.post('/api/items', this.$data).then(this.onSuccess).catch(function (error) {
-                _this.errors.record(error.response.data.errors);
+            this.form.submit('post', '/api/items').then(function (data) {
+                console.log(data);
+            }).catch(function (error) {
+                console.log(error);
             });
-        },
-        onSuccess: function onSuccess(response) {
-            this.code = '';
-            this.name = '';
         }
     }
 });
