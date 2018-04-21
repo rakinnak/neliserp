@@ -13,7 +13,9 @@ return [
     |
     */
 
-    'previous' => '&laquo; Previous',
-    'next' => 'Next &raquo;',
-
+    'previous' => '&laquo; previous',
+    'next' => 'next &raquo;',
+    'from' => 'from',
+    'to' => 'to',
+    'total' => 'total',
 ];
