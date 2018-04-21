@@ -24,12 +24,17 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     @include('layouts.nav')
+
                 </ul>
 
                 <ul class="navbar-nav ml-auto">
                     @guest
                         <li><a class="nav-link" href="{{ route('login') }}">{{ __('login') }}</a></li>
                     @else
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="text" placeholder="{{ __('search') }}">
+                        </form>
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }} <span class="caret"></span>
@@ -58,7 +63,7 @@
             </div>
         </main>
 
-        <footer class="container-fluid" style="text-align: center;">
+        <footer class="container-fluid footer" style="text-align: center;">
             <div class="border-top pt-2 pb-2">
                 &copy; 2018 {{ config('app.name', 'Laravel') }}
             </div>

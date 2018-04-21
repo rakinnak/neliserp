@@ -4,8 +4,7 @@
             <h5>items</h5>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group">
-                    <button class="btn btn-sm btn-outline-secondary">create</button>
-                    <button class="btn btn-sm btn-outline-secondary">export</button>
+                    <a href="/items/create" class="btn btn-sm btn-outline-success">create</a>
                 </div>
             </div>
         </div>

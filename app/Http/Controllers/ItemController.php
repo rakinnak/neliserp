@@ -12,4 +12,11 @@ class ItemController extends Controller
 
         return view('items.index');
     }
+
+    public function create()
+    {
+        $this->authorize('create', Item::class);
+
+        return view('items.create');
+    }
 }

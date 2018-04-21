@@ -10,4 +10,6 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('items', 'ItemController@index');
     Route::get('companies', 'CompanyController@index');
     Route::get('reports', 'ReportController@index');
+
+    Route::get('items/create', 'ItemController@create');
 });

@@ -19,6 +19,9 @@ class CreateItemsTable extends Migration
             $table->string('code')->unique();
             $table->string('name')->index();
             $table->timestamps();
+
+            // brand
+            // category_id
         });
     }
 
