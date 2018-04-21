@@ -22,6 +22,8 @@ Vue.component('pagination', require('./components/Pagination.vue'));
 
 window.Form = require('./Form');
 
+window.getParameterByName = require('./functions');
+
 const app = new Vue({
     el: '#app',
 });

@@ -12,7 +12,7 @@
     <link href="/css/app.css" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
         <nav class="navbar navbar-expand-md navbar-light bg-light rounded">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -24,16 +24,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     @include('layouts.nav')
-
                 </ul>
 
                 <ul class="navbar-nav ml-auto">
                     @guest
                         <li><a class="nav-link" href="{{ route('login') }}">{{ __('login') }}</a></li>
                     @else
-                        <form class="form-inline my-2 my-lg-0">
+                        <!-- <form class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="text" placeholder="{{ __('search') }}">
-                        </form>
+                        </form> -->
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

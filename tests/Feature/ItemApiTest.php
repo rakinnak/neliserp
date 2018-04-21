@@ -107,7 +107,6 @@ class ItemApiTest extends TestCase
             ]);
     }
 
-
     /** @test */
     public function authorized_user_can_filter_items_by_name()
     {
@@ -130,6 +129,48 @@ class ItemApiTest extends TestCase
                         'uuid' => $item_a2->uuid,
                         'code' => $item_a2->code,
                         'name' => $item_a2->name,
+                    ],
+                ]
+            ])
+            ->assertJsonMissing([
+                'data' => [
+                    [
+                        'uuid' => $item_b1->uuid,
+                        'code' => $item_b1->code,
+                        'name' => $item_b1->name,
+                    ]
+                ]
+            ]);
+    }
+
+    /** @test */
+    public function authorized_user_can_filter_items_by_code_or_name()
+    {
+        $this->signInWithPermission('items.index');
+
+        $item_a1 = factory(Item::class)->create(['code' => 'a-001', 'name' => 'c-001']);
+        $item_a2 = factory(Item::class)->create(['code' => 'a-002', 'name' => 'c-002']);
+        $item_b1 = factory(Item::class)->create(['code' => 'b-001', 'name' => 'c-003']);
+        $item_b2 = factory(Item::class)->create(['code' => 'b-002', 'name' => 'a-004']);
+
+        $this->json('GET', route('api.items.index') . '?q=a')
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    [
+                        'uuid' => $item_a1->uuid,
+                        'code' => $item_a1->code,
+                        'name' => $item_a1->name,
+                    ],
+                    [
+                        'uuid' => $item_a2->uuid,
+                        'code' => $item_a2->code,
+                        'name' => $item_a2->name,
+                    ],
+                    [
+                        'uuid' => $item_b2->uuid,
+                        'code' => $item_b2->code,
+                        'name' => $item_b2->name,
                     ],
                 ]
             ])

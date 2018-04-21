@@ -1,10 +1,11 @@
 <script>
     export default {
-        props: ['dataset'],
+        props: ['dataset', 'appends'],
 
         data() {
             return {
                 page: 1,
+                pages: 1,
                 prevUrl: false,
                 nextUrl: false,
                 metaFrom: 1,
@@ -16,6 +17,7 @@
         watch: {
             dataset() {
                 this.page = this.dataset.meta.current_page;
+                this.pages = this.dataset.meta.last_page;
                 this.prevUrl = this.dataset.links.prev;
                 this.nextUrl = this.dataset.links.next;
                 this.metaFrom = this.dataset.meta.from;
@@ -28,13 +30,12 @@
 
                 this.updateUrl();
             }
-
         },
 
         computed: {
             hasPagination() {
                 return !! this.prevUrl || !! this.nextUrl;
-            }
+            },
         },
 
         methods: {
@@ -43,7 +44,17 @@
             },
 
             updateUrl() {
-                history.pushState(null, null, '?page=' + this.page);
+                // history.pushState(null, null, '?page=' + this.page);
+            },
+
+            href(page) {
+                var href = '?page=' + page;
+
+                if (this.appends) {
+                    href += '&q=' + this.appends['q'];
+                }
+
+                return href;
             }
         }
     }

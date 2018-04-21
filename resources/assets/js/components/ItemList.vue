@@ -4,6 +4,7 @@
             return {
                 dataset: false,
                 items: [],
+                done: false,
             }
         },
 
@@ -24,12 +25,16 @@
                     page = query ? query[1] : 1;
                 }
 
-                return '/api' + location.pathname + '?page=' + page;
+                var q = getParameterByName('q');
+
+                return '/api' + location.pathname + '?q=' + q + '&page=' + page;
             },
 
             refresh(response) {
                 this.dataset = response.data;
                 this.items = response.data.data;
+
+                this.done = true;
             }
 
         }
