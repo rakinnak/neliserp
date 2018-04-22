@@ -15,7 +15,7 @@
     <div class="col-md-6 mb-3">
         <label for="name">{{ __('items.name') }}</label>
         @if ($action == 'show')
-            <div>@{{ item.name }}</div>
+            <input type="text" class="form-control-plaintext" id="name" name="name" :value="item.name" :readonly="true">
         @elseif ($action == 'edit')
             <input type="text" class="form-control" :class="{'is-invalid': form.errors.has('name')}" id="name" name="name" value="" v-model="form.name">
             <div class="invalid-feedback" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></div>

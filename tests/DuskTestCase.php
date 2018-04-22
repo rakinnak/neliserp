@@ -48,8 +48,8 @@ abstract class DuskTestCase extends BaseTestCase
     protected function signIn($user = null)
     {
         $user = $user ?: factory(User::class)->create();
-    
-        $this->actingAs($user, 'api');
+
+        $this->actingAs($user);
     
         return $this;
     }
@@ -64,6 +64,8 @@ abstract class DuskTestCase extends BaseTestCase
         $user = factory(User::class)->create();
         $user->assignRole($role->name);
     
-        $this->actingAs($user, 'api');
+        $this->actingAs($user);
+
+        return $this;
     }
 }

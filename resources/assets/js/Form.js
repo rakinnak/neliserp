@@ -76,8 +76,6 @@ class Form {
     }
 
     onSuccess(data) {
-        // alert('onSuccess');
-
         this.reset();
     }
 

@@ -13,7 +13,7 @@ class ItemApi extends ApiController
     public function index(ItemFilter $filter)
     {
         $this->authorize('index', Item::class);
-
+        
         $items = Item::filter($filter)
             ->paginate(10); // TODO: per page configuration
 

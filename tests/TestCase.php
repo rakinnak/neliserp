@@ -32,5 +32,7 @@ abstract class TestCase extends BaseTestCase
         $user->assignRole($role->name);
     
         $this->actingAs($user, 'api');
+
+        return $this;
     }
 }

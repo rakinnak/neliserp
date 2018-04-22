@@ -8,7 +8,7 @@
         </div>
         <form method="DELETE" action="/items/{{ $uuid }}" @submit.prevent="onSubmit">
             @include('items.form', ['action' => 'delete'])
-            <button type="submit" class="btn btn-danger" :disabled="form.errors.any()">{{ __('submit') }}</button>
+            <button type="submit" id="submit" class="btn btn-danger" :disabled="form.errors.any()">{{ __('submit') }}</button>
             <a href="/items/{{ $uuid }}" class="btn btn-light">cancel</a>
         </form>
     </div>

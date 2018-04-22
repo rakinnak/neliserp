@@ -8,7 +8,7 @@
         </div>
         <form method="PATCH" action="/items/{{ $uuid }}" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
             @include('items.form', ['action' => 'edit'])
-            <button type="submit" class="btn btn-primary" :disabled="form.errors.any()">{{ __('submit') }}</button>
+            <button type="submit" id="submit" class="btn btn-primary" :disabled="form.errors.any()">{{ __('submit') }}</button>
             <a href="/items/{{ $uuid }}" class="btn btn-light">cancel</a>
         </form>
     </div>

@@ -30,7 +30,7 @@
                         <i class="fa fa-spinner fa-spin"></i> {{ __('loading') }}
                     </td>
                 </tr>
-                <tr v-if="items.length == 0">
+                <tr v-if="done && items.length == 0">
                     <td colspan="2">
                         not found
                     </td>

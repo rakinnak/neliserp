@@ -8,7 +8,7 @@
         </div>
         <form method="POST" action="/items" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
             @include('items.form', ['action' => 'create'])
-            <button type="submit" class="btn btn-primary" :disabled="form.errors.any()">{{ __('submit') }}</button>
+            <button type="submit" id="submit" class="btn btn-primary" :disabled="form.errors.any()">{{ __('submit') }}</button>
         </form>
     </div>        
 </item-create>

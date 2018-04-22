@@ -377,33 +377,6 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file.
@@ -507,6 +480,33 @@ module.exports = function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -3604,7 +3604,7 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 12 */
@@ -14013,14 +14013,14 @@ window.Vue = __webpack_require__(37);
 Vue.component('item-list', __webpack_require__(40));
 Vue.component('item-create', __webpack_require__(42));
 Vue.component('item-show', __webpack_require__(44));
-Vue.component('item-edit', __webpack_require__(50));
-Vue.component('item-delete', __webpack_require__(52));
+Vue.component('item-edit', __webpack_require__(46));
+Vue.component('item-delete', __webpack_require__(48));
 
-Vue.component('pagination', __webpack_require__(46));
+Vue.component('pagination', __webpack_require__(50));
 
-window.Form = __webpack_require__(48);
+window.Form = __webpack_require__(52);
 
-window.getParameterByName = __webpack_require__(49);
+window.getParameterByName = __webpack_require__(53);
 
 var app = new Vue({
   el: '#app'
@@ -32075,7 +32075,7 @@ axios.defaults.params['api_token'] = document.head.querySelector('meta[name="api
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(35)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(35)(module)))
 
 /***/ }),
 /* 35 */
@@ -47000,7 +47000,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(38).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(38).setImmediate))
 
 /***/ }),
 /* 38 */
@@ -47068,7 +47068,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 39 */
@@ -47261,14 +47261,14 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(6)))
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(41)
 /* template */
@@ -47359,7 +47359,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(43)
 /* template */
@@ -47421,8 +47421,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         onSubmit: function onSubmit() {
             this.form.submit('post', '/api/items').then(function (data) {
-                // console.log(data);
                 window.location.href = '/items';
+                //window.location.replace('/items');
             }).catch(function (error) {
                 // console.log(error);
             });
@@ -47435,7 +47435,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(45)
 /* template */
@@ -47508,9 +47508,192 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(47)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/ItemEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6e76ee74", Component.options)
+  } else {
+    hotAPI.reload("data-v-6e76ee74", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['uuid'],
+
+    data: function data() {
+        return {
+            item: {},
+            form: new Form({
+                code: '',
+                name: ''
+            })
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/items/' + this.uuid).then(function (response) {
+            _this.item = response.data.data;
+
+            _this.form.code = _this.item.code;
+            _this.form.name = _this.item.name;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    },
+
+
+    methods: {
+        onSubmit: function onSubmit() {
+            var _this2 = this;
+
+            this.form.submit('patch', '/api/items/' + this.uuid).then(function (data) {
+                // console.log(data);
+                window.location.href = '/items/' + _this2.uuid;
+            }).catch(function (error) {
+                // console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(49)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/ItemDelete.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3e0c3dd6", Component.options)
+  } else {
+    hotAPI.reload("data-v-3e0c3dd6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['uuid'],
+
+    data: function data() {
+        return {
+            item: {},
+            form: new Form({
+                code: '',
+                name: ''
+            })
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/items/' + this.uuid).then(function (response) {
+            _this.item = response.data.data;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    },
+
+
+    methods: {
+        onSubmit: function onSubmit() {
+            this.form.submit('delete', '/api/items/' + this.uuid).then(function (data) {
+                // console.log(data);
+                window.location.href = '/items';
+            }).catch(function (error) {
+                // console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(51)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -47551,7 +47734,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 47 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47616,7 +47799,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 48 */
+/* 52 */
 /***/ (function(module, exports) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -47719,8 +47902,6 @@ var Form = function () {
     }, {
         key: 'onSuccess',
         value: function onSuccess(data) {
-            // alert('onSuccess');
-
             this.reset();
         }
     }, {
@@ -47736,7 +47917,7 @@ var Form = function () {
 module.exports = Form;
 
 /***/ }),
-/* 49 */
+/* 53 */
 /***/ (function(module, exports) {
 
 function getParameterByName(name) {
@@ -47752,189 +47933,6 @@ function getParameterByName(name) {
 }
 
 module.exports = getParameterByName;
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(51)
-/* template */
-var __vue_template__ = null
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/ItemEdit.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6e76ee74", Component.options)
-  } else {
-    hotAPI.reload("data-v-6e76ee74", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 51 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['uuid'],
-
-    data: function data() {
-        return {
-            item: {},
-            form: new Form({
-                code: '',
-                name: ''
-            })
-        };
-    },
-    created: function created() {
-        var _this = this;
-
-        axios.get('/api/items/' + this.uuid).then(function (response) {
-            _this.item = response.data.data;
-
-            _this.form.code = _this.item.code;
-            _this.form.name = _this.item.name;
-        }).catch(function (error) {
-            alert(error.response.status + ': ' + error.response.statusText);
-        });
-    },
-
-
-    methods: {
-        onSubmit: function onSubmit() {
-            var _this2 = this;
-
-            this.form.submit('patch', '/api/items/' + this.uuid).then(function (data) {
-                // console.log(data);
-                window.location.href = '/items/' + _this2.uuid;
-            }).catch(function (error) {
-                // console.log(error);
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(53)
-/* template */
-var __vue_template__ = null
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/ItemDelete.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3e0c3dd6", Component.options)
-  } else {
-    hotAPI.reload("data-v-3e0c3dd6", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 53 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['uuid'],
-
-    data: function data() {
-        return {
-            item: {},
-            form: new Form({
-                code: '',
-                name: ''
-            })
-        };
-    },
-    created: function created() {
-        var _this = this;
-
-        axios.get('/api/items/' + this.uuid).then(function (response) {
-            _this.item = response.data.data;
-        }).catch(function (error) {
-            alert(error.response.status + ': ' + error.response.statusText);
-        });
-    },
-
-
-    methods: {
-        onSubmit: function onSubmit() {
-            this.form.submit('delete', '/api/items/' + this.uuid).then(function (data) {
-                // console.log(data);
-                window.location.href = '/items';
-            }).catch(function (error) {
-                // console.log(error);
-            });
-        }
-    }
-});
 
 /***/ })
 /******/ ]);
