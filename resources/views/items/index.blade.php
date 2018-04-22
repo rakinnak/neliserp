@@ -36,7 +36,7 @@
                     </td>
                 </tr>
                 <tr v-for="item in items" :key="item.uuid">
-                    <td>@{{ item.code }}</td>
+                    <td><a :href="'/items/' + item.uuid">@{{ item.code }}</a></td>
                     <td>@{{ item.name }}</td>
                 </tr>
             </tbody>

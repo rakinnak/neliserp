@@ -2,22 +2,14 @@
 
 @section('content')
 <item-create inline-template>
-    <form method="POST" action="/items" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="code">{{ __('items.code') }}</label>
-                <input type="text" class="form-control" :class="{'is-invalid': form.errors.has('code')}" id="code" name="code" value="" v-model="form.code">
-                <div class="invalid-feedback" v-if="form.errors.has('code')" v-text="form.errors.get('code')"></div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="name">{{ __('items.name') }}</label>
-                <input type="text" class="form-control" :class="{'is-invalid': form.errors.has('name')}" id="name" name="name" value="" v-model="form.name">
-                <div class="invalid-feedback" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></div>
-            </div>
+    <div>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h5>{{ __('create') }}</h5>
         </div>
-
-        <button type="submit" class="btn btn-primary" :disabled="form.errors.any()">{{ __('submit') }}</button>
-    </form>
+        <form method="POST" action="/items" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
+            @include('items.form', ['action' => 'create'])
+            <button type="submit" class="btn btn-primary" :disabled="form.errors.any()">{{ __('submit') }}</button>
+        </form>
+    </div>        
 </item-create>
 @endsection

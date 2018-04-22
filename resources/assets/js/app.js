@@ -18,6 +18,10 @@ window.Vue = require('vue');
 
 Vue.component('item-list', require('./components/ItemList.vue'));
 Vue.component('item-create', require('./components/ItemCreate.vue'));
+Vue.component('item-show', require('./components/ItemShow.vue'));
+Vue.component('item-edit', require('./components/ItemEdit.vue'));
+Vue.component('item-delete', require('./components/ItemDelete.vue'));
+
 Vue.component('pagination', require('./components/Pagination.vue'));
 
 window.Form = require('./Form');

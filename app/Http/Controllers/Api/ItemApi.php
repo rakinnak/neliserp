@@ -40,9 +40,12 @@ class ItemApi extends ApiController
     {
         $this->authorize('update', $item);
 
-        foreach ($request->toArray() as $field => $value) {
-            $item->$field = $value;
-        }
+        // foreach ($request->toArray() as $field => $value) {
+        //     $item->$field = $value;
+        // }
+
+        $item->code = request('code');
+        $item->name = request('name');
 
         $item->save();
 

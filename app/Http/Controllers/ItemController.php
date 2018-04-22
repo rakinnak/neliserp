@@ -19,4 +19,25 @@ class ItemController extends Controller
 
         return view('items.create');
     }
+
+    public function show($uuid)
+    {
+        // $this->authorize('show', $item);
+
+        return view('items.show', compact('uuid'));
+    }
+
+    public function edit($uuid)
+    {
+        // $this->authorize('edit', $item);
+
+        return view('items.edit', compact('uuid'));
+    }
+
+    public function delete($uuid)
+    {
+        // $this->authorize('edit', $item);
+
+        return view('items.delete', compact('uuid'));
+    }
 }
