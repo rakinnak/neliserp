@@ -18,4 +18,7 @@ return [
     'from' => 'from',
     'to' => 'to',
     'total' => 'total',
+    'showing' => 'showing',
+    'of' => 'of',
+    'entries' => 'entries',
 ];

@@ -10,7 +10,7 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('companies', 'CompanyController@index');
     Route::get('reports', 'ReportController@index');
 
-    Route::get('items', 'ItemController@index');
+    Route::get('items', 'ItemController@index')->name('items.index');
     Route::get('items/create', 'ItemController@create');
     Route::get('items/{uuid}', 'ItemController@show');
     Route::get('items/{uuid}/edit', 'ItemController@edit');

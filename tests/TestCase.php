@@ -15,22 +15,22 @@ abstract class TestCase extends BaseTestCase
     protected function signIn($user = null)
     {
         $user = $user ?: factory(User::class)->create();
-
+    
         $this->actingAs($user, 'api');
-
+    
         return $this;
     }
 
     protected function signInWithPermission($permission_name)
     {
         $permission = factory(Permission::class)->create(['name' => $permission_name]);
-
+    
         $role = factory(Role::class)->create();
         $role->givePermissionTo($permission);
-
+    
         $user = factory(User::class)->create();
         $user->assignRole($role->name);
-
+    
         $this->actingAs($user, 'api');
     }
 }
