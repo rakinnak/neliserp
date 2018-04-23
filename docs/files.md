@@ -1,0 +1,20 @@
+files
+-----
+- app/Company.php
+- app/Filters/CompanyFilter.php
+- app/Http/Controllers/Api/CompanyApi.php
+- app/Http/Controllers/CompanyController.php
+- app/Http/Requests/CompanyRequest.php
+- app/Http/Resources/CompanyResource.php
+- app/Policies/CompanyPolicy.php
+- app/Providers/AuthServiceProvider.php
+- database/factories/CompanyFactory.php
+- database/seeds/CompanySeeder.php
+- database/seeds/DatabaseSeeder.php
+- database/seeds/PermissionSeeder.php
+- resources/assets/js/app.js
+- resources/assets/js/components/companies/
+- resources/lang/en.json
+- resources/views/companies/
+- tests/Browser/CompanyWebTest.php
+- tests/Feature/CompanyApiTest.php

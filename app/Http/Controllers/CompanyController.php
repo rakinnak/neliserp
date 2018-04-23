@@ -22,21 +22,21 @@ class CompanyController extends Controller
 
     public function show($uuid)
     {
-        // $this->authorize('show', $item);
+        // $this->authorize('show', $company);
 
         return view('companies.show', compact('uuid'));
     }
 
     public function edit($uuid)
     {
-        // $this->authorize('edit', $item);
+        // $this->authorize('edit', $company);
 
         return view('companies.edit', compact('uuid'));
     }
 
     public function delete($uuid)
     {
-        // $this->authorize('edit', $item);
+        // $this->authorize('edit', $company);
 
         return view('companies.delete', compact('uuid'));
     }

@@ -9,7 +9,13 @@ Route::group(['middleware' => ['auth:api']], function() {
 
     Route::get('companies', 'Api\CompanyApi@index')->name('api.companies.index');
     Route::post('companies', 'Api\CompanyApi@store')->name('api.companies.store');
-    Route::get('companies/{item}', 'Api\CompanyApi@show')->name('api.companies.show');
-    Route::patch('companies/{item}', 'Api\CompanyApi@update')->name('api.companies.update');
-    Route::delete('companies/{item}', 'Api\CompanyApi@destroy')->name('api.companies.destroy');
+    Route::get('companies/{company}', 'Api\CompanyApi@show')->name('api.companies.show');
+    Route::patch('companies/{company}', 'Api\CompanyApi@update')->name('api.companies.update');
+    Route::delete('companies/{company}', 'Api\CompanyApi@destroy')->name('api.companies.destroy');
+
+    Route::get('docs', 'Api\DocApi@index')->name('api.docs.index');
+    Route::post('docs', 'Api\DocApi@store')->name('api.docs.store');
+    Route::get('docs/{doc}', 'Api\DocApi@show')->name('api.docs.show');
+    Route::patch('docs/{doc}', 'Api\DocApi@update')->name('api.docs.update');
+    Route::delete('docs/{doc}', 'Api\DocApi@destroy')->name('api.docs.destroy');
 });

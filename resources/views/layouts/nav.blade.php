@@ -3,17 +3,17 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="buying" data-toggle="dropdown">{{ __('buying') }}</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">{{ __('buying.po') }}</a>
-              <a class="dropdown-item" href="#">{{ __('buying.do') }}</a>
-              <a class="dropdown-item" href="#">{{ __('buying.invoice') }}</a>
+              <a class="dropdown-item" href="/docs">{{ __('buying.po') }}</a>
+              <a class="dropdown-item" href="/docs">{{ __('buying.do') }}</a>
+              <a class="dropdown-item" href="/docs">{{ __('buying.invoice') }}</a>
             </div>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="selling" data-toggle="dropdown">{{ __('selling') }}</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">{{ __('selling.po') }}</a>
-              <a class="dropdown-item" href="#">{{ __('selling.do') }}</a>
-              <a class="dropdown-item" href="#">{{ __('selling.invoice') }}</a>
+              <a class="dropdown-item" href="/docs">{{ __('selling.po') }}</a>
+              <a class="dropdown-item" href="/docs">{{ __('selling.do') }}</a>
+              <a class="dropdown-item" href="/docs">{{ __('selling.invoice') }}</a>
             </div>
         </li>
     

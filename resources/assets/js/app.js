@@ -28,6 +28,12 @@ Vue.component('company-show', require('./components/companies/CompanyShow.vue'))
 Vue.component('company-edit', require('./components/companies/CompanyEdit.vue'));
 Vue.component('company-delete', require('./components/companies/CompanyDelete.vue'));
 
+Vue.component('doc-index', require('./components/docs/DocIndex.vue'));
+Vue.component('doc-create', require('./components/docs/DocCreate.vue'));
+Vue.component('doc-show', require('./components/docs/DocShow.vue'));
+Vue.component('doc-edit', require('./components/docs/DocEdit.vue'));
+Vue.component('doc-delete', require('./components/docs/DocDelete.vue'));
+
 Vue.component('pagination', require('./components/Pagination.vue'));
 
 window.Form = require('./Form');

@@ -5,5 +5,7 @@
     "items.code": "code",
     "items.name": "name",
     "companies.code": "code",
-    "companies.name": "name"
+    "companies.name": "name",
+    "docs.code": "code",
+    "docs.name": "name"
 }

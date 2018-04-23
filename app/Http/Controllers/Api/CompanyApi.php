@@ -20,11 +20,11 @@ class CompanyApi extends ApiController
         return CompanyResource::collection($companies);
     }
 
-    public function show(Company $item)
+    public function show(Company $company)
     {
-        $this->authorize('show', $item);
+        $this->authorize('show', $company);
 
-        return new CompanyResource($item);
+        return new CompanyResource($company);
     }
 
     public function store(CompanyRequest $request)
@@ -36,26 +36,26 @@ class CompanyApi extends ApiController
         return $created;
     }
 
-    public function update(CompanyRequest $request, Company $item)
+    public function update(CompanyRequest $request, Company $company)
     {
-        $this->authorize('update', $item);
+        $this->authorize('update', $company);
 
         // foreach ($request->toArray() as $field => $value) {
-        //     $item->$field = $value;
+        //     $company->$field = $value;
         // }
 
-        $item->code = request('code');
-        $item->name = request('name');
+        $company->code = request('code');
+        $company->name = request('name');
 
-        $item->save();
+        $company->save();
 
-        return $item;
+        return $company;
     }
 
-    public function destroy(Company $item)
+    public function destroy(Company $company)
     {
-        $this->authorize('delete', $item);
+        $this->authorize('delete', $company);
 
-        $item->delete();
+        $company->delete();
     }
 }

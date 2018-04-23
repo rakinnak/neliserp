@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 use App\Company;
+use App\Doc;
 use App\Item;
 use App\Policies\CompanyPolicy;
+use App\Policies\DocPolicy;
 use App\Policies\ItemPolicy;
 
 class AuthServiceProvider extends ServiceProvider
@@ -18,8 +20,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Item::class => ItemPolicy::class,
+        Doc::class => DocPolicy::class,
         Company::class => CompanyPolicy::class,
+        Item::class => ItemPolicy::class,
     ];
 
     /**

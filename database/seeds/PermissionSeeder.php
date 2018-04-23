@@ -24,6 +24,12 @@ class PermissionSeeder extends Seeder
             'companies.create',
             'companies.update',
             'companies.delete',
+
+            'docs.index',
+            'docs.show',
+            'docs.create',
+            'docs.update',
+            'docs.delete',
         ];
 
         foreach ($permissions as $permission) {
