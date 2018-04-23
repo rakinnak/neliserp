@@ -4,7 +4,7 @@
 <item-list inline-template>
     <div>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h5>{{ __('items') }}</h5>
+            <h5>{{ __('index') }}</h5>
             <form method="GET" action="/items" id="items-search" class="form-inline">
                 <label class="mr-2" for="q">{{ __('items.code') }}/{{ __('items.name') }}</label>
                 <input type="text" class="form-control" id="q" name="q" value="{{ request('q') }}">

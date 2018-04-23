@@ -101,9 +101,10 @@ class ItemWebTest extends DuskTestCase
         });
     }
 
+    /** @test */
     public function authorized_user_can_create_an_item()
     {
-        $this->signInWithPermission('items.create');
+        $this->signInWithPermission('items.all');
 
         $user = auth()->user();
 
@@ -116,13 +117,16 @@ class ItemWebTest extends DuskTestCase
                 ->type('#code', $item1->code . '1')
                 ->type('#name', $item1->name . '1')
                 ->press('#submit')
+                ->waitForText($item1->code)
+                ->assertSee($item1->code)
                 ->assertPathIs('/items');
         });
     }
 
+    /** @test */
     public function authorized_user_can_edit_an_item()
     {
-        $this->signInWithPermission('items.update');
+        $this->signInWithPermission('items.all');
 
         $user = auth()->user();
 
@@ -132,16 +136,20 @@ class ItemWebTest extends DuskTestCase
             $item1 = factory(Item::class)->create();
 
             $browser->visit('/items/' . $item1->uuid . '/edit')
-                ->type('#code', $item1->code . '1')
-                ->type('#name', $item1->name . '1')
+                ->type('#code', $item1->code . '-edited')
+                ->type('#name', $item1->name . '-edited')
                 ->press('#submit')
-                ->assertPathIs('/items/' . $this->uuid);
+                ->waitForText('show')
+                ->assertValue('#code', $item1->code . '-edited')
+                ->assertValue('#name', $item1->name . '-edited')
+                ->assertPathIs('/items/' . $item1->uuid);
         });
     }
 
+    /** @test */
     public function authorized_user_can_delete_an_item()
     {
-        $this->signInWithPermission('items.delete');
+        $this->signInWithPermission('items.all');
 
         $user = auth()->user();
 
@@ -152,6 +160,9 @@ class ItemWebTest extends DuskTestCase
 
             $browser->visit('/items/' . $item1->uuid . '/delete')
                 ->press('#submit')
+                ->waitForText('index')
+                ->assertDontSee($item1->code)
+                ->assertDontSee($item1->name)
                 ->assertPathIs('/items');
         });
     }
