@@ -16,11 +16,17 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('item-list', require('./components/ItemList.vue'));
-Vue.component('item-create', require('./components/ItemCreate.vue'));
-Vue.component('item-show', require('./components/ItemShow.vue'));
-Vue.component('item-edit', require('./components/ItemEdit.vue'));
-Vue.component('item-delete', require('./components/ItemDelete.vue'));
+Vue.component('item-index', require('./components/items/ItemIndex.vue'));
+Vue.component('item-create', require('./components/items/ItemCreate.vue'));
+Vue.component('item-show', require('./components/items/ItemShow.vue'));
+Vue.component('item-edit', require('./components/items/ItemEdit.vue'));
+Vue.component('item-delete', require('./components/items/ItemDelete.vue'));
+
+Vue.component('company-index', require('./components/companies/CompanyIndex.vue'));
+Vue.component('company-create', require('./components/companies/CompanyCreate.vue'));
+Vue.component('company-show', require('./components/companies/CompanyShow.vue'));
+Vue.component('company-edit', require('./components/companies/CompanyEdit.vue'));
+Vue.component('company-delete', require('./components/companies/CompanyDelete.vue'));
 
 Vue.component('pagination', require('./components/Pagination.vue'));
 

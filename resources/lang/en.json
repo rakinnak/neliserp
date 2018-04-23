@@ -1,5 +1,9 @@
 {
-    "login": "Login",
-    "username": "Username",
-    "password": "Password",
+    "login": "login",
+    "username": "username",
+    "password": "password",
+    "items.code": "code",
+    "items.name": "name",
+    "companies.code": "code",
+    "companies.name": "name"
 }

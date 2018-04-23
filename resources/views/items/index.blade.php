@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<item-list inline-template>
+<item-index inline-template>
     <div>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <h5>{{ __('index') }}</h5>
@@ -44,6 +44,6 @@
 
         @include('pagination', ['appends' => ['q' => request('q', '')]])
     </div>
-</item-list>
+</item-index>
 
 @endsection
