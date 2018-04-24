@@ -1,5 +1,7 @@
 <script>
     export default {
+        props: ['type'],
+
         data() {
             return {
                 form: new Form({
@@ -10,10 +12,10 @@
         },
         methods: {
             onSubmit() {
-                this.form.submit('post', '/api/docs')
+                this.form.submit('post', '/api/docs/' + this.type)
                     .then(data => {
-                        window.location.href = '/docs';
-                        //window.location.replace('/docs');
+                        window.location.href = '/docs/' + this.type;
+                        //window.location.replace('/docs/' + this.type);
                     })
                     .catch(error => {
                         // console.log(error);

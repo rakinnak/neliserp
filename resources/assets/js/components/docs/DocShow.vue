@@ -1,6 +1,6 @@
 <script>
     export default {
-        props: ['uuid'],
+        props: ['type', 'uuid'],
 
         data() {
             return {
@@ -9,7 +9,7 @@
         },
 
         created() {
-            axios.get('/api/docs/' + this.uuid)
+            axios.get('/api/docs/' + this.type + '/' + this.uuid)
                 .then(response => {
                     this.doc = response.data.data;
                 })

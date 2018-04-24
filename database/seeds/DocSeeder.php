@@ -13,6 +13,6 @@ class DocSeeder extends Seeder
      */
     public function run()
     {
-        factory(Doc::class, 5)->create();
+        factory(Doc::class, 98)->create();
     }
 }

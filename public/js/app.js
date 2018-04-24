@@ -48267,6 +48267,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['type'],
+
     data: function data() {
         return {
             form: new Form({
@@ -48278,9 +48280,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         onSubmit: function onSubmit() {
-            this.form.submit('post', '/api/docs').then(function (data) {
-                window.location.href = '/docs';
-                //window.location.replace('/docs');
+            var _this = this;
+
+            this.form.submit('post', '/api/docs/' + this.type).then(function (data) {
+                window.location.href = '/docs/' + _this.type;
+                //window.location.replace('/docs/' + this.type);
             }).catch(function (error) {
                 // console.log(error);
             });
@@ -48343,7 +48347,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['uuid'],
+    props: ['type', 'uuid'],
 
     data: function data() {
         return {
@@ -48353,7 +48357,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        axios.get('/api/docs/' + this.uuid).then(function (response) {
+        axios.get('/api/docs/' + this.type + '/' + this.uuid).then(function (response) {
             _this.doc = response.data.data;
         }).catch(function (error) {
             alert(error.response.status + ': ' + error.response.statusText);
@@ -48416,7 +48420,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['uuid'],
+    props: ['type', 'uuid'],
 
     data: function data() {
         return {
@@ -48430,7 +48434,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        axios.get('/api/docs/' + this.uuid).then(function (response) {
+        axios.get('/api/docs/' + this.type + '/' + this.uuid).then(function (response) {
             _this.doc = response.data.data;
 
             _this.form.code = _this.doc.code;
@@ -48445,9 +48449,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         onSubmit: function onSubmit() {
             var _this2 = this;
 
-            this.form.submit('patch', '/api/docs/' + this.uuid).then(function (data) {
+            this.form.submit('patch', '/api/docs/' + this.type + '/' + this.uuid).then(function (data) {
                 // console.log(data);
-                window.location.href = '/docs/' + _this2.uuid;
+                window.location.href = '/docs/' + _this2.type + '/' + _this2.uuid;
             }).catch(function (error) {
                 // console.log(error);
             });
@@ -48510,7 +48514,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['uuid'],
+    props: ['type', 'uuid'],
 
     data: function data() {
         return {
@@ -48524,7 +48528,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        axios.get('/api/docs/' + this.uuid).then(function (response) {
+        axios.get('/api/docs/' + this.type + '/' + this.uuid).then(function (response) {
             _this.doc = response.data.data;
         }).catch(function (error) {
             alert(error.response.status + ': ' + error.response.statusText);
@@ -48534,9 +48538,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         onSubmit: function onSubmit() {
-            this.form.submit('delete', '/api/docs/' + this.uuid).then(function (data) {
+            var _this2 = this;
+
+            this.form.submit('delete', '/api/docs/' + this.type + '/' + this.uuid).then(function (data) {
                 // console.log(data);
-                window.location.href = '/docs';
+                window.location.href = '/docs/' + _this2.type;
             }).catch(function (error) {
                 // console.log(error);
             });

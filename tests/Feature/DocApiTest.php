@@ -44,8 +44,12 @@ class DocApiTest extends TestCase
     {
         $this->signInWithPermission('docs.index');
 
-        $doc1 = factory(Doc::class)->create();
-        $doc2 = factory(Doc::class)->create();
+        $doc1 = factory(Doc::class)->create([
+            'type' => $this->type,
+        ]);
+        $doc2 = factory(Doc::class)->create([
+            'type' => $this->type,
+        ]);
 
         $user = auth()->user();
 
@@ -95,9 +99,20 @@ class DocApiTest extends TestCase
     {
         $this->signInWithPermission('docs.index');
 
-        $doc_a1 = factory(Doc::class)->create(['name' => 'a-001']);
-        $doc_a2 = factory(Doc::class)->create(['name' => 'a-002']);
-        $doc_b1 = factory(Doc::class)->create(['name' => 'b-001']);
+        $doc_a1 = factory(Doc::class)->create([
+            'name' => 'a-001',
+            'type' => $this->type,
+        ]);
+
+        $doc_a2 = factory(Doc::class)->create([
+            'name' => 'a-002',
+            'type' => $this->type,
+        ]);
+
+        $doc_b1 = factory(Doc::class)->create([
+            'name' => 'b-001',
+            'type' => $this->type,
+        ]);
 
         $this->json('GET', route('api.docs.index', $this->type) . '?name=a-00')
             ->assertStatus(200)
@@ -138,10 +153,55 @@ class DocApiTest extends TestCase
             ]);
     }
 
+    /** @test */
+    public function authorized_user_can_index_only_specified_type()
+    {
+        $this->signInWithPermission('docs.index');
+
+        $doc1 = factory(Doc::class)->create([
+            'type' => $this->type . '-another',
+        ]);
+
+        $doc2 = factory(Doc::class)->create([
+            'type' => $this->type,
+        ]);
+
+        $user = auth()->user();
+
+        $this->json('GET', route('api.docs.index', $this->type))
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    [
+                        'uuid' => $doc2->uuid,
+                        'name' => $doc2->name,
+                        'type' => $this->type,
+                        'company_uuid' => $doc2->company_uuid,
+                        'company_code' => $doc2->company_code,
+                        'company_name' => $doc2->company_name,
+                        'issued_at' => $doc2->issued_at,
+                    ],
+                ]
+            ])
+            ->assertJsonMissing([
+                'data' => [
+                    [
+                        'uuid' => $doc1->uuid,
+                        'name' => $doc1->name,
+                        'type' => $this->type . '-another',
+                        'company_uuid' => $doc1->company_uuid,
+                        'company_code' => $doc1->company_code,
+                        'company_name' => $doc1->company_name,
+                        'issued_at' => $doc1->issued_at,
+                    ]
+                ]
+            ]);
+    }
+
     // *** docs.show ***
 
     /** @test */
-    public function guest_user_cannot_view_an_doc()
+    public function guest_user_cannot_view_a_doc()
     {
         $doc1 = factory(Doc::class)->create();
 
@@ -150,7 +210,7 @@ class DocApiTest extends TestCase
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_view_an_doc()
+    public function unauthorized_user_denied_to_view_a_doc()
     {
         $this->signIn();
 
@@ -161,11 +221,13 @@ class DocApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_view_an_doc()
+    public function authorized_user_can_view_a_doc()
     {
         $this->signInWithPermission('docs.show');
 
-        $doc1 = factory(Doc::class)->create();
+        $doc1 = factory(Doc::class)->create([
+            'type' => $this->type,
+        ]);
 
         $this->json('GET', route('api.docs.show', [$this->type, $doc1->uuid]))
             ->assertStatus(200)
@@ -182,10 +244,23 @@ class DocApiTest extends TestCase
             ]);
     }
 
+    /** @test */
+    public function view_a_doc_within_another_type_url_return_not_found()
+    {
+        $this->signInWithPermission('docs.show');
+
+        $doc1 = factory(Doc::class)->create([
+            'type' => $this->type,
+        ]);
+
+        $this->json('GET', route('api.docs.show', [$this->type . '-another', $doc1->uuid]))
+            ->assertStatus(404);
+    }
+
     // *** docs.store ***
 
     /** @test */
-    public function guest_user_cannot_create_an_doc()
+    public function guest_user_cannot_create_a_doc()
     {
         $doc1 = factory(Doc::class)->make();
 
@@ -194,7 +269,7 @@ class DocApiTest extends TestCase
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_create_an_doc()
+    public function unauthorized_user_denied_to_create_a_doc()
     {
         $this->signIn();
 
@@ -205,7 +280,7 @@ class DocApiTest extends TestCase
     }
 
     /**  @test */
-    public function create_an_doc_requires_required_fields()
+    public function create_a_doc_requires_required_fields()
     {
         $this->signInWithPermission('docs.create');
 
@@ -228,7 +303,7 @@ class DocApiTest extends TestCase
     }
 
     /**  @test */
-    public function create_an_doc_requires_valid_fields()
+    public function create_a_doc_requires_valid_fields()
     {
         $this->signInWithPermission('docs.create');
 
@@ -255,7 +330,7 @@ class DocApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_create_an_doc()
+    public function authorized_user_can_create_a_doc()
     {
         $this->signInWithPermission('docs.create');
 
@@ -283,7 +358,7 @@ class DocApiTest extends TestCase
     // *** docs.update ***
 
     /** @test */
-    public function guest_user_cannot_update_an_doc()
+    public function guest_user_cannot_update_a_doc()
     {
         $doc1 = factory(Doc::class)->create();
 
@@ -297,7 +372,7 @@ class DocApiTest extends TestCase
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_update_an_doc()
+    public function unauthorized_user_denied_to_update_a_doc()
     {
         $this->signIn();
 
@@ -315,7 +390,7 @@ class DocApiTest extends TestCase
     }
 
     /**  @test */
-    public function update_an_doc_requires_required_fields()
+    public function update_a_doc_requires_required_fields()
     {
         $this->signInWithPermission('docs.update');
 
@@ -340,7 +415,7 @@ class DocApiTest extends TestCase
     }
 
     /**  @test */
-    public function update_an_doc_requires_valid_fields()
+    public function update_a_doc_requires_valid_fields()
     {
         $this->signInWithPermission('docs.update');
 
@@ -369,7 +444,7 @@ class DocApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_update_an_doc()
+    public function authorized_user_can_update_a_doc()
     {
         $this->signInWithPermission('docs.update');
 
@@ -395,7 +470,7 @@ class DocApiTest extends TestCase
     // *** docs.delete ***
 
     /** @test */
-    public function guest_user_cannot_delete_an_doc()
+    public function guest_user_cannot_delete_a_doc()
     {
         $doc1 = factory(Doc::class)->create();
 
@@ -404,7 +479,7 @@ class DocApiTest extends TestCase
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_delete_an_doc()
+    public function unauthorized_user_denied_to_delete_a_doc()
     {
         $this->signIn();
 
@@ -415,7 +490,7 @@ class DocApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_delete_an_doc()
+    public function authorized_user_can_delete_a_doc()
     {
         $this->signInWithPermission('docs.delete');
 

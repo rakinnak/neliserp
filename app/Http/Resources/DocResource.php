@@ -21,7 +21,7 @@ class DocResource extends JsonResource
             'company_uuid' => $this->company_uuid,
             'company_code' => $this->company_code,
             'company_name' => $this->company_name,
-            'issued_at' => $this->issued_at,
+            'issued_at' => str_replace(' 00:00:00', '', $this->issued_at),
         ];
     }
 }

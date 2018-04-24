@@ -1,6 +1,6 @@
 <script>
     export default {
-        props: ['uuid'],
+        props: ['type', 'uuid'],
 
         data() {
             return {
@@ -13,7 +13,7 @@
         },
 
         created() {
-            axios.get('/api/docs/' + this.uuid)
+            axios.get('/api/docs/' + this.type + '/' + this.uuid)
                 .then(response => {
                     this.doc = response.data.data;
                 })
@@ -24,10 +24,10 @@
 
         methods: {
             onSubmit() {
-                this.form.submit('delete', '/api/docs/' + this.uuid)
+                this.form.submit('delete', '/api/docs/' + this.type + '/' + this.uuid)
                     .then(data => {
                         // console.log(data);
-                        window.location.href = '/docs';
+                        window.location.href = '/docs/' + this.type;
                     })
                     .catch(error => {
                         // console.log(error);

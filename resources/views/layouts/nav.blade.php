@@ -1,19 +1,19 @@
 <ul class="navbar-nav mr-auto">
     @auth
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="buying" data-toggle="dropdown">{{ __('buying') }}</a>
+            <a class="nav-link dropdown-toggle" href="#" id="purchase" data-toggle="dropdown">{{ __('purchase') }}</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="/docs">{{ __('buying.po') }}</a>
-              <a class="dropdown-item" href="/docs">{{ __('buying.do') }}</a>
-              <a class="dropdown-item" href="/docs">{{ __('buying.invoice') }}</a>
+              <a class="dropdown-item" href="/docs/po">{{ __('docs.po') }}</a>
+              <a class="dropdown-item" href="/docs/ro">{{ __('docs.ro') }}</a>
+              <a class="dropdown-item" href="/docs/ri">{{ __('docs.ri') }}</a>
             </div>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="selling" data-toggle="dropdown">{{ __('selling') }}</a>
+            <a class="nav-link dropdown-toggle" href="#" id="sales" data-toggle="dropdown">{{ __('sales') }}</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="/docs">{{ __('selling.po') }}</a>
-              <a class="dropdown-item" href="/docs">{{ __('selling.do') }}</a>
-              <a class="dropdown-item" href="/docs">{{ __('selling.invoice') }}</a>
+              <a class="dropdown-item" href="/docs/so">{{ __('docs.so') }}</a>
+              <a class="dropdown-item" href="/docs/do">{{ __('docs.do') }}</a>
+              <a class="dropdown-item" href="/docs/si">{{ __('docs.si') }}</a>
             </div>
         </li>
     

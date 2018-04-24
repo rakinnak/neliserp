@@ -6,38 +6,38 @@ use App\Doc;
 
 class DocController extends Controller
 {
-    public function index()
+    public function index($type)
     {
         //$this->authorize('index', Doc::class);
 
-        return view('docs.index');
+        return view('docs.index', compact('type'));
     }
 
-    public function create()
+    public function create($type)
     {
         //$this->authorize('create', Doc::class);
 
-        return view('docs.create');
+        return view('docs.create', compact('type'));
     }
 
-    public function show($uuid)
+    public function show($type, $uuid)
     {
         // $this->authorize('show', $doc);
 
-        return view('docs.show', compact('uuid'));
+        return view('docs.show', compact('type', 'uuid'));
     }
 
-    public function edit($uuid)
+    public function edit($type, $uuid)
     {
         // $this->authorize('edit', $doc);
 
-        return view('docs.edit', compact('uuid'));
+        return view('docs.edit', compact('type', 'uuid'));
     }
 
-    public function delete($uuid)
+    public function delete($type, $uuid)
     {
         // $this->authorize('edit', $doc);
 
-        return view('docs.delete', compact('uuid'));
+        return view('docs.delete', compact('type', 'uuid'));
     }
 }

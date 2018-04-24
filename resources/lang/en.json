@@ -7,5 +7,13 @@
     "companies.code": "code",
     "companies.name": "name",
     "docs.code": "code",
-    "docs.name": "name"
+    "docs.name": "name",
+    "docs.company_code": "company",
+    "docs.issued_at": "issued date",
+    "docs.po": "purchase order",
+    "docs.ro": "receive order",
+    "docs.ri": "receive invoice",
+    "docs.so": "sales order",
+    "docs.do": "delivery order",
+    "docs.si": "sales invoice"
 }

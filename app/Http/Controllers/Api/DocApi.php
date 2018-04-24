@@ -17,6 +17,7 @@ class DocApi extends ApiController
         $this->authorize('index', Doc::class);
         
         $docs = Doc::filter($filter)
+            ->where('type', $type)
             ->paginate(10); // TODO: per page configuration
 
         return DocResource::collection($docs);
@@ -25,6 +26,10 @@ class DocApi extends ApiController
     public function show($type, Doc $doc)
     {
         $this->authorize('show', $doc);
+
+        if ($doc->type != $type) {
+            abort(404);
+        }
 
         return new DocResource($doc);
     }
