@@ -16,8 +16,11 @@ class DocResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'code' => $this->code,
             'name' => $this->name,
+            'company_uuid' => $this->company_uuid,
+            'company_code' => $this->company_code,
+            'company_name' => $this->company_name,
+            'issued_at' => $this->issued_at,
         ];
     }
 }

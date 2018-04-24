@@ -28,12 +28,12 @@ class CompanyRequest extends FormRequest
             'code' => [
                 'required',
                 Rule::unique('companies')
-                    ->ignore($this->item ? $this->item->id : null),
+                    ->ignore($this->company ? $this->company->id : null),
             ],
             'name' => [
                 'required',
                 Rule::unique('companies')
-                    ->ignore($this->item ? $this->item->id : null),
+                    ->ignore($this->company ? $this->company->id : null),
             ],
         ];
         

@@ -11,8 +11,12 @@ class Doc extends Model
     use RecordsActivity;
 
     protected $fillable = [
-        'code',
         'name',
+        'company_id',
+        'company_uuid',
+        'company_code',
+        'company_name',
+        'issued_at',
     ];
 
     public static function boot()

@@ -25,16 +25,13 @@ class DocRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => [
-                'required',
-                Rule::unique('docs')
-                    ->ignore($this->item ? $this->item->id : null),
-            ],
             'name' => [
                 'required',
                 Rule::unique('docs')
-                    ->ignore($this->item ? $this->item->id : null),
+                    ->ignore($this->doc ? $this->doc->id : null),
             ],
+            'company_id' => 'required|exists:companies,id',
+            'issued_at' => 'required|date',
         ];
         
     }

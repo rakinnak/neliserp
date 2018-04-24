@@ -3,7 +3,7 @@
 @section('content')
 <item-index inline-template>
     <div>
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        @component('header')
             <h5>{{ __('index') }}</h5>
             <form method="GET" action="/items" id="items-search" class="form-inline">
                 <label class="mr-2" for="q">{{ __('items.code') }}/{{ __('items.name') }}</label>
@@ -15,32 +15,23 @@
                     <a href="/items/create" class="btn btn-sm btn-outline-success">{{ __('create') }}</a>
                 </div>
             </div>
-        </div>
+        @endcomponent
 
-        <table class="table table-bordered table-hover">
-            <thead class="thead-light">
+        @component('table')
+            @slot('thead')
                 <tr>
                     <th>{{ __('items.code') }}</th>
                     <th>{{ __('items.name') }}</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr v-if="! done">
-                    <td colspan="2">
-                        <i class="fa fa-spinner fa-spin"></i> {{ __('loading') }}
-                    </td>
-                </tr>
-                <tr v-if="done && items.length == 0">
-                    <td colspan="2">
-                        not found
-                    </td>
-                </tr>
+            @endslot
+
+            @slot('tbody')
                 <tr v-for="item in items" :key="item.uuid">
                     <td><a :href="'/items/' + item.uuid">@{{ item.code }}</a></td>
                     <td>@{{ item.name }}</td>
                 </tr>
-            </tbody>
-        </table>
+            @endslot
+        @endcomponent
 
         @include('pagination', ['appends' => ['q' => request('q', '')]])
     </div>
