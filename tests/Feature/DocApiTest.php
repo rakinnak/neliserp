@@ -11,12 +11,22 @@ class DocApiTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $type;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->type = 'docs';
+    }
+
+
     // *** docs.index ***
 
     /** @test */
     public function guest_user_cannot_index_docs()
     {
-        $this->json('GET', route('api.docs.index'))
+        $this->json('GET', route('api.docs.index', $this->type))
             ->assertStatus(401);
     }
 
@@ -25,7 +35,7 @@ class DocApiTest extends TestCase
     {
         $this->signIn();
 
-        $this->json('GET', route('api.docs.index'))
+        $this->json('GET', route('api.docs.index', $this->type))
             ->assertStatus(403);
     }
 
@@ -39,13 +49,14 @@ class DocApiTest extends TestCase
 
         $user = auth()->user();
 
-        $this->json('GET', route('api.docs.index'))
+        $this->json('GET', route('api.docs.index', $this->type))
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
                     [
                         'uuid' => $doc1->uuid,
                         'name' => $doc1->name,
+                        'type' => $this->type,
                         'company_uuid' => $doc1->company_uuid,
                         'company_code' => $doc1->company_code,
                         'company_name' => $doc1->company_name,
@@ -54,6 +65,7 @@ class DocApiTest extends TestCase
                     [
                         'uuid' => $doc2->uuid,
                         'name' => $doc2->name,
+                        'type' => $this->type,
                         'company_uuid' => $doc2->company_uuid,
                         'company_code' => $doc2->company_code,
                         'company_name' => $doc2->company_name,
@@ -61,8 +73,8 @@ class DocApiTest extends TestCase
                     ]
                 ],
                 'links' => [
-                    'first' => 'http://localhost/api/docs?page=1',
-                    'last' => 'http://localhost/api/docs?page=1',
+                    'first' => "http://localhost/api/docs/{$this->type}?page=1",
+                    'last' => "http://localhost/api/docs/{$this->type}?page=1",
                     'prev' => null,
                     'next' => null
                 ],
@@ -70,7 +82,7 @@ class DocApiTest extends TestCase
                     'current_page' => 1,
                     'from' => 1,
                     'last_page' => 1,
-                    'path' => 'http://localhost/api/docs',
+                    'path' => "http://localhost/api/docs/{$this->type}",
                     'per_page' => 10,
                     'to' => 2,
                     'total' => 2
@@ -87,13 +99,14 @@ class DocApiTest extends TestCase
         $doc_a2 = factory(Doc::class)->create(['name' => 'a-002']);
         $doc_b1 = factory(Doc::class)->create(['name' => 'b-001']);
 
-        $this->json('GET', route('api.docs.index') . '?name=a-00')
+        $this->json('GET', route('api.docs.index', $this->type) . '?name=a-00')
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
                     [
                         'uuid' => $doc_a1->uuid,
                         'name' => $doc_a1->name,
+                        'type' => $this->type,
                         'company_uuid' => $doc_a1->company_uuid,
                         'company_code' => $doc_a1->company_code,
                         'company_name' => $doc_a1->company_name,
@@ -102,6 +115,7 @@ class DocApiTest extends TestCase
                     [
                         'uuid' => $doc_a2->uuid,
                         'name' => $doc_a2->name,
+                        'type' => $this->type,
                         'company_uuid' => $doc_a2->company_uuid,
                         'company_code' => $doc_a2->company_code,
                         'company_name' => $doc_a2->company_name,
@@ -114,6 +128,7 @@ class DocApiTest extends TestCase
                     [
                         'uuid' => $doc_b1->uuid,
                         'name' => $doc_b1->name,
+                        'type' => $this->type,
                         'company_uuid' => $doc_b1->company_uuid,
                         'company_code' => $doc_b1->company_code,
                         'company_name' => $doc_b1->company_name,
@@ -130,7 +145,7 @@ class DocApiTest extends TestCase
     {
         $doc1 = factory(Doc::class)->create();
 
-        $this->json('GET', route('api.docs.show', $doc1->uuid))
+        $this->json('GET', route('api.docs.show', [$this->type, $doc1->uuid]))
             ->assertStatus(401);
     }
 
@@ -141,7 +156,7 @@ class DocApiTest extends TestCase
 
         $doc1 = factory(Doc::class)->create();
 
-        $this->json('GET', route('api.docs.show', $doc1->uuid))
+        $this->json('GET', route('api.docs.show', [$this->type, $doc1->uuid]))
             ->assertStatus(403);
     }
 
@@ -152,12 +167,13 @@ class DocApiTest extends TestCase
 
         $doc1 = factory(Doc::class)->create();
 
-        $this->json('GET', route('api.docs.show', $doc1->uuid))
+        $this->json('GET', route('api.docs.show', [$this->type, $doc1->uuid]))
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
                     'uuid' => $doc1->uuid,
                     'name' => $doc1->name,
+                    'type' => $this->type,
                     'company_uuid' => $doc1->company_uuid,
                     'company_code' => $doc1->company_code,
                     'company_name' => $doc1->company_name,
@@ -173,7 +189,7 @@ class DocApiTest extends TestCase
     {
         $doc1 = factory(Doc::class)->make();
 
-        $this->json('POST', route('api.docs.store'), $doc1->toArray())
+        $this->json('POST', route('api.docs.store', $this->type), $doc1->toArray())
             ->assertStatus(401);
     }
 
@@ -184,7 +200,7 @@ class DocApiTest extends TestCase
 
         $doc1 = factory(Doc::class)->make();
 
-        $this->json('POST', route('api.docs.store'), $doc1->toArray())
+        $this->json('POST', route('api.docs.store', $this->type), $doc1->toArray())
             ->assertStatus(403);
     }
 
@@ -193,7 +209,7 @@ class DocApiTest extends TestCase
     {
         $this->signInWithPermission('docs.create');
 
-        $this->json('POST', route('api.docs.store'))
+        $this->json('POST', route('api.docs.store', $this->type))
             ->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
@@ -218,7 +234,7 @@ class DocApiTest extends TestCase
 
         $doc1 = factory(Doc::class)->make();
 
-        $this->json('POST', route('api.docs.store'),
+        $this->json('POST', route('api.docs.store', $this->type),
             [
                 'name' => $doc1->name,
                 'company_id' => 9999,
@@ -245,7 +261,7 @@ class DocApiTest extends TestCase
 
         $doc1 = factory(Doc::class)->make();
 
-        $this->json('POST', route('api.docs.store'),
+        $this->json('POST', route('api.docs.store', $this->type),
             [
                 'name' => $doc1->name,
                 'company_id' => $doc1->company_id,
@@ -255,6 +271,7 @@ class DocApiTest extends TestCase
 
         $this->assertDatabaseHas('docs', [
             'name' => $doc1->name,
+            'type' => $this->type,
             'company_id' => $doc1->company_id,
             'company_uuid' => $doc1->company_uuid,
             'company_code' => $doc1->company_code,
@@ -272,7 +289,7 @@ class DocApiTest extends TestCase
 
         $doc_updated = factory(Doc::class)->make();
 
-        $this->json('PATCH', route('api.docs.update', $doc1->uuid),
+        $this->json('PATCH', route('api.docs.update', [$this->type, $doc1->uuid]),
             [
                 'name' => $doc_updated->name,
             ])
@@ -288,7 +305,7 @@ class DocApiTest extends TestCase
 
         $doc_updated = factory(Doc::class)->make();
 
-        $this->json('PATCH', route('api.docs.update', $doc1->uuid),
+        $this->json('PATCH', route('api.docs.update', [$this->type, $doc1->uuid]),
             [
                 'name' => $doc_updated->name,
                 'company_id' => $doc_updated->company_id,
@@ -304,7 +321,7 @@ class DocApiTest extends TestCase
 
         $doc1 = factory(Doc::class)->create();
 
-        $this->json('PATCH', route('api.docs.update', $doc1->uuid))
+        $this->json('PATCH', route('api.docs.update', [$this->type, $doc1->uuid]))
             ->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
@@ -331,7 +348,7 @@ class DocApiTest extends TestCase
 
         $doc_updated = factory(Doc::class)->make();
 
-        $this->json('PATCH', route('api.docs.update', $doc1->uuid),
+        $this->json('PATCH', route('api.docs.update', [$this->type, $doc1->uuid]),
             [
                 'name' => $doc_updated->name,
                 'company_id' => 9999,
@@ -360,7 +377,7 @@ class DocApiTest extends TestCase
 
         $doc_updated = factory(Doc::class)->make();
 
-        $this->json('PATCH', route('api.docs.update', $doc1->uuid),
+        $this->json('PATCH', route('api.docs.update', [$this->type, $doc1->uuid]),
             [
                 'name' => $doc_updated->name,
                 'company_id' => $doc_updated->company_id,
@@ -382,7 +399,7 @@ class DocApiTest extends TestCase
     {
         $doc1 = factory(Doc::class)->create();
 
-        $this->json('DELETE', route('api.docs.destroy', $doc1->uuid))
+        $this->json('DELETE', route('api.docs.destroy', [$this->type, $doc1->uuid]))
             ->assertStatus(401);
     }
 
@@ -393,7 +410,7 @@ class DocApiTest extends TestCase
 
         $doc1 = factory(Doc::class)->create();
 
-        $this->json('DELETE', route('api.docs.destroy', $doc1->uuid))
+        $this->json('DELETE', route('api.docs.destroy', [$this->type, $doc1->uuid]))
             ->assertStatus(403);
     }
 
@@ -404,7 +421,7 @@ class DocApiTest extends TestCase
 
         $doc1 = factory(Doc::class)->create();
 
-        $this->json('DELETE', route('api.docs.destroy', $doc1->uuid))
+        $this->json('DELETE', route('api.docs.destroy', [$this->type, $doc1->uuid]))
             ->assertStatus(200);
 
         $this->assertDatabaseMissing('docs', [

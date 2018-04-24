@@ -12,6 +12,7 @@ class Doc extends Model
 
     protected $fillable = [
         'name',
+        'type',
         'company_id',
         'company_uuid',
         'company_code',

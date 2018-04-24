@@ -12,7 +12,7 @@ use App\Http\Resources\DocCollection;
 
 class DocApi extends ApiController
 {
-    public function index(DocFilter $filter)
+    public function index(DocFilter $filter, $type)
     {
         $this->authorize('index', Doc::class);
         
@@ -22,14 +22,14 @@ class DocApi extends ApiController
         return DocResource::collection($docs);
     }
 
-    public function show(Doc $doc)
+    public function show($type, Doc $doc)
     {
         $this->authorize('show', $doc);
 
         return new DocResource($doc);
     }
 
-    public function store(DocRequest $request)
+    public function store(DocRequest $request, $type)
     {
         $this->authorize('create', Doc::class);
 
@@ -37,6 +37,7 @@ class DocApi extends ApiController
 
         $created = Doc::create([
             'name' => $request['name'],
+            'type' => $type,
             'company_id' => $request['company_id'],
             'company_uuid' => $company->uuid,
             'company_code' => $company->code,
@@ -47,7 +48,7 @@ class DocApi extends ApiController
         return $created;
     }
 
-    public function update(DocRequest $request, Doc $doc)
+    public function update(DocRequest $request, $type, Doc $doc)
     {
         $this->authorize('update', $doc);
 
@@ -62,7 +63,7 @@ class DocApi extends ApiController
         return $doc;
     }
 
-    public function destroy(Doc $doc)
+    public function destroy($type, Doc $doc)
     {
         $this->authorize('delete', $doc);
 

@@ -18,7 +18,7 @@ class CreateDocsTable extends Migration
             $table->unsignedInteger('company_id');
             $table->uuid('uuid')->unique();
             $table->string('name')->index();
-            //$table->string('type'); // purchase_order, receive_order, receive_invoice, sales_order, delivery_order, sales_invoice
+            $table->string('type'); // purchase_order, receive_order, receive_invoice, sales_order, delivery_order, sales_invoice
             $table->string('company_uuid');
             $table->string('company_code');
             $table->string('company_name');

@@ -17,6 +17,7 @@ class DocResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
+            'type' => $this->type,
             'company_uuid' => $this->company_uuid,
             'company_code' => $this->company_code,
             'company_name' => $this->company_name,
