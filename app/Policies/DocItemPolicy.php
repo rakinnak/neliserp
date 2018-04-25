@@ -4,10 +4,10 @@ namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-use App\Doc;
+use App\DocItem;
 use App\User;
 
-class DocPolicy
+class DocItemPolicy
 {
     use HandlesAuthorization;
 
@@ -16,7 +16,7 @@ class DocPolicy
         return $user->hasPermission('docs.index') || $user->hasPermission('docs.all');
     }
 
-    public function show(User $user, Doc $doc)
+    public function show(User $user, DocItem $doc_item)
     {
         return $user->hasPermission('docs.show') || $user->hasPermission('docs.all');
     }
@@ -26,12 +26,12 @@ class DocPolicy
         return $user->hasPermission('docs.create') || $user->hasPermission('docs.all');
     }
 
-    public function update(User $user, Doc $doc)
+    public function update(User $user, DocItem $doc_item)
     {
         return $user->hasPermission('docs.update') || $user->hasPermission('docs.all');
     }
 
-    public function delete(User $user, Doc $doc)
+    public function delete(User $user, DocItem $doc_item)
     {
         return $user->hasPermission('docs.delete') || $user->hasPermission('docs.all');
     }
