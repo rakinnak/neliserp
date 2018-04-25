@@ -22,6 +22,7 @@ class DocResource extends JsonResource
             'company_code' => $this->company_code,
             'company_name' => $this->company_name,
             'issued_at' => str_replace(' 00:00:00', '', $this->issued_at),
+            'doc_item' => DocItemResource::collection($this->doc_item),
         ];
     }
 }

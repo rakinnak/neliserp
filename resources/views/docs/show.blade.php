@@ -14,6 +14,7 @@
         </div>
         <form>
             @include('docs.form', ['action' => 'show'])
+
             <a href="/docs/{{ $type }}" class="btn btn-outline-dark">back</a>
         </form>
     </div>

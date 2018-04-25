@@ -31,6 +31,8 @@ class DocApi extends ApiController
             abort(404);
         }
 
+        $doc = $doc->load('doc_item');
+
         return new DocResource($doc);
     }
 

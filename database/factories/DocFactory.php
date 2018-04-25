@@ -8,12 +8,12 @@ $factory->define(App\Doc::class, function (Faker $faker) {
 
     $issued_at = $faker->dateTimeBetween('-7 days', 'now')->format('Y-m-d');
 
-    $type = $faker->randomElement(['po', 'ro', 'ri', 'so', 'do', 'si']);
+    //$type = $faker->randomElement(['po', 'ro', 'ri', 'so', 'do', 'si']);
+    $type = $faker->randomElement(['po', 'so']);
 
     $name = $faker->unique()->bothify(strtoupper($type) . '-####');
 
     return [
-        'uuid' => uuid(),
         'name' => $name,
         'type' => $type,
         'company_id' => $company->id,

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Filters\DocFilter;
+use Carbon\Carbon;
 
 class Doc extends Model
 {
@@ -17,6 +18,12 @@ class Doc extends Model
         'company_uuid',
         'company_code',
         'company_name',
+        'issued_at',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
         'issued_at',
     ];
 
@@ -37,5 +44,15 @@ class Doc extends Model
     public function scopeFilter($builder, DocFilter $filter)
     {
         return $filter->apply($builder);
+    }
+
+    public function getIssuedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');
+    }
+
+    public function doc_item()
+    {
+        return $this->hasMany(DocItem::class);
     }
 }

@@ -351,7 +351,7 @@ class DocApiTest extends TestCase
             'company_uuid' => $doc1->company_uuid,
             'company_code' => $doc1->company_code,
             'company_name' => $doc1->company_name,
-            'issued_at' => $doc1->issued_at,
+            'issued_at' => $doc1->issued_at . ' 00:00:00',
         ]);
     }
 
