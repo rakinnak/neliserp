@@ -48271,19 +48271,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
+            companies: [],
             form: new Form({
-                code: '',
-                name: ''
+                company_uuid: '',
+                name: '',
+                issued_at: ''
             })
         };
     },
+    created: function created() {
+        var _this = this;
+
+        // TODO: show all companies
+        axios.get('/api/companies?per_page=1000').then(function (response) {
+            _this.companies = response.data.data;
+        });
+    },
+
 
     methods: {
         onSubmit: function onSubmit() {
-            var _this = this;
+            var _this2 = this;
 
             this.form.submit('post', '/api/docs/' + this.type).then(function (data) {
-                window.location.href = '/docs/' + _this.type;
+                window.location.href = '/docs/' + _this2.type;
                 //window.location.replace('/docs/' + this.type);
             }).catch(function (error) {
                 // console.log(error);
@@ -48425,20 +48436,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             doc: {},
+            companies: [],
             form: new Form({
-                code: '',
-                name: ''
+                company_uuid: '',
+                name: '',
+                issued_at: ''
             })
         };
     },
     created: function created() {
         var _this = this;
 
+        // TODO: show all companies
+        axios.get('/api/companies?per_page=1000').then(function (response) {
+            _this.companies = response.data.data;
+        });
+
         axios.get('/api/docs/' + this.type + '/' + this.uuid).then(function (response) {
             _this.doc = response.data.data;
 
-            _this.form.code = _this.doc.code;
+            _this.form.company_uuid = _this.doc.company_uuid;
             _this.form.name = _this.doc.name;
+            _this.form.issued_at = _this.doc.issued_at;
         }).catch(function (error) {
             alert(error.response.status + ': ' + error.response.statusText);
         });

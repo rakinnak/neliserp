@@ -38,13 +38,14 @@ class DocApi extends ApiController
     {
         $this->authorize('create', Doc::class);
 
-        $company = Company::find($request['company_id']);
+        $company = Company::where('uuid', $request['company_uuid'])
+            ->first();
 
         $created = Doc::create([
             'name' => $request['name'],
             'type' => $type,
-            'company_id' => $request['company_id'],
-            'company_uuid' => $company->uuid,
+            'company_uuid' => $request['company_uuid'],
+            'company_id' => $company->id,
             'company_code' => $company->code,
             'company_name' => $company->name,
             'issued_at' => $request['issued_at'],
@@ -57,11 +58,14 @@ class DocApi extends ApiController
     {
         $this->authorize('update', $doc);
 
-        // foreach ($request->toArray() as $field => $value) {
-        //     $doc->$field = $value;
-        // }
+        $company = Company::where('uuid', $request['company_uuid'])
+            ->first();
 
-        $doc->name = request('name');
+        $doc->name = $request['name'];
+        $doc->company_uuid = $request['company_uuid'];
+        $doc->company_id = $company->id;
+        $doc->company_code = $company->code;
+        $doc->company_name = $company->name;
 
         $doc->save();
 

@@ -292,8 +292,8 @@ class DocApiTest extends TestCase
                     'name' => [
                         'The name field is required.'
                     ],
-                    'company_id' => [
-                        'The company id field is required.'
+                    'company_uuid' => [
+                        'The company uuid field is required.'
                     ],
                     'issued_at' => [
                         'The issued at field is required.'
@@ -312,15 +312,15 @@ class DocApiTest extends TestCase
         $this->json('POST', route('api.docs.store', $this->type),
             [
                 'name' => $doc1->name,
-                'company_id' => 9999,
+                'company_uuid' => 9999,
                 'issued_at' => 1234,
             ])
             ->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
                 'errors' => [
-                    'company_id' => [
-                        'The selected company id is invalid.',
+                    'company_uuid' => [
+                        'The selected company uuid is invalid.',
                     ],
                     'issued_at' => [
                         'The issued at is not a valid date.',
@@ -339,7 +339,7 @@ class DocApiTest extends TestCase
         $this->json('POST', route('api.docs.store', $this->type),
             [
                 'name' => $doc1->name,
-                'company_id' => $doc1->company_id,
+                'company_uuid' => $doc1->company_uuid,
                 'issued_at' => $doc1->issued_at,
             ])
             ->assertStatus(201);
@@ -383,7 +383,7 @@ class DocApiTest extends TestCase
         $this->json('PATCH', route('api.docs.update', [$this->type, $doc1->uuid]),
             [
                 'name' => $doc_updated->name,
-                'company_id' => $doc_updated->company_id,
+                'company_uuid' => $doc_updated->company_uuid,
                 'issued_at' => $doc_updated->issued_at,
             ])
             ->assertStatus(403);
@@ -404,8 +404,8 @@ class DocApiTest extends TestCase
                     'name' => [
                         'The name field is required.'
                     ],
-                    'company_id' => [
-                        'The company id field is required.'
+                    'company_uuid' => [
+                        'The company uuid field is required.'
                     ],
                     'issued_at' => [
                         'The issued at field is required.'
@@ -426,15 +426,15 @@ class DocApiTest extends TestCase
         $this->json('PATCH', route('api.docs.update', [$this->type, $doc1->uuid]),
             [
                 'name' => $doc_updated->name,
-                'company_id' => 9999,
+                'company_uuid' => 9999,
                 'issued_at' => 1234,
             ])
             ->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
                 'errors' => [
-                    'company_id' => [
-                        'The selected company id is invalid.',
+                    'company_uuid' => [
+                        'The selected company uuid is invalid.',
                     ],
                     'issued_at' => [
                         'The issued at is not a valid date.',
@@ -455,7 +455,7 @@ class DocApiTest extends TestCase
         $this->json('PATCH', route('api.docs.update', [$this->type, $doc1->uuid]),
             [
                 'name' => $doc_updated->name,
-                'company_id' => $doc_updated->company_id,
+                'company_uuid' => $doc_updated->company_uuid,
                 'issued_at' => $doc_updated->issued_at,
             ])
             ->assertStatus(200);
@@ -464,6 +464,10 @@ class DocApiTest extends TestCase
             'id' => $doc1->id,
             'uuid' => $doc1->uuid,
             'name' => $doc_updated->name,
+            'company_id' => $doc_updated->company_id,
+            'company_uuid' => $doc_updated->company_uuid,
+            'company_code' => $doc_updated->company_code,
+            'company_name' => $doc_updated->company_name,
         ]);
     }
 

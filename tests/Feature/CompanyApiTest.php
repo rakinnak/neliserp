@@ -189,7 +189,7 @@ class CompanyApiTest extends TestCase
     // *** companies.show ***
 
     /** @test */
-    public function guest_user_cannot_view_an_company()
+    public function guest_user_cannot_view_a_company()
     {
         $company1 = factory(Company::class)->create();
 
@@ -198,7 +198,7 @@ class CompanyApiTest extends TestCase
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_view_an_company()
+    public function unauthorized_user_denied_to_view_a_company()
     {
         $this->signIn();
 
@@ -209,7 +209,7 @@ class CompanyApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_view_an_company()
+    public function authorized_user_can_view_a_company()
     {
         $this->signInWithPermission('companies.show');
 
@@ -229,7 +229,7 @@ class CompanyApiTest extends TestCase
     // *** companies.store ***
 
     /** @test */
-    public function guest_user_cannot_create_an_company()
+    public function guest_user_cannot_create_a_company()
     {
         $company1 = factory(Company::class)->make();
 
@@ -238,7 +238,7 @@ class CompanyApiTest extends TestCase
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_create_an_company()
+    public function unauthorized_user_denied_to_create_a_company()
     {
         $this->signIn();
 
@@ -249,7 +249,7 @@ class CompanyApiTest extends TestCase
     }
 
     /**  @test */
-    public function create_an_company_requires_valid_fields()
+    public function create_a_company_requires_valid_fields()
     {
         $this->signInWithPermission('companies.create');
 
@@ -269,7 +269,7 @@ class CompanyApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_create_an_company()
+    public function authorized_user_can_create_a_company()
     {
         $this->signInWithPermission('companies.create');
 
@@ -291,7 +291,7 @@ class CompanyApiTest extends TestCase
     // *** companies.update ***
 
     /** @test */
-    public function guest_user_cannot_update_an_company()
+    public function guest_user_cannot_update_a_company()
     {
         $company1 = factory(Company::class)->create();
 
@@ -306,7 +306,7 @@ class CompanyApiTest extends TestCase
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_update_an_company()
+    public function unauthorized_user_denied_to_update_a_company()
     {
         $this->signIn();
 
@@ -323,7 +323,7 @@ class CompanyApiTest extends TestCase
     }
 
     /**  @test */
-    public function update_an_company_requires_valid_fields()
+    public function update_a_company_requires_valid_fields()
     {
         $this->signInWithPermission('companies.update');
 
@@ -345,7 +345,7 @@ class CompanyApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_update_an_company()
+    public function authorized_user_can_update_a_company()
     {
         $this->signInWithPermission('companies.update');
 
@@ -371,7 +371,7 @@ class CompanyApiTest extends TestCase
     // *** companies.delete ***
 
     /** @test */
-    public function guest_user_cannot_delete_an_company()
+    public function guest_user_cannot_delete_a_company()
     {
         $company1 = factory(Company::class)->create();
 
@@ -380,7 +380,7 @@ class CompanyApiTest extends TestCase
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_delete_an_company()
+    public function unauthorized_user_denied_to_delete_a_company()
     {
         $this->signIn();
 
@@ -391,7 +391,7 @@ class CompanyApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_delete_an_company()
+    public function authorized_user_can_delete_a_company()
     {
         $this->signInWithPermission('companies.delete');
 

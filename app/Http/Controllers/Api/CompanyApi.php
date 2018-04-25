@@ -13,9 +13,16 @@ class CompanyApi extends ApiController
     public function index(CompanyFilter $filter)
     {
         $this->authorize('index', Company::class);
-        
+
+        // TODO: per_page handling
+        $per_page = request('per_page');
+
+        if (! $per_page) {
+            $per_page = 10;
+        }
+
         $companies = Company::filter($filter)
-            ->paginate(10); // TODO: per page configuration
+            ->paginate($per_page); // TODO: per page configuration
 
         return CompanyResource::collection($companies);
     }

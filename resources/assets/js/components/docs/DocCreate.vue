@@ -4,12 +4,22 @@
 
         data() {
             return {
+                companies: [],
                 form: new Form({
-                    code: '',
-                    name: ''
+                    company_uuid: '',
+                    name: '',
+                    issued_at: '',
                 }),
             }
         },
+        created() {
+            // TODO: show all companies
+            axios.get('/api/companies?per_page=1000')
+                .then(response => {
+                    this.companies = response.data.data;
+                });
+        },
+
         methods: {
             onSubmit() {
                 this.form.submit('post', '/api/docs/' + this.type)
