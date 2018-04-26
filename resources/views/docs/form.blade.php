@@ -57,21 +57,25 @@
                 <tr v-for="doc_item in doc.doc_item" v-if="! doc_item.deleted" :class="{'table-info' : doc_item.editing, 'table-danger' : doc_item.deleting}">
                     <template v-if="doc_item.creating || doc_item.editing">
                         <td>
-                            <input type="text" class="form-control" id="line_number" name="line_number" v-model="doc_item.line_number">
+                            <input type="text" class="form-control" id="line_number" name="line_number" v-model="doc_item.line_number" :class="{'is-invalid': doc_item.errors.hasOwnProperty('line_number')}">
+                            <div class="invalid-feedback" v-if="doc_item.errors.hasOwnProperty('line_number')" v-text="doc_item.errors['line_number'][0]"></div>
                         </td>
                         <td>
                             <!-- <input type="text" class="form-control" id="item_code" name="item_code" v-model="doc_item.item_code"> -->
                             <!-- :class="{'is-invalid': form.errors.has('company_uuid')}"> -->
-                            <select class="form-control" id="item_uuid" name="item_uuid" v-model="doc_item.item_uuid">
+                            <select class="form-control" id="item_uuid" name="item_uuid" v-model="doc_item.item_uuid" :class="{'is-invalid': doc_item.errors.hasOwnProperty('item_uuid')}">
                                 <option value="">-- select --</option>
                                 <option v-for="item in items" :value="item.uuid" v-text="item.code"></option>
                             </select>
+                            <div class="invalid-feedback" v-if="doc_item.errors.hasOwnProperty('item_uuid')" v-text="doc_item.errors['item_uuid'][0]"></div>
                         </td>
                         <td>
-                            <input type="text" class="form-control" id="quantity" name="quantity" v-model="doc_item.quantity">
+                            <input type="text" class="form-control" id="quantity" name="quantity" v-model="doc_item.quantity" :class="{'is-invalid': doc_item.errors.hasOwnProperty('quantity')}">
+                            <div class="invalid-feedback" v-if="doc_item.errors.hasOwnProperty('quantity')" v-text="doc_item.errors['quantity'][0]"></div>
                         </td>
                         <td>
-                            <input type="text" class="form-control" id="unit_price" name="unit_price" v-model="doc_item.unit_price">
+                            <input type="text" class="form-control" id="unit_price" name="unit_price" v-model="doc_item.unit_price" :class="{'is-invalid': doc_item.errors.hasOwnProperty('unit_price')}">
+                            <div class="invalid-feedback" v-if="doc_item.errors.hasOwnProperty('unit_price')" v-text="doc_item.errors['unit_price'][0]"></div>
                         </td>
                     </template>
                     <template v-else>

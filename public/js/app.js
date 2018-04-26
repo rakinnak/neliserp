@@ -48484,7 +48484,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 quantity: '',
                 unit_price: '',
                 creating: true,
-                deleted: false
+                deleted: false,
+                errors: {}
             });
         },
         createDocItem: function createDocItem(doc_item) {
@@ -48502,6 +48503,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 doc_item.creating = false;
             }).catch(function (error) {
                 console.log(error);
+                doc_item.errors = error.response.data.errors;
             });
         },
         editDocItem: function editDocItem(doc_item) {
@@ -48514,7 +48516,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 doc_item.item_code = data.data.item_code;
                 doc_item.editing = false;
             }).catch(function (error) {
-                console.log(error);
+                doc_item.errors = error.response.data.errors;
             });
         },
         deleteDocItem: function deleteDocItem(doc_item) {

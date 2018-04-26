@@ -51,6 +51,7 @@
                     unit_price: '',
                     creating: true,
                     deleted: false,
+                    errors: {},
                 })
             },
             createDocItem(doc_item) {
@@ -70,6 +71,7 @@
                 })
                 .catch(error => {
                     console.log(error);
+                    doc_item.errors = error.response.data.errors;
                 })
             },
             editDocItem(doc_item) {
@@ -84,7 +86,7 @@
                     doc_item.editing = false;
                 })
                 .catch(error => {
-                    console.log(error);
+                    doc_item.errors = error.response.data.errors;
                 })
             },
             deleteDocItem(doc_item) {
