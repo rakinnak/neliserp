@@ -33,7 +33,7 @@
     </div>
 </div>
 
-@if ($action != 'create')
+<doc-item-table :doc="doc" :type="type" inline-template>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -53,7 +53,7 @@
                     <td>@{{ doc_item.unit_price }}</td>
                     <td>-</td>
                 </tr>
-            @elseif ($action == 'edit')
+            @elseif ($action == 'create' || $action == 'edit')
                 <tr v-for="doc_item in doc.doc_item" v-if="! doc_item.deleted" :class="{'table-info' : doc_item.editing, 'table-danger' : doc_item.deleting}">
                     <template v-if="doc_item.creating || doc_item.editing">
                         <td>
@@ -87,10 +87,15 @@
 
                     <template v-if="doc_item.creating">
                         <td>
-                            <button type="button" class="btn btn-sm btn-outline-info" @click="createDocItem(doc_item)">create</button>
+                            @if ($action == 'create')
+                                <button type="button" class="btn btn-sm btn-outline-danger" @click="doc_item.deleted = true">delete</button>
+                            @elseif ($action == 'edit')
+                                <button type="button" class="btn btn-sm btn-outline-info" @click="createDocItem(doc_item)">create</button>
 
-                            <!-- TODO: created value should be reset, when click cancel -->
-                            <button type="button" class="btn btn-sm btn-outline-dark" @click="doc_item.deleted = true">cancel</button>
+                                <!-- TODO: created value should be reset, when click cancel -->
+                                <button type="button" class="btn btn-sm btn-outline-dark" @click="doc_item.deleted = true">cancel</button>
+                            @endif
+
                         </td>
                     </template>
 
@@ -119,7 +124,7 @@
                 </tr>
             @endif
 
-            @if ($action == 'edit')
+            @if ($action == 'create' || $action == 'edit')
                 <tr>
                     <td colspan="4"></td>
                     <td><button type="button" class="btn btn-sm btn-outline-success" @click="addDocItemLine()">add</button></td>
@@ -127,4 +132,4 @@
             @endif
         </tbody>
     </table>
-@endif
+</doc-item-table>

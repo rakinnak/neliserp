@@ -33,6 +33,7 @@ Vue.component('doc-create', require('./components/docs/DocCreate.vue'));
 Vue.component('doc-show', require('./components/docs/DocShow.vue'));
 Vue.component('doc-edit', require('./components/docs/DocEdit.vue'));
 Vue.component('doc-delete', require('./components/docs/DocDelete.vue'));
+Vue.component('doc-item-table', require('./components/docs/DocItemTable.vue'));
 
 Vue.component('pagination', require('./components/Pagination.vue'));
 

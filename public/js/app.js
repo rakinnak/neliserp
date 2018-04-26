@@ -14027,6 +14027,7 @@ Vue.component('doc-create', __webpack_require__(62));
 Vue.component('doc-show', __webpack_require__(64));
 Vue.component('doc-edit', __webpack_require__(66));
 Vue.component('doc-delete', __webpack_require__(68));
+Vue.component('doc-item-table', __webpack_require__(74));
 
 Vue.component('pagination', __webpack_require__(70));
 
@@ -48271,11 +48272,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
+            doc: {
+                doc_item: []
+            },
             companies: [],
             form: new Form({
                 company_uuid: '',
                 name: '',
-                issued_at: ''
+                issued_at: '2018-04-26'
             })
         };
     },
@@ -48298,11 +48302,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         onSubmit: function onSubmit() {
             var _this2 = this;
 
+            var doc_item_length = this.doc.doc_item.length;
+            var counter = 0;
+
             this.form.submit('post', '/api/docs/' + this.type).then(function (data) {
-                window.location.href = '/docs/' + _this2.type;
-                //window.location.replace('/docs/' + this.type);
+                console.log(data);
+                _this2.doc.uuid = data.uuid;
+
+                var doc_type = _this2.type;
+                var doc_uuid = data.uuid;
+
+                // TODO: redirect to show page after added
+
+                _this2.doc.doc_item.forEach(function (doc_item) {
+                    axios.post('/api/doc_item/' + doc_type + '/' + doc_uuid, {
+                        line_number: doc_item.line_number,
+                        item_uuid: doc_item.item_uuid,
+                        quantity: doc_item.quantity,
+                        unit_price: doc_item.unit_price
+                    }).then(function (data) {
+                        console.log(data);
+                        doc_item.uuid = data.data.uuid;
+                        doc_item.item_code = data.data.item_code;
+                        doc_item.creating = false;
+                    }).catch(function (error) {
+                        console.log(error);
+                        doc_item.errors = error.response.data.errors;
+                    });
+                });
             }).catch(function (error) {
-                // console.log(error);
+                console.log(error);
             });
         }
     }
@@ -48442,7 +48471,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             doc: {},
             companies: [],
-            items: [],
             form: new Form({
                 company_uuid: '',
                 name: '',
@@ -48458,11 +48486,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.companies = response.data.data;
         });
 
-        // TODO: show all items
-        axios.get('/api/items?per_page=1000').then(function (response) {
-            _this.items = response.data.data;
-        });
-
         axios.get('/api/docs/' + this.type + '/' + this.uuid).then(function (response) {
             _this.doc = response.data.data;
 
@@ -48476,74 +48499,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
-        addDocItemLine: function addDocItemLine() {
-            this.doc.doc_item.push({
-                line_number: '',
-                item_uuid: '',
-                item_code: '',
-                quantity: '',
-                unit_price: '',
-                creating: true,
-                deleted: false,
-                errors: {}
-            });
-        },
-        createDocItem: function createDocItem(doc_item) {
-            // zzz
-            // this.form.submit('patch', '/api/docs/' + this.type + '/' + this.uuid)
-            console.log(doc_item);
-            axios.post('/api/doc_item/' + this.type + '/' + this.uuid, {
-                line_number: doc_item.line_number,
-                item_uuid: doc_item.item_uuid,
-                quantity: doc_item.quantity,
-                unit_price: doc_item.unit_price
-            }).then(function (data) {
-                console.log(data);
-                doc_item.item_code = data.data.item_code;
-                doc_item.creating = false;
-            }).catch(function (error) {
-                console.log(error);
-                doc_item.errors = error.response.data.errors;
-            });
-        },
-        editDocItem: function editDocItem(doc_item) {
-            axios.patch('/api/doc_item/' + doc_item.uuid, {
-                line_number: doc_item.line_number,
-                item_uuid: doc_item.item_uuid,
-                quantity: doc_item.quantity,
-                unit_price: doc_item.unit_price
-            }).then(function (data) {
-                doc_item.item_code = data.data.item_code;
-                doc_item.editing = false;
-            }).catch(function (error) {
-                doc_item.errors = error.response.data.errors;
-            });
-        },
-        deleteDocItem: function deleteDocItem(doc_item) {
-            axios.delete('/api/doc_item/' + doc_item.uuid).then(function (data) {
-                console.log(data);
-                doc_item.deleting = false;
-                doc_item.deleted = true;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
         onSubmit: function onSubmit() {
             var _this2 = this;
 
             this.form.submit('patch', '/api/docs/' + this.type + '/' + this.uuid).then(function (data) {
-                _this2.doc.doc_item.forEach(function (doc_item) {
-                    axios.patch('/api/doc_item/' + doc_item.uuid, {
-                        line_number: doc_item.line_number,
-                        item_uuid: doc_item.item_uuid,
-                        quantity: doc_item.quantity,
-                        unit_price: doc_item.unit_price
-                    }).then(function (data) {
-                        console.log(data);
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-                });
+                // this.doc.doc_item.forEach(function (doc_item) {
+                //     axios.patch('/api/doc_item/' + doc_item.uuid, {
+                //         line_number: doc_item.line_number,
+                //         item_uuid: doc_item.item_uuid,
+                //         quantity: doc_item.quantity,
+                //         unit_price: doc_item.unit_price,
+                //     })
+                //     .then(data => {
+                //         console.log(data);
+                //     })
+                //     .catch(error => {
+                //         console.log(error);
+                //     })
+                // });
 
                 window.location.href = '/docs/' + _this2.type + '/' + _this2.uuid;
             }).catch(function (error) {});
@@ -48889,6 +48862,137 @@ function getParameterByName(name) {
 }
 
 module.exports = getParameterByName;
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(75)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/docs/DocItemTable.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-b6ac55e0", Component.options)
+  } else {
+    hotAPI.reload("data-v-b6ac55e0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['doc', 'type'],
+
+    data: function data() {
+        return {
+            items: []
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        // TODO: show all items
+        axios.get('/api/items?per_page=1000').then(function (response) {
+            _this.items = response.data.data;
+        });
+    },
+
+
+    methods: {
+        addDocItemLine: function addDocItemLine() {
+            this.doc.doc_item.push({
+                uuid: '',
+                line_number: '',
+                item_uuid: '',
+                item_code: '',
+                quantity: '',
+                unit_price: '',
+                creating: true,
+                editing: false,
+                deleting: false,
+                deleted: false,
+                errors: {}
+            });
+        },
+        createDocItem: function createDocItem(doc_item) {
+            console.log(doc_item);
+            axios.post('/api/doc_item/' + this.type + '/' + this.doc.uuid, {
+                line_number: doc_item.line_number,
+                item_uuid: doc_item.item_uuid,
+                quantity: doc_item.quantity,
+                unit_price: doc_item.unit_price
+            }).then(function (data) {
+                console.log(data);
+                doc_item.uuid = data.data.uuid;
+                doc_item.item_code = data.data.item_code;
+                doc_item.creating = false;
+            }).catch(function (error) {
+                console.log(error);
+                doc_item.errors = error.response.data.errors;
+            });
+        },
+        editDocItem: function editDocItem(doc_item) {
+            axios.patch('/api/doc_item/' + doc_item.uuid, {
+                line_number: doc_item.line_number,
+                item_uuid: doc_item.item_uuid,
+                quantity: doc_item.quantity,
+                unit_price: doc_item.unit_price
+            }).then(function (data) {
+                doc_item.item_code = data.data.item_code;
+                doc_item.editing = false;
+            }).catch(function (error) {
+                doc_item.errors = error.response.data.errors;
+            });
+        },
+        deleteDocItem: function deleteDocItem(doc_item) {
+            axios.delete('/api/doc_item/' + doc_item.uuid).then(function (data) {
+                console.log(data);
+                doc_item.deleting = false;
+                doc_item.deleted = true;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+
+});
 
 /***/ })
 /******/ ]);
