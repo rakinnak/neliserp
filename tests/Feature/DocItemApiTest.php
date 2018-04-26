@@ -229,254 +229,301 @@ class DocItemApiTest extends TestCase
             ]);
     }
 
-//    // *** doc_item.store ***
-//
-//    /** @test */
-//    public function guest_user_cannot_create_a_doc_item()
-//    {
-//        $doc_item1 = factory(DocItem::class)->make();
-//
-//        $this->json('POST', route('api.doc_item.store', $this->type), $doc_item1->toArray())
-//            ->assertStatus(401);
-//    }
-//
-//    /** @test */
-//    public function unauthorized_user_denied_to_create_a_doc_item()
-//    {
-//        $this->signIn();
-//
-//        $doc_item1 = factory(DocItem::class)->make();
-//
-//        $this->json('POST', route('api.doc_item.store', $this->type), $doc_item1->toArray())
-//            ->assertStatus(403);
-//    }
-//
-//    /**  @test */
-//    public function create_a_doc_item_requires_required_fields()
-//    {
-//        $this->signInWithPermission('doc_item.create');
-//
-//        $this->json('POST', route('api.doc_item.store', $this->type))
-//            ->assertStatus(422)
-//            ->assertJson([
-//                'message' => 'The given data was invalid.',
-//                'errors' => [
-//                    'name' => [
-//                        'The name field is required.'
-//                    ],
-//                    'company_uuid' => [
-//                        'The company uuid field is required.'
-//                    ],
-//                    'issued_at' => [
-//                        'The issued at field is required.'
-//                    ],
-//                ],
-//            ]);
-//    }
-//
-//    /**  @test */
-//    public function create_a_doc_item_requires_valid_fields()
-//    {
-//        $this->signInWithPermission('doc_item.create');
-//
-//        $doc_item1 = factory(DocItem::class)->make();
-//
-//        $this->json('POST', route('api.doc_item.store', $this->type),
-//            [
-//                'name' => $doc_item1->name,
-//                'company_uuid' => 9999,
-//                'issued_at' => 1234,
-//            ])
-//            ->assertStatus(422)
-//            ->assertJson([
-//                'message' => 'The given data was invalid.',
-//                'errors' => [
-//                    'company_uuid' => [
-//                        'The selected company uuid is invalid.',
-//                    ],
-//                    'issued_at' => [
-//                        'The issued at is not a valid date.',
-//                    ],
-//                ],
-//            ]);
-//    }
-//
-//    /** @test */
-//    public function authorized_user_can_create_a_doc_item()
-//    {
-//        $this->signInWithPermission('doc_item.create');
-//
-//        $doc_item1 = factory(DocItem::class)->make();
-//
-//        $this->json('POST', route('api.doc_item.store', $this->type),
-//            [
-//                'name' => $doc_item1->name,
-//                'company_uuid' => $doc_item1->company_uuid,
-//                'issued_at' => $doc_item1->issued_at,
-//            ])
-//            ->assertStatus(201);
-//
-//        $this->assertDatabaseHas('doc_item', [
-//            'name' => $doc_item1->name,
-//            'type' => $this->type,
-//            'company_id' => $doc_item1->company_id,
-//            'company_uuid' => $doc_item1->company_uuid,
-//            'company_code' => $doc_item1->company_code,
-//            'company_name' => $doc_item1->company_name,
-//            'issued_at' => $doc_item1->issued_at . ' 00:00:00',
-//        ]);
-//    }
-//
-//    // *** doc_item.update ***
-//
-//    /** @test */
-//    public function guest_user_cannot_update_a_doc_item()
-//    {
-//        $doc_item1 = factory(DocItem::class)->create();
-//
-//        $doc_item_updated = factory(DocItem::class)->make();
-//
-//        $this->json('PATCH', route('api.doc_item.update', [$this->type, $doc_item1->uuid]),
-//            [
-//                'name' => $doc_item_updated->name,
-//            ])
-//            ->assertStatus(401);
-//    }
-//
-//    /** @test */
-//    public function unauthorized_user_denied_to_update_a_doc_item()
-//    {
-//        $this->signIn();
-//
-//        $doc_item1 = factory(DocItem::class)->create();
-//
-//        $doc_item_updated = factory(DocItem::class)->make();
-//
-//        $this->json('PATCH', route('api.doc_item.update', [$this->type, $doc_item1->uuid]),
-//            [
-//                'name' => $doc_item_updated->name,
-//                'company_uuid' => $doc_item_updated->company_uuid,
-//                'issued_at' => $doc_item_updated->issued_at,
-//            ])
-//            ->assertStatus(403);
-//    }
-//
-//    /**  @test */
-//    public function update_a_doc_item_requires_required_fields()
-//    {
-//        $this->signInWithPermission('doc_item.update');
-//
-//        $doc_item1 = factory(DocItem::class)->create();
-//
-//        $this->json('PATCH', route('api.doc_item.update', [$this->type, $doc_item1->uuid]))
-//            ->assertStatus(422)
-//            ->assertJson([
-//                'message' => 'The given data was invalid.',
-//                'errors' => [
-//                    'name' => [
-//                        'The name field is required.'
-//                    ],
-//                    'company_uuid' => [
-//                        'The company uuid field is required.'
-//                    ],
-//                    'issued_at' => [
-//                        'The issued at field is required.'
-//                    ],
-//                ],
-//            ]);
-//    }
-//
-//    /**  @test */
-//    public function update_a_doc_item_requires_valid_fields()
-//    {
-//        $this->signInWithPermission('doc_item.update');
-//
-//        $doc_item1 = factory(DocItem::class)->create();
-//
-//        $doc_item_updated = factory(DocItem::class)->make();
-//
-//        $this->json('PATCH', route('api.doc_item.update', [$this->type, $doc_item1->uuid]),
-//            [
-//                'name' => $doc_item_updated->name,
-//                'company_uuid' => 9999,
-//                'issued_at' => 1234,
-//            ])
-//            ->assertStatus(422)
-//            ->assertJson([
-//                'message' => 'The given data was invalid.',
-//                'errors' => [
-//                    'company_uuid' => [
-//                        'The selected company uuid is invalid.',
-//                    ],
-//                    'issued_at' => [
-//                        'The issued at is not a valid date.',
-//                    ],
-//                ],
-//            ]);
-//    }
-//
-//    /** @test */
-//    public function authorized_user_can_update_a_doc_item()
-//    {
-//        $this->signInWithPermission('doc_item.update');
-//
-//        $doc_item1 = factory(DocItem::class)->create();
-//
-//        $doc_item_updated = factory(DocItem::class)->make();
-//
-//        $this->json('PATCH', route('api.doc_item.update', [$this->type, $doc_item1->uuid]),
-//            [
-//                'name' => $doc_item_updated->name,
-//                'company_uuid' => $doc_item_updated->company_uuid,
-//                'issued_at' => $doc_item_updated->issued_at,
-//            ])
-//            ->assertStatus(200);
-//
-//        $this->assertDatabaseHas('doc_item', [
-//            'id' => $doc_item1->id,
-//            'uuid' => $doc_item1->uuid,
-//            'name' => $doc_item_updated->name,
-//            'company_id' => $doc_item_updated->company_id,
-//            'company_uuid' => $doc_item_updated->company_uuid,
-//            'company_code' => $doc_item_updated->company_code,
-//            'company_name' => $doc_item_updated->company_name,
-//        ]);
-//    }
-//
-//    // *** doc_item.delete ***
-//
-//    /** @test */
-//    public function guest_user_cannot_delete_a_doc_item()
-//    {
-//        $doc_item1 = factory(DocItem::class)->create();
-//
-//        $this->json('DELETE', route('api.doc_item.destroy', [$this->type, $doc_item1->uuid]))
-//            ->assertStatus(401);
-//    }
-//
-//    /** @test */
-//    public function unauthorized_user_denied_to_delete_a_doc_item()
-//    {
-//        $this->signIn();
-//
-//        $doc_item1 = factory(DocItem::class)->create();
-//
-//        $this->json('DELETE', route('api.doc_item.destroy', [$this->type, $doc_item1->uuid]))
-//            ->assertStatus(403);
-//    }
-//
-//    /** @test */
-//    public function authorized_user_can_delete_a_doc_item()
-//    {
-//        $this->signInWithPermission('doc_item.delete');
-//
-//        $doc_item1 = factory(DocItem::class)->create();
-//
-//        $this->json('DELETE', route('api.doc_item.destroy', [$this->type, $doc_item1->uuid]))
-//            ->assertStatus(200);
-//
-//        $this->assertDatabaseMissing('doc_item', [
-//            'id' => $doc_item1->id,
-//        ]);
-//    }
+    // *** doc_item.store ***
+
+    /** @test */
+    public function guest_user_cannot_create_a_doc_item()
+    {
+        $doc = factory(Doc::class)->create([
+            'type' => $this->type,
+        ]);
+
+        $doc_item1 = factory(DocItem::class)->make();
+
+        $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]), $doc_item1->toArray())
+            ->assertStatus(401);
+    }
+
+    /** @test */
+    public function unauthorized_user_denied_to_create_a_doc_item()
+    {
+        $this->signIn();
+
+        $doc = factory(Doc::class)->create([
+            'type' => $this->type,
+        ]);
+
+        $doc_item1 = factory(DocItem::class)->make();
+
+        $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]), $doc_item1->toArray())
+            ->assertStatus(403);
+    }
+
+    /**  @test */
+    public function create_a_doc_item_requires_required_fields()
+    {
+        $this->signInWithPermission('doc_item.create');
+
+        $doc = factory(Doc::class)->create([
+            'type' => $this->type,
+        ]);
+
+        $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]))
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'item_uuid' => [
+                        'The item uuid field is required.'
+                    ],
+                    'quantity' => [
+                        'The quantity field is required.'
+                    ],
+                    'unit_price' => [
+                        'The unit price field is required.'
+                    ],
+                ],
+            ]);
+    }
+
+    /**  @test */
+    public function create_a_doc_item_requires_valid_fields()
+    {
+        $this->signInWithPermission('doc_item.create');
+
+        $doc = factory(Doc::class)->create([
+            'type' => $this->type,
+        ]);
+
+        $doc_item1 = factory(DocItem::class)->make();
+
+        $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]),
+            [
+                'line_number' => 'a',
+                'item_uuid' => 'a',
+                'quantity' => 'a',
+                'unit_price' => 'a',
+            ])
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'line_number' => [
+                        'The line number must be a number.',
+                    ],
+                    'item_uuid' => [
+                        'The selected item uuid is invalid.',
+                    ],
+                    'quantity' => [
+                        'The quantity must be a number.',
+                    ],
+                    'unit_price' => [
+                        'The unit price must be a number.',
+                    ],
+                ],
+            ]);
+    }
+
+    /** @test */
+    public function authorized_user_can_create_a_doc_item()
+    {
+        $this->signInWithPermission('docs.create');
+
+        $doc = factory(Doc::class)->create([
+            'type' => $this->type,
+        ]);
+
+        $doc_item1 = factory(DocItem::class)->make();
+
+        $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]),
+            [
+                'line_number' => $doc_item1->line_number,
+                'item_uuid' => $doc_item1->item_uuid,
+                'quantity' => $doc_item1->quantity,
+                'unit_price' => $doc_item1->unit_price,
+            ])
+            ->assertStatus(201);
+
+        $this->assertDatabaseHas('doc_item', [
+            'doc_id' => $doc->id,
+            'line_number' => $doc_item1->line_number,
+            'ref_id' => null,
+            'item_id' => $doc_item1->item_id,
+            'item_uuid' => $doc_item1->item_uuid,
+            'item_code' => $doc_item1->item_code,
+            'item_name' => $doc_item1->item_name,
+            'quantity' => $doc_item1->quantity,
+            'pending_quantity' => $doc_item1->pending_quantity,
+            'unit_price' => $doc_item1->unit_price,
+        ]);
+    }
+
+    // *** doc_item.update ***
+
+    /** @test */
+    public function guest_user_cannot_update_a_doc_item()
+    {
+        $doc_item1 = factory(DocItem::class)->create();
+
+        $doc_item_updated = factory(DocItem::class)->make();
+
+        $this->json('PATCH', route('api.doc_item.update', [$this->type, $doc_item1->uuid]),
+            [
+                'line_number' => $doc_item_updated->line_number,
+                'item_uuid' => $doc_item_updated->item_uuid,
+                'quantity' => $doc_item_updated->quantity,
+                'unit_price' => $doc_item_updated->unit_price,
+            ])
+            ->assertStatus(401);
+    }
+
+    /** @test */
+    public function unauthorized_user_denied_to_update_a_doc_item()
+    {
+        $this->signIn();
+
+        $doc_item1 = factory(DocItem::class)->create();
+
+        $doc_item_updated = factory(DocItem::class)->make();
+
+        $this->json('PATCH', route('api.doc_item.update', [$this->type, $doc_item1->uuid]),
+            [
+                'line_number' => $doc_item_updated->line_number,
+                'item_uuid' => $doc_item_updated->item_uuid,
+                'quantity' => $doc_item_updated->quantity,
+                'unit_price' => $doc_item_updated->unit_price,
+            ])
+            ->assertStatus(403);
+    }
+
+    /**  @test */
+    public function update_a_doc_item_requires_required_fields()
+    {
+        $this->signInWithPermission('docs.update');
+
+        $doc_item1 = factory(DocItem::class)->create();
+
+        $this->json('PATCH', route('api.doc_item.update', [$this->type, $doc_item1->uuid]))
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'item_uuid' => [
+                        'The item uuid field is required.'
+                    ],
+                    'quantity' => [
+                        'The quantity field is required.'
+                    ],
+                    'unit_price' => [
+                        'The unit price field is required.'
+                    ],
+                ],
+            ]);
+    }
+
+    /**  @test */
+    public function update_a_doc_item_requires_valid_fields()
+    {
+        $this->signInWithPermission('doc_item.update');
+
+        $doc_item1 = factory(DocItem::class)->create();
+
+        //$doc_item_updated = factory(DocItem::class)->make();
+
+        $this->json('PATCH', route('api.doc_item.update', [$this->type, $doc_item1->uuid]),
+            [
+                'line_number' => 'a',
+                'item_uuid' => 'a',
+                'quantity' => 'a',
+                'unit_price' => 'a',
+            ])
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'line_number' => [
+                        'The line number must be a number.',
+                    ],
+                    'item_uuid' => [
+                        'The selected item uuid is invalid.',
+                    ],
+                    'quantity' => [
+                        'The quantity must be a number.',
+                    ],
+                    'unit_price' => [
+                        'The unit price must be a number.',
+                    ],
+                ],
+            ]);
+    }
+
+    /** @test */
+    public function authorized_user_can_update_a_doc_item()
+    {
+        $this->signInWithPermission('docs.update');
+
+        $doc_item1 = factory(DocItem::class)->create();
+
+        $doc_item_updated = factory(DocItem::class)->make();
+
+        $this->json('PATCH', route('api.doc_item.update', [$this->type, $doc_item1->uuid]),
+            [
+                'line_number' => $doc_item_updated->line_number,
+                'item_uuid' => $doc_item_updated->item_uuid,
+                'quantity' => $doc_item_updated->quantity,
+                'unit_price' => $doc_item_updated->unit_price,
+            ])
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas('doc_item', [
+            'id' => $doc_item1->id,
+            'uuid' => $doc_item1->uuid,
+            'line_number' => $doc_item_updated->line_number,
+            'ref_id' => null,
+            'item_id' => $doc_item_updated->item_id,
+            'item_uuid' => $doc_item_updated->item_uuid,
+            'item_code' => $doc_item_updated->item_code,
+            'item_name' => $doc_item_updated->item_name,
+            'quantity' => $doc_item_updated->quantity,
+            'pending_quantity' => $doc_item_updated->pending_quantity,
+            'unit_price' => $doc_item_updated->unit_price,
+        ]);
+    }
+
+    // *** doc_item.delete ***
+
+    /** @test */
+    public function guest_user_cannot_delete_a_doc_item()
+    {
+        $doc_item1 = factory(DocItem::class)->create();
+
+        $this->json('DELETE', route('api.doc_item.destroy', [$this->type, $doc_item1->uuid]))
+            ->assertStatus(401);
+    }
+
+    /** @test */
+    public function unauthorized_user_denied_to_delete_a_doc_item()
+    {
+        $this->signIn();
+
+        $doc_item1 = factory(DocItem::class)->create();
+
+        $this->json('DELETE', route('api.doc_item.destroy', [$this->type, $doc_item1->uuid]))
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function authorized_user_can_delete_a_doc_item()
+    {
+        $this->signInWithPermission('docs.delete');
+
+        $doc_item1 = factory(DocItem::class)->create();
+
+        $this->json('DELETE', route('api.doc_item.destroy', [$this->type, $doc_item1->uuid]))
+            ->assertStatus(200);
+
+        $this->assertDatabaseMissing('doc_item', [
+            'id' => $doc_item1->id,
+        ]);
+    }
 }

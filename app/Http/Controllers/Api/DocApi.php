@@ -28,7 +28,7 @@ class DocApi extends ApiController
         $this->authorize('show', $doc);
 
         if ($doc->type != $type) {
-            abort(404);
+            return response([], 404);
         }
 
         $doc = $doc->load('doc_item');

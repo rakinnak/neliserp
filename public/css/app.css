@@ -9,3 +9,7 @@
 .pagination {
     margin-bottom: 0;
 }
+
+[v-cloak] {
+    display: none;
+}

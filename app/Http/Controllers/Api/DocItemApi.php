@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Company;
+use App\Doc;
 use App\DocItem;
+use App\Item;
 
 use App\Filters\DocItemFilter;
 use App\Http\Requests\DocItemRequest;
@@ -30,21 +31,24 @@ class DocItemApi extends ApiController
         return new DocItemResource($doc_item);
     }
 
-    public function store(DocItemRequest $request, $type)
+    public function store(DocItemRequest $request, $type, Doc $doc)
     {
         $this->authorize('create', DocItem::class);
 
-        $company = Company::where('uuid', $request['company_uuid'])
+        $item = Item::where('uuid', $request['item_uuid'])
             ->first();
 
         $created = DocItem::create([
-            'name' => $request['name'],
-            'type' => $type,
-            'company_uuid' => $request['company_uuid'],
-            'company_id' => $company->id,
-            'company_code' => $company->code,
-            'company_name' => $company->name,
-            'issued_at' => $request['issued_at'],
+            'doc_id' => $doc->id,
+            'line_number' => $request['line_number'],
+            'item_id' => $item->id,
+            'ref_id' => null,
+            'item_uuid' => $request['item_uuid'],
+            'item_code' => $item->code,
+            'item_name' => $item->name,
+            'quantity' => $request['quantity'],
+            'pending_quantity' => $request['quantity'],
+            'unit_price' => $request['unit_price'],
         ]);
 
         return $created;
@@ -54,14 +58,18 @@ class DocItemApi extends ApiController
     {
         $this->authorize('update', $doc_item);
 
-        $company = Company::where('uuid', $request['company_uuid'])
+        $item = Item::where('uuid', $request['item_uuid'])
             ->first();
 
-        $doc_item->name = $request['name'];
-        $doc_item->company_uuid = $request['company_uuid'];
-        $doc_item->company_id = $company->id;
-        $doc_item->company_code = $company->code;
-        $doc_item->company_name = $company->name;
+        $doc_item->line_number = $request['line_number'];
+        $doc_item->item_uuid = $request['item_uuid'];
+        $doc_item->item_id = $item->id;
+        $doc_item->item_uuid = $item->uuid;
+        $doc_item->item_code = $item->code;
+        $doc_item->item_name = $item->name;
+        $doc_item->quantity = $request['quantity'];
+        $doc_item->pending_quantity = $request['quantity'];
+        $doc_item->unit_price = $request['unit_price'];
 
         $doc_item->save();
 
