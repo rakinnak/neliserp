@@ -27,7 +27,7 @@
         @if ($action == 'show' || $action == 'delete')
             <input type="text" class="form-control-plaintext" id="issued_at" name="issued_at" :value="doc.issued_at" :readonly="true">
         @elseif ($action == 'create' || $action == 'edit')
-            <input type="text" class="form-control" :class="{'is-invalid': form.errors.has('issued_at')}" id="issued_at" name="issued_at" value="" v-model="form.issued_at" placeholder="2017-12-04">
+            <input type="text" class="form-control" :class="{'is-invalid': form.errors.has('issued_at')}" id="issued_at" name="issued_at" value="" v-model="form.issued_at" placeholder="YYYY-MM-DD">
             <div class="invalid-feedback" v-if="form.errors.has('issued_at')" v-text="form.errors.get('issued_at')"></div>
         @endif
     </div>
@@ -88,7 +88,7 @@
                     <template v-if="doc_item.creating">
                         <td>
                             @if ($action == 'create')
-                                <button type="button" class="btn btn-sm btn-outline-danger" @click="doc_item.deleted = true">delete</button>
+                                <button type="button" class="btn btn-sm btn-outline-danger" @click="doc_item.creating = false; doc_item.deleted = true">delete</button>
                             @elseif ($action == 'edit')
                                 <button type="button" class="btn btn-sm btn-outline-info" @click="createDocItem(doc_item)">create</button>
 

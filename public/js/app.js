@@ -14027,13 +14027,13 @@ Vue.component('doc-create', __webpack_require__(62));
 Vue.component('doc-show', __webpack_require__(64));
 Vue.component('doc-edit', __webpack_require__(66));
 Vue.component('doc-delete', __webpack_require__(68));
-Vue.component('doc-item-table', __webpack_require__(74));
+Vue.component('doc-item-table', __webpack_require__(70));
 
-Vue.component('pagination', __webpack_require__(70));
+Vue.component('pagination', __webpack_require__(72));
 
-window.Form = __webpack_require__(72);
+window.Form = __webpack_require__(74);
 
-window.getParameterByName = __webpack_require__(73);
+window.getParameterByName = __webpack_require__(75);
 
 var app = new Vue({
   el: '#app'
@@ -48273,6 +48273,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             doc: {
+                uuid: '',
                 doc_item: []
             },
             companies: [],
@@ -48295,6 +48296,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         axios.get('/api/items?per_page=1000').then(function (response) {
             _this.items = response.data.data;
         });
+
+        // TODO: should refactor
+        this.doc.doc_item.push({
+            uuid: '',
+            line_number: '',
+            item_uuid: '',
+            item_code: '',
+            quantity: '',
+            unit_price: '',
+            creating: true,
+            editing: false,
+            deleting: false,
+            deleted: false,
+            errors: {}
+        });
     },
 
 
@@ -48302,34 +48318,67 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         onSubmit: function onSubmit() {
             var _this2 = this;
 
-            var doc_item_length = this.doc.doc_item.length;
-            var counter = 0;
+            if (this.doc.uuid == '') {
+                // create
+                var method = 'post';
+            } else {
+                // edit
+                var method = 'patch';
+            }
 
-            this.form.submit('post', '/api/docs/' + this.type).then(function (data) {
+            this.form.submit(method, '/api/docs/' + this.type + '/' + this.doc.uuid).then(function (data) {
                 console.log(data);
                 _this2.doc.uuid = data.uuid;
+                _this2.form.company_uuid = data.company_uuid;
+                _this2.form.name = data.name;
+                _this2.form.issued_at = data.issued_at;
 
                 var doc_type = _this2.type;
                 var doc_uuid = data.uuid;
 
                 // TODO: redirect to show page after added
+                var doc_item_creating_count = 0;
 
                 _this2.doc.doc_item.forEach(function (doc_item) {
-                    axios.post('/api/doc_item/' + doc_type + '/' + doc_uuid, {
-                        line_number: doc_item.line_number,
-                        item_uuid: doc_item.item_uuid,
-                        quantity: doc_item.quantity,
-                        unit_price: doc_item.unit_price
-                    }).then(function (data) {
-                        console.log(data);
-                        doc_item.uuid = data.data.uuid;
-                        doc_item.item_code = data.data.item_code;
-                        doc_item.creating = false;
-                    }).catch(function (error) {
-                        console.log(error);
-                        doc_item.errors = error.response.data.errors;
-                    });
+                    if (doc_item.creating) {
+                        doc_item_creating_count++;
+                    }
                 });
+
+                if (doc_item_creating_count == 0) {
+                    window.location.href = '/docs/' + _this2.type + '/' + _this2.doc.uuid;
+                }
+
+                console.log(doc_item_creating_count);
+
+                var doc_item_creating_success = 0;
+
+                _this2.doc.doc_item.forEach(function (doc_item) {
+                    var _this3 = this;
+
+                    if (doc_item.creating) {
+                        axios.post('/api/doc_item/' + this.type + '/' + this.doc.uuid, {
+                            line_number: doc_item.line_number,
+                            item_uuid: doc_item.item_uuid,
+                            quantity: doc_item.quantity,
+                            unit_price: doc_item.unit_price
+                        }).then(function (data) {
+                            console.log(data);
+                            doc_item.uuid = data.data.uuid;
+                            doc_item.item_code = data.data.item_code;
+                            doc_item.creating = false;
+
+                            doc_item_creating_success++;
+
+                            if (doc_item_creating_count == doc_item_creating_success) {
+                                window.location.href = '/docs/' + _this3.type + '/' + _this3.doc.uuid;
+                            }
+                        }).catch(function (error) {
+                            console.log(error);
+                            doc_item.errors = error.response.data.errors;
+                        });
+                    }
+                }, _this2); // this bind in forEach loop
             }).catch(function (error) {
                 console.log(error);
             });
@@ -48641,6 +48690,136 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "resources/assets/js/components/docs/DocItemTable.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-b6ac55e0", Component.options)
+  } else {
+    hotAPI.reload("data-v-b6ac55e0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['doc', 'type'],
+
+    data: function data() {
+        return {
+            items: []
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        // TODO: show all items
+        axios.get('/api/items?per_page=1000').then(function (response) {
+            _this.items = response.data.data;
+        });
+    },
+
+
+    methods: {
+        addDocItemLine: function addDocItemLine() {
+            this.doc.doc_item.push({
+                uuid: '',
+                line_number: '',
+                item_uuid: '',
+                item_code: '',
+                quantity: '',
+                unit_price: '',
+                creating: true,
+                editing: false,
+                deleting: false,
+                deleted: false,
+                errors: {}
+            });
+        },
+        createDocItem: function createDocItem(doc_item) {
+            console.log(doc_item);
+            axios.post('/api/doc_item/' + this.type + '/' + this.doc.uuid, {
+                line_number: doc_item.line_number,
+                item_uuid: doc_item.item_uuid,
+                quantity: doc_item.quantity,
+                unit_price: doc_item.unit_price
+            }).then(function (data) {
+                console.log(data);
+                doc_item.uuid = data.data.uuid;
+                doc_item.item_code = data.data.item_code;
+                doc_item.creating = false;
+            }).catch(function (error) {
+                console.log(error);
+                doc_item.errors = error.response.data.errors;
+            });
+        },
+        editDocItem: function editDocItem(doc_item) {
+            axios.patch('/api/doc_item/' + doc_item.uuid, {
+                line_number: doc_item.line_number,
+                item_uuid: doc_item.item_uuid,
+                quantity: doc_item.quantity,
+                unit_price: doc_item.unit_price
+            }).then(function (data) {
+                doc_item.item_code = data.data.item_code;
+                doc_item.editing = false;
+            }).catch(function (error) {
+                doc_item.errors = error.response.data.errors;
+            });
+        },
+        deleteDocItem: function deleteDocItem(doc_item) {
+            axios.delete('/api/doc_item/' + doc_item.uuid).then(function (data) {
+                console.log(data);
+                doc_item.deleting = false;
+                doc_item.deleted = true;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(73)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
 Component.options.__file = "resources/assets/js/components/Pagination.vue"
 
 /* hot reload */
@@ -48663,7 +48842,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 71 */
+/* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48728,7 +48907,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 72 */
+/* 74 */
 /***/ (function(module, exports) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -48846,7 +49025,7 @@ var Form = function () {
 module.exports = Form;
 
 /***/ }),
-/* 73 */
+/* 75 */
 /***/ (function(module, exports) {
 
 function getParameterByName(name) {
@@ -48862,137 +49041,6 @@ function getParameterByName(name) {
 }
 
 module.exports = getParameterByName;
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(75)
-/* template */
-var __vue_template__ = null
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/docs/DocItemTable.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-b6ac55e0", Component.options)
-  } else {
-    hotAPI.reload("data-v-b6ac55e0", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 75 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['doc', 'type'],
-
-    data: function data() {
-        return {
-            items: []
-        };
-    },
-    created: function created() {
-        var _this = this;
-
-        // TODO: show all items
-        axios.get('/api/items?per_page=1000').then(function (response) {
-            _this.items = response.data.data;
-        });
-    },
-
-
-    methods: {
-        addDocItemLine: function addDocItemLine() {
-            this.doc.doc_item.push({
-                uuid: '',
-                line_number: '',
-                item_uuid: '',
-                item_code: '',
-                quantity: '',
-                unit_price: '',
-                creating: true,
-                editing: false,
-                deleting: false,
-                deleted: false,
-                errors: {}
-            });
-        },
-        createDocItem: function createDocItem(doc_item) {
-            console.log(doc_item);
-            axios.post('/api/doc_item/' + this.type + '/' + this.doc.uuid, {
-                line_number: doc_item.line_number,
-                item_uuid: doc_item.item_uuid,
-                quantity: doc_item.quantity,
-                unit_price: doc_item.unit_price
-            }).then(function (data) {
-                console.log(data);
-                doc_item.uuid = data.data.uuid;
-                doc_item.item_code = data.data.item_code;
-                doc_item.creating = false;
-            }).catch(function (error) {
-                console.log(error);
-                doc_item.errors = error.response.data.errors;
-            });
-        },
-        editDocItem: function editDocItem(doc_item) {
-            axios.patch('/api/doc_item/' + doc_item.uuid, {
-                line_number: doc_item.line_number,
-                item_uuid: doc_item.item_uuid,
-                quantity: doc_item.quantity,
-                unit_price: doc_item.unit_price
-            }).then(function (data) {
-                doc_item.item_code = data.data.item_code;
-                doc_item.editing = false;
-            }).catch(function (error) {
-                doc_item.errors = error.response.data.errors;
-            });
-        },
-        deleteDocItem: function deleteDocItem(doc_item) {
-            axios.delete('/api/doc_item/' + doc_item.uuid).then(function (data) {
-                console.log(data);
-                doc_item.deleting = false;
-                doc_item.deleted = true;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        }
-    }
-
-});
 
 /***/ })
 /******/ ]);
