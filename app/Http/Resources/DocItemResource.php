@@ -24,6 +24,10 @@ class DocItemResource extends JsonResource
             'quantity' => $this->quantity,
             'pending_quantity' => $this->pending_quantity,
             'unit_price' => $this->unit_price,
+            'creating' => false,    // TODO: temp assign, should be definied in Vue
+            'editing' => false,     // TODO: temp assign, should be definied in Vue
+            'deleting' => false,    // TODO: temp assign, should be definied in Vue
+            'deleted' => false,     // TODO: temp assign, should be definied in Vue
         ];
     }
 }

@@ -48286,6 +48286,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         axios.get('/api/companies?per_page=1000').then(function (response) {
             _this.companies = response.data.data;
         });
+
+        // TODO: show all items
+        axios.get('/api/items?per_page=1000').then(function (response) {
+            _this.items = response.data.data;
+        });
     },
 
 
@@ -48437,6 +48442,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             doc: {},
             companies: [],
+            items: [],
             form: new Form({
                 company_uuid: '',
                 name: '',
@@ -48452,6 +48458,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.companies = response.data.data;
         });
 
+        // TODO: show all items
+        axios.get('/api/items?per_page=1000').then(function (response) {
+            _this.items = response.data.data;
+        });
+
         axios.get('/api/docs/' + this.type + '/' + this.uuid).then(function (response) {
             _this.doc = response.data.data;
 
@@ -48465,15 +48476,75 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
+        addDocItemLine: function addDocItemLine() {
+            this.doc.doc_item.push({
+                line_number: '',
+                item_uuid: '',
+                item_code: '',
+                quantity: '',
+                unit_price: '',
+                creating: true,
+                deleted: false
+            });
+        },
+        createDocItem: function createDocItem(doc_item) {
+            // zzz
+            // this.form.submit('patch', '/api/docs/' + this.type + '/' + this.uuid)
+            console.log(doc_item);
+            axios.post('/api/doc_item/' + this.type + '/' + this.uuid, {
+                line_number: doc_item.line_number,
+                item_uuid: doc_item.item_uuid,
+                quantity: doc_item.quantity,
+                unit_price: doc_item.unit_price
+            }).then(function (data) {
+                console.log(data);
+                doc_item.item_code = data.data.item_code;
+                doc_item.creating = false;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        editDocItem: function editDocItem(doc_item) {
+            axios.patch('/api/doc_item/' + doc_item.uuid, {
+                line_number: doc_item.line_number,
+                item_uuid: doc_item.item_uuid,
+                quantity: doc_item.quantity,
+                unit_price: doc_item.unit_price
+            }).then(function (data) {
+                doc_item.item_code = data.data.item_code;
+                doc_item.editing = false;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        deleteDocItem: function deleteDocItem(doc_item) {
+            axios.delete('/api/doc_item/' + doc_item.uuid).then(function (data) {
+                console.log(data);
+                doc_item.deleting = false;
+                doc_item.deleted = true;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
         onSubmit: function onSubmit() {
             var _this2 = this;
 
             this.form.submit('patch', '/api/docs/' + this.type + '/' + this.uuid).then(function (data) {
-                // console.log(data);
+                _this2.doc.doc_item.forEach(function (doc_item) {
+                    axios.patch('/api/doc_item/' + doc_item.uuid, {
+                        line_number: doc_item.line_number,
+                        item_uuid: doc_item.item_uuid,
+                        quantity: doc_item.quantity,
+                        unit_price: doc_item.unit_price
+                    }).then(function (data) {
+                        console.log(data);
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                });
+
                 window.location.href = '/docs/' + _this2.type + '/' + _this2.uuid;
-            }).catch(function (error) {
-                // console.log(error);
-            });
+            }).catch(function (error) {});
         }
     }
 });

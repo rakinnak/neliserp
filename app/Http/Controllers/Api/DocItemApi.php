@@ -54,7 +54,7 @@ class DocItemApi extends ApiController
         return $created;
     }
 
-    public function update(DocItemRequest $request, $type, DocItem $doc_item)
+    public function update(DocItemRequest $request, DocItem $doc_item)
     {
         $this->authorize('update', $doc_item);
 
@@ -76,7 +76,7 @@ class DocItemApi extends ApiController
         return $doc_item;
     }
 
-    public function destroy($type, DocItem $doc_item)
+    public function destroy(DocItem $doc_item)
     {
         $this->authorize('delete', $doc_item);
 

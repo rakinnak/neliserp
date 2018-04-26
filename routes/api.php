@@ -22,6 +22,6 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('doc_item/{type}', 'Api\DocItemApi@index')->name('api.doc_item.index');
     Route::post('doc_item/{type}/{doc}', 'Api\DocItemApi@store')->name('api.doc_item.store');
     Route::get('doc_item/{type}/{doc_item}', 'Api\DocItemApi@show')->name('api.doc_item.show');
-    Route::patch('doc_item/{type}/{doc_item}', 'Api\DocItemApi@update')->name('api.doc_item.update');
-    Route::delete('doc_item/{type}/{doc_item}', 'Api\DocItemApi@destroy')->name('api.doc_item.destroy');
+    Route::patch('doc_item/{doc_item}', 'Api\DocItemApi@update')->name('api.doc_item.update');
+    Route::delete('doc_item/{doc_item}', 'Api\DocItemApi@destroy')->name('api.doc_item.destroy');
 });

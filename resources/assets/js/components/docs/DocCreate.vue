@@ -18,6 +18,12 @@
                 .then(response => {
                     this.companies = response.data.data;
                 });
+
+            // TODO: show all items
+            axios.get('/api/items?per_page=1000')
+                .then(response => {
+                    this.items = response.data.data;
+                });
         },
 
         methods: {

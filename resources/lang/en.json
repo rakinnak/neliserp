@@ -19,5 +19,6 @@
     "doc_item.line_number": "#",
     "doc_item.item_code": "item",
     "doc_item.quantity": "quantity",
-    "doc_item.unit_price": "unit price"
+    "doc_item.unit_price": "unit price",
+    "doc_item.action": "action"
 }
