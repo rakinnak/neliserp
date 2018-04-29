@@ -40,17 +40,17 @@ class DocApi extends ApiController
     {
         $this->authorize('create', Doc::class);
 
-        $company = Company::where('uuid', $request['company_uuid'])
+        $company = Company::where('code', $request['company_code'])
             ->first();
 
         $created = Doc::create([
             'name' => $request['name'],
             'type' => $type,
-            'company_uuid' => $request['company_uuid'],
-            'company_id' => $company->id,
-            'company_code' => $company->code,
-            'company_name' => $company->name,
+            'company_code' => $request['company_code'],
             'issued_at' => $request['issued_at'],
+            'company_id' => $company->id,
+            'company_uuid' => $company->uuid,
+            'company_name' => $company->name,
         ]);
 
         return $created;
@@ -60,12 +60,13 @@ class DocApi extends ApiController
     {
         $this->authorize('update', $doc);
 
-        $company = Company::where('uuid', $request['company_uuid'])
+        $company = Company::where('code', $request['company_code'])
             ->first();
 
         $doc->name = $request['name'];
-        $doc->company_uuid = $request['company_uuid'];
+        $doc->company_code = $request['company_code'];
         $doc->company_id = $company->id;
+        $doc->company_uuid = $company->uuid;
         $doc->company_code = $company->code;
         $doc->company_name = $company->name;
 

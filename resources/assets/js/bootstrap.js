@@ -57,3 +57,7 @@ axios.defaults.params['api_token'] = document.head.querySelector('meta[name="api
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+window.Bloodhound = require('typeahead.js');
+window.typeahead = require('typeahead.js');
+

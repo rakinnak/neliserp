@@ -1,14 +1,16 @@
 <div class="row">
     <div class="col-md-4 mb-3">
-        <label for="company_code">{{ __('docs.company_code') }}</label>
+        <label for="company_code" id="company">{{ __('docs.company_code') }}</label>
         @if ($action == 'show' || $action == 'delete')
             <input type="text" class="form-control-plaintext" id="company_code" company_code="company_code" :value="doc.company_code" :readonly="true">
         @elseif ($action == 'create' || $action == 'edit')
-            <select class="form-control" id="company_uuid" name="company_uuid" v-model="form.company_uuid" :class="{'is-invalid': form.errors.has('company_uuid')}">
-                <option value="">-- select --</option>
-                <option v-for="company in companies" :value="company.uuid" v-text="company.code"></option>
-            </select>
-            <div class="invalid-feedback" v-if="form.errors.has('company_uuid')" v-text="form.errors.get('company_uuid')"></div>
+            <div id="company">
+                <input class="form-control typeahead" type="text" id="company_code" name="company_code" placeholder="code..." 
+                    autocomplete="off" v-model="form.company_code" :class="{'is-invalid': form.errors.has('company_code')}">
+                <!-- TODO: temp solution to display invalid-feedback -->
+                <input class="form-control" type="hidden" :class="{'is-invalid': form.errors.has('company_code')}">
+                <div class="invalid-feedback" v-if="form.errors.has('company_code')" v-text="form.errors.get('company_code')"></div>
+            </div>
         @endif
     </div>
 
@@ -17,7 +19,8 @@
         @if ($action == 'show' || $action == 'delete')
             <input type="text" class="form-control-plaintext" id="name" name="name" :value="doc.name" :readonly="true">
         @elseif ($action == 'create' || $action == 'edit')
-            <input type="text" class="form-control" :class="{'is-invalid': form.errors.has('name')}" id="name" name="name" value="" v-model="form.name">
+            <input type="text" class="form-control" :class="{'is-invalid': form.errors.has('name')}"
+                id="name" name="name" value="" v-model="form.name">
             <div class="invalid-feedback" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></div>
         @endif
     </div>
@@ -61,8 +64,6 @@
                             <div class="invalid-feedback" v-if="doc_item.errors.hasOwnProperty('line_number')" v-text="doc_item.errors['line_number'][0]"></div>
                         </td>
                         <td>
-                            <!-- <input type="text" class="form-control" id="item_code" name="item_code" v-model="doc_item.item_code"> -->
-                            <!-- :class="{'is-invalid': form.errors.has('company_uuid')}"> -->
                             <select class="form-control" id="item_uuid" name="item_uuid" v-model="doc_item.item_uuid" :class="{'is-invalid': doc_item.errors.hasOwnProperty('item_uuid')}">
                                 <option value="">-- select --</option>
                                 <option v-for="item in items" :value="item.uuid" v-text="item.code"></option>
