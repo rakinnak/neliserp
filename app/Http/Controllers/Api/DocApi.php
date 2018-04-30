@@ -40,6 +40,8 @@ class DocApi extends ApiController
     {
         $this->authorize('create', Doc::class);
 
+        $user = auth()->user();
+
         $company = Company::where('code', $request['company_code'])
             ->first();
 
@@ -51,6 +53,9 @@ class DocApi extends ApiController
             'company_id' => $company->id,
             'company_uuid' => $company->uuid,
             'company_name' => $company->name,
+            'user_id' => $user->id,
+            'user_uuid' => $user->uuid,
+            'user_username' => $user->username,
         ]);
 
         return $created;

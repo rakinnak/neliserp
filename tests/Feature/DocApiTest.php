@@ -334,6 +334,8 @@ class DocApiTest extends TestCase
     {
         $this->signInWithPermission('docs.create');
 
+        $user = auth()->user();
+
         $doc1 = factory(Doc::class)->make();
 
         $this->json('POST', route('api.docs.store', $this->type),
@@ -348,9 +350,12 @@ class DocApiTest extends TestCase
             'name' => $doc1->name,
             'type' => $this->type,
             'company_id' => $doc1->company_id,
-            'company_code' => $doc1->company_code,
+            'company_uuid' => $doc1->company_uuid,
             'company_code' => $doc1->company_code,
             'company_name' => $doc1->company_name,
+            'user_id' => $user->id,
+            'user_uuid' => $user->uuid,
+            'user_username' => $user->username,
             'issued_at' => $doc1->issued_at . ' 00:00:00',
         ]);
     }

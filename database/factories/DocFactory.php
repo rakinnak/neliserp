@@ -5,6 +5,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Doc::class, function (Faker $faker) {
 
     $company = factory(App\Company::class)->create();
+    $user = factory(App\User::class)->create();
 
     $issued_at = $faker->dateTimeBetween('-7 days', 'now')->format('Y-m-d');
 
@@ -20,6 +21,9 @@ $factory->define(App\Doc::class, function (Faker $faker) {
         'company_uuid' => $company->uuid,
         'company_code' => $company->code,
         'company_name' => $company->name,
+        'user_id' => $user->id,
+        'user_uuid' => $user->uuid,
+        'user_username' => $user->username,
         'issued_at' => $issued_at,
     ];
 });

@@ -18,6 +18,9 @@ class Doc extends Model
         'company_uuid',
         'company_code',
         'company_name',
+        'user_id',
+        'user_uuid',
+        'user_username',
         'issued_at',
     ];
 
