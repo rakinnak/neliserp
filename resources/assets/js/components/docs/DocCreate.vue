@@ -56,7 +56,7 @@
             // TODO: temp solution to assign Vue variable from jQuery
             var vm = this;
 
-            $('.typeahead').bind('typeahead:idle', function(ev) {
+            $('#company .typeahead').bind('typeahead:idle', function(ev) {
                 vm.form.company_code = $(this).val();
             });
 
@@ -124,7 +124,7 @@
                             if (doc_item.creating) {
                                 axios.post('/api/doc_item/' + this.type + '/' + this.doc.uuid, {
                                     line_number: doc_item.line_number,
-                                    item_uuid: doc_item.item_uuid,
+                                    item_code: doc_item.item_code,
                                     quantity: doc_item.quantity,
                                     unit_price: doc_item.unit_price,
                                 })

@@ -273,8 +273,8 @@ class DocItemApiTest extends TestCase
             ->assertJson([
                 'message' => 'The given data was invalid.',
                 'errors' => [
-                    'item_uuid' => [
-                        'The item uuid field is required.'
+                    'item_code' => [
+                        'The item code field is required.'
                     ],
                     'quantity' => [
                         'The quantity field is required.'
@@ -300,7 +300,7 @@ class DocItemApiTest extends TestCase
         $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]),
             [
                 'line_number' => 'a',
-                'item_uuid' => 'a',
+                'item_code' => 'a',
                 'quantity' => 'a',
                 'unit_price' => 'a',
             ])
@@ -311,8 +311,8 @@ class DocItemApiTest extends TestCase
                     'line_number' => [
                         'The line number must be a number.',
                     ],
-                    'item_uuid' => [
-                        'The selected item uuid is invalid.',
+                    'item_code' => [
+                        'The selected item code is invalid.',
                     ],
                     'quantity' => [
                         'The quantity must be a number.',
@@ -338,7 +338,7 @@ class DocItemApiTest extends TestCase
         $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]),
             [
                 'line_number' => $doc_item1->line_number,
-                'item_uuid' => $doc_item1->item_uuid,
+                'item_code' => $doc_item1->item_code,
                 'quantity' => $doc_item1->quantity,
                 'unit_price' => $doc_item1->unit_price,
             ])
@@ -370,7 +370,7 @@ class DocItemApiTest extends TestCase
         $this->json('PATCH', route('api.doc_item.update', $doc_item1->uuid),
             [
                 'line_number' => $doc_item_updated->line_number,
-                'item_uuid' => $doc_item_updated->item_uuid,
+                'item_code' => $doc_item_updated->item_code,
                 'quantity' => $doc_item_updated->quantity,
                 'unit_price' => $doc_item_updated->unit_price,
             ])
@@ -389,7 +389,7 @@ class DocItemApiTest extends TestCase
         $this->json('PATCH', route('api.doc_item.update', $doc_item1->uuid),
             [
                 'line_number' => $doc_item_updated->line_number,
-                'item_uuid' => $doc_item_updated->item_uuid,
+                'item_code' => $doc_item_updated->item_code,
                 'quantity' => $doc_item_updated->quantity,
                 'unit_price' => $doc_item_updated->unit_price,
             ])
@@ -408,8 +408,8 @@ class DocItemApiTest extends TestCase
             ->assertJson([
                 'message' => 'The given data was invalid.',
                 'errors' => [
-                    'item_uuid' => [
-                        'The item uuid field is required.'
+                    'item_code' => [
+                        'The item code field is required.'
                     ],
                     'quantity' => [
                         'The quantity field is required.'
@@ -433,7 +433,7 @@ class DocItemApiTest extends TestCase
         $this->json('PATCH', route('api.doc_item.update', $doc_item1->uuid),
             [
                 'line_number' => 'a',
-                'item_uuid' => 'a',
+                'item_code' => 'a',
                 'quantity' => 'a',
                 'unit_price' => 'a',
             ])
@@ -444,8 +444,8 @@ class DocItemApiTest extends TestCase
                     'line_number' => [
                         'The line number must be a number.',
                     ],
-                    'item_uuid' => [
-                        'The selected item uuid is invalid.',
+                    'item_code' => [
+                        'The selected item code is invalid.',
                     ],
                     'quantity' => [
                         'The quantity must be a number.',
@@ -469,7 +469,7 @@ class DocItemApiTest extends TestCase
         $this->json('PATCH', route('api.doc_item.update', $doc_item1->uuid),
             [
                 'line_number' => $doc_item_updated->line_number,
-                'item_uuid' => $doc_item_updated->item_uuid,
+                'item_code' => $doc_item_updated->item_code,
                 'quantity' => $doc_item_updated->quantity,
                 'unit_price' => $doc_item_updated->unit_price,
             ])

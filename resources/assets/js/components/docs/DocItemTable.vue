@@ -8,7 +8,7 @@
             }
         },
 
-        created() {
+        mounted() {
             // TODO: show all items
             axios.get('/api/items?per_page=1000')
                 .then(response => {
@@ -33,10 +33,9 @@
                 })
             },
             createDocItem(doc_item) {
-                console.log(doc_item);
                 axios.post('/api/doc_item/' + this.type + '/' + this.doc.uuid, {
                     line_number: doc_item.line_number,
-                    item_uuid: doc_item.item_uuid,
+                    item_code: doc_item.item_code,
                     quantity: doc_item.quantity,
                     unit_price: doc_item.unit_price,
                 })
@@ -52,9 +51,10 @@
                 })
             },
             editDocItem(doc_item) {
+                console.log('edit');
                 axios.patch('/api/doc_item/' + doc_item.uuid, {
                     line_number: doc_item.line_number,
-                    item_uuid: doc_item.item_uuid,
+                    item_code: doc_item.item_code,
                     quantity: doc_item.quantity,
                     unit_price: doc_item.unit_price,
                 })

@@ -35,6 +35,8 @@ Vue.component('doc-edit', require('./components/docs/DocEdit.vue'));
 Vue.component('doc-delete', require('./components/docs/DocDelete.vue'));
 Vue.component('doc-item-table', require('./components/docs/DocItemTable.vue'));
 
+Vue.component('doc-item-code', require('./components/docs/DocItemCode.vue'));
+
 Vue.component('pagination', require('./components/Pagination.vue'));
 
 window.Form = require('./Form');

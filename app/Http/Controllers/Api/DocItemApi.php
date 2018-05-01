@@ -35,7 +35,7 @@ class DocItemApi extends ApiController
     {
         $this->authorize('create', DocItem::class);
 
-        $item = Item::where('uuid', $request['item_uuid'])
+        $item = Item::where('code', $request['item_code'])
             ->first();
 
         $created = DocItem::create([
@@ -43,8 +43,8 @@ class DocItemApi extends ApiController
             'line_number' => $request['line_number'],
             'item_id' => $item->id,
             'ref_id' => null,
-            'item_uuid' => $request['item_uuid'],
-            'item_code' => $item->code,
+            'item_code' => $request['item_code'],
+            'item_uuid' => $item->uuid,
             'item_name' => $item->name,
             'quantity' => $request['quantity'],
             'pending_quantity' => $request['quantity'],
@@ -58,14 +58,13 @@ class DocItemApi extends ApiController
     {
         $this->authorize('update', $doc_item);
 
-        $item = Item::where('uuid', $request['item_uuid'])
+        $item = Item::where('code', $request['item_code'])
             ->first();
 
         $doc_item->line_number = $request['line_number'];
-        $doc_item->item_uuid = $request['item_uuid'];
+        $doc_item->item_code = $request['item_code'];
         $doc_item->item_id = $item->id;
         $doc_item->item_uuid = $item->uuid;
-        $doc_item->item_code = $item->code;
         $doc_item->item_name = $item->name;
         $doc_item->quantity = $request['quantity'];
         $doc_item->pending_quantity = $request['quantity'];

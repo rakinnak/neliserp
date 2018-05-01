@@ -8,7 +8,7 @@
                 <input class="form-control typeahead" type="text" id="company_code" name="company_code" placeholder="code..." 
                     autocomplete="off" v-model="form.company_code" :class="{'is-invalid': form.errors.has('company_code')}">
                 <!-- TODO: temp solution to display invalid-feedback -->
-                <input class="form-control" type="hidden" :class="{'is-invalid': form.errors.has('company_code')}">
+                <input class="form-control form-control-sm" type="hidden" :class="{'is-invalid': form.errors.has('company_code')}">
                 <div class="invalid-feedback" v-if="form.errors.has('company_code')" v-text="form.errors.get('company_code')"></div>
             </div>
         @endif
@@ -19,7 +19,7 @@
         @if ($action == 'show' || $action == 'delete')
             <input type="text" class="form-control-plaintext" id="name" name="name" :value="doc.name" :readonly="true">
         @elseif ($action == 'create' || $action == 'edit')
-            <input type="text" class="form-control" :class="{'is-invalid': form.errors.has('name')}"
+            <input type="text" class="form-control form-control-sm" :class="{'is-invalid': form.errors.has('name')}"
                 id="name" name="name" value="" v-model="form.name">
             <div class="invalid-feedback" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></div>
         @endif
@@ -30,7 +30,7 @@
         @if ($action == 'show' || $action == 'delete')
             <input type="text" class="form-control-plaintext" id="issued_at" name="issued_at" :value="doc.issued_at" :readonly="true">
         @elseif ($action == 'create' || $action == 'edit')
-            <input type="text" class="form-control" :class="{'is-invalid': form.errors.has('issued_at')}" id="issued_at" name="issued_at" value="" v-model="form.issued_at" placeholder="YYYY-MM-DD">
+            <input type="text" class="form-control form-control-sm" :class="{'is-invalid': form.errors.has('issued_at')}" id="issued_at" name="issued_at" value="" v-model="form.issued_at" placeholder="YYYY-MM-DD">
             <div class="invalid-feedback" v-if="form.errors.has('issued_at')" v-text="form.errors.get('issued_at')"></div>
         @endif
     </div>
@@ -60,22 +60,18 @@
                 <tr v-for="doc_item in doc.doc_item" v-if="! doc_item.deleted" :class="{'table-info' : doc_item.editing, 'table-danger' : doc_item.deleting}">
                     <template v-if="doc_item.creating || doc_item.editing">
                         <td>
-                            <input type="text" class="form-control" id="line_number" name="line_number" v-model="doc_item.line_number" :class="{'is-invalid': doc_item.errors.hasOwnProperty('line_number')}">
+                            <input type="text" class="form-control form-control-sm line-number" id="line_number" name="line_number" v-model="doc_item.line_number" :class="{'is-invalid': doc_item.errors.hasOwnProperty('line_number')}">
                             <div class="invalid-feedback" v-if="doc_item.errors.hasOwnProperty('line_number')" v-text="doc_item.errors['line_number'][0]"></div>
                         </td>
                         <td>
-                            <select class="form-control" id="item_uuid" name="item_uuid" v-model="doc_item.item_uuid" :class="{'is-invalid': doc_item.errors.hasOwnProperty('item_uuid')}">
-                                <option value="">-- select --</option>
-                                <option v-for="item in items" :value="item.uuid" v-text="item.code"></option>
-                            </select>
-                            <div class="invalid-feedback" v-if="doc_item.errors.hasOwnProperty('item_uuid')" v-text="doc_item.errors['item_uuid'][0]"></div>
+                            <doc-item-code :doc_item="doc_item"></doc-item-code>
                         </td>
                         <td>
-                            <input type="text" class="form-control" id="quantity" name="quantity" v-model="doc_item.quantity" :class="{'is-invalid': doc_item.errors.hasOwnProperty('quantity')}">
+                            <input type="text" class="form-control form-control-sm" id="quantity" name="quantity" v-model="doc_item.quantity" :class="{'is-invalid': doc_item.errors.hasOwnProperty('quantity')}">
                             <div class="invalid-feedback" v-if="doc_item.errors.hasOwnProperty('quantity')" v-text="doc_item.errors['quantity'][0]"></div>
                         </td>
                         <td>
-                            <input type="text" class="form-control" id="unit_price" name="unit_price" v-model="doc_item.unit_price" :class="{'is-invalid': doc_item.errors.hasOwnProperty('unit_price')}">
+                            <input type="text" class="form-control form-control-sm" id="unit_price" name="unit_price" v-model="doc_item.unit_price" :class="{'is-invalid': doc_item.errors.hasOwnProperty('unit_price')}">
                             <div class="invalid-feedback" v-if="doc_item.errors.hasOwnProperty('unit_price')" v-text="doc_item.errors['unit_price'][0]"></div>
                         </td>
                     </template>

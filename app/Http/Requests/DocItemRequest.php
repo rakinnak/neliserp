@@ -26,7 +26,7 @@ class DocItemRequest extends FormRequest
     {
         return [
             'line_number' => 'required|numeric|min:0',
-            'item_uuid' => 'required|exists:items,uuid',
+            'item_code' => 'required|exists:items,code',
             'quantity' => 'required|numeric|min:0',
             'unit_price' => 'required|numeric|min:0',
         ];
