@@ -299,6 +299,7 @@ class DocItemApiTest extends TestCase
 
         $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]),
             [
+                'ref_uuid' => 'a',
                 'line_number' => 'a',
                 'item_code' => 'a',
                 'quantity' => 'a',
@@ -308,6 +309,9 @@ class DocItemApiTest extends TestCase
             ->assertJson([
                 'message' => 'The given data was invalid.',
                 'errors' => [
+                    'ref_uuid' => [
+                        'The selected ref uuid is invalid.',
+                    ],
                     'line_number' => [
                         'The line number must be a number.',
                     ],
@@ -348,6 +352,60 @@ class DocItemApiTest extends TestCase
             'doc_id' => $doc->id,
             'line_number' => $doc_item1->line_number,
             'ref_id' => null,
+            'item_id' => $doc_item1->item_id,
+            'item_uuid' => $doc_item1->item_uuid,
+            'item_code' => $doc_item1->item_code,
+            'item_name' => $doc_item1->item_name,
+            'quantity' => $doc_item1->quantity,
+            'pending_quantity' => $doc_item1->pending_quantity,
+            'unit_price' => $doc_item1->unit_price,
+        ]);
+    }
+
+    /** @test */
+    public function authorized_user_can_create_a_doc_item_with_ref_doc_item()
+    {
+        $this->signInWithPermission('docs.create');
+
+        // ref
+        $ref_doc_item = factory(DocItem::class)->create();
+
+        // new
+        $doc = factory(Doc::class)->create([
+            'type' => $this->type,
+        ]);
+
+        $doc_item1 = factory(DocItem::class)->make();
+
+        $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]),
+            [
+                'ref_uuid' => $ref_doc_item->uuid,
+                'line_number' => $doc_item1->line_number,
+                'item_code' => $doc_item1->item_code,
+                'quantity' => $doc_item1->quantity,
+                'unit_price' => $doc_item1->unit_price,
+            ])
+            ->assertStatus(201);
+
+        // ref doc_item
+        $this->assertDatabaseHas('doc_item', [
+            'doc_id' => $ref_doc_item->doc_id,
+            'line_number' => $ref_doc_item->line_number,
+            'ref_id' => null,
+            'item_id' => $ref_doc_item->item_id,
+            'item_uuid' => $ref_doc_item->item_uuid,
+            'item_code' => $ref_doc_item->item_code,
+            'item_name' => $ref_doc_item->item_name,
+            'quantity' => $ref_doc_item->quantity,
+            'pending_quantity' => $ref_doc_item->pending_quantity - $doc_item1->quantity,
+            'unit_price' => $ref_doc_item->unit_price,
+        ]);
+
+        // new doc_item
+        $this->assertDatabaseHas('doc_item', [
+            'doc_id' => $doc->id,
+            'line_number' => $doc_item1->line_number,
+            'ref_id' => $ref_doc_item->id,
             'item_id' => $doc_item1->item_id,
             'item_uuid' => $doc_item1->item_uuid,
             'item_code' => $doc_item1->item_code,
@@ -485,7 +543,7 @@ class DocItemApiTest extends TestCase
             'item_code' => $doc_item_updated->item_code,
             'item_name' => $doc_item_updated->item_name,
             'quantity' => $doc_item_updated->quantity,
-            'pending_quantity' => $doc_item_updated->pending_quantity,
+            'pending_quantity' => $doc_item_updated->quantity,
             'unit_price' => $doc_item_updated->unit_price,
         ]);
     }

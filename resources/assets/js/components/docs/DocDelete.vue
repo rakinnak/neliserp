@@ -9,6 +9,7 @@
                     code: '',
                     name: '',
                 }),
+                refer: false,
             }
         },
 

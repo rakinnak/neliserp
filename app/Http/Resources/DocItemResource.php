@@ -28,7 +28,11 @@ class DocItemResource extends JsonResource
             'editing' => false,     // TODO: temp assign, should be definied in Vue
             'deleting' => false,    // TODO: temp assign, should be definied in Vue
             'deleted' => false,     // TODO: temp assign, should be definied in Vue
-            'errors' => []
+            'moving' => false,      // TODO: temp assign, should be definied in Vue
+            'errors' => [],
+            'refer' => '',
+            'doc_name' => $this->doc->name,
+            'ref_uuid' => '',
         ];
     }
 }

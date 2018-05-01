@@ -28,6 +28,8 @@ class DocItemApi extends ApiController
     {
         $this->authorize('show', $doc_item);
 
+        $doc_item = $doc_item->load('doc');
+
         return new DocItemResource($doc_item);
     }
 
@@ -38,11 +40,22 @@ class DocItemApi extends ApiController
         $item = Item::where('code', $request['item_code'])
             ->first();
 
+        if ($request['ref_uuid'] == '') {
+            $ref_id = null;
+        } else {
+            $ref_doc_item = DocItem::where('uuid', $request['ref_uuid'])
+                ->first();
+            $ref_id = $ref_doc_item->id;
+
+            $ref_doc_item->pending_quantity = $ref_doc_item->pending_quantity - $request['quantity'];
+            $ref_doc_item->save();
+        }
+
         $created = DocItem::create([
             'doc_id' => $doc->id,
             'line_number' => $request['line_number'],
             'item_id' => $item->id,
-            'ref_id' => null,
+            'ref_id' => $ref_id,
             'item_code' => $request['item_code'],
             'item_uuid' => $item->uuid,
             'item_name' => $item->name,

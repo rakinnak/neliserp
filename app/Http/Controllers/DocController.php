@@ -19,6 +19,8 @@ class DocController extends Controller
 
         if (session('input')) {
             $input = session('input');
+            unset($input['_method']);
+            unset($input['_token']);
         } else {
             $input = [
                 'company_code' => '',

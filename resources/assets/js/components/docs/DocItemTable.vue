@@ -1,6 +1,6 @@
 <script>
     export default {
-        props: ['doc', 'type'],
+        props: ['doc', 'type', 'refer'],
 
         data() {
             return {
@@ -61,6 +61,8 @@
                 .then(data => {
                     doc_item.item_code = data.data.item_code;
                     doc_item.editing = false;
+
+                    doc_item.pending_quantity = data.data.quantity;
                 })
                 .catch(error => {
                     doc_item.errors = error.response.data.errors;

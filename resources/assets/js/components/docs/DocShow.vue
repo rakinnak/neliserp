@@ -11,6 +11,7 @@
                     name: '',
                     issued_at: '',
                 }),
+                refer: false,
             }
         },
 

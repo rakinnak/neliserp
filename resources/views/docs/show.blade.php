@@ -22,12 +22,13 @@
             @include('docs.form', ['action' => 'show'])
 
             <template v-if="doc.moving">
+                <input type="hidden" name="source_type" value="{{ $type }}">
                 <div class="row">
                     <div class="col-md-3 mb-3">
                         <label for="destination_type" id="destination_type">{{ __('move to') }}</label>
                         <select id="destination_type" name="destination_type" class="form-control form-control-sm">
                             <option value="">-- select --</option>
-                            <option value="do">{{ __('docs.do') }}</option>
+                            <option value="do" selected>{{ __('docs.do') }}</option>
                             <option value="si">{{ __('docs.si') }}</option>
                         </select>
                     </div>

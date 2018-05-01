@@ -23,8 +23,8 @@ class CreateDocItemTable extends Migration
             $table->string('item_uuid');
             $table->string('item_code');
             $table->string('item_name');
-            $table->unsignedInteger('quantity');
-            $table->unsignedInteger('pending_quantity');
+            $table->integer('quantity');
+            $table->integer('pending_quantity');
             $table->decimal('unit_price', 10, 2);
             $table->timestamps();
 

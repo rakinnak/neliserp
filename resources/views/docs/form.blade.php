@@ -36,7 +36,7 @@
     </div>
 </div>
 
-<doc-item-table :doc="doc" :type="type" inline-template>
+<doc-item-table :doc="doc" :type="type" :refer="refer" inline-template>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -46,6 +46,11 @@
                     </th>
                 </template>
                 <th>{{ __('doc_item.line_number') }}</th>
+                <template v-if="refer">
+                    <th>
+                        {{ __('ref.') }}
+                    </th>
+                </template>
                 <th>{{ __('doc_item.item_code') }}</th>
                 <th>{{ __('doc_item.quantity') }}</th>
                 <th>{{ __('doc_item.unit_price') }}</th>
@@ -57,12 +62,20 @@
                 <tr v-for="doc_item in doc.doc_item" :class="{'table-info' : doc_item.editing, 'table-danger' : doc_item.deleting}">
                     <template v-if="doc.moving">
                         <td>
-                            <input type="checkbox" :name="'doc_item[' + doc_item.uuid + ']'" :value="doc_item.item_code">
+                            <template v-if="doc_item.pending_quantity > 0">
+                                <input type="checkbox" checked :name="'doc_item[' + doc_item.uuid + ']'" :value="doc_item.item_code">
+                            </template>
+                            <template v-else>
+                                -
+                            </template>
                         </td>
                     </template>
                     <td>@{{ doc_item.line_number }}</td>
                     <td>@{{ doc_item.item_code }}</td>
-                    <td>@{{ doc_item.quantity }}</td>
+                    <td>
+                        @{{ doc_item.pending_quantity }} /
+                        @{{ doc_item.quantity }}
+                    </td>
                     <td>@{{ doc_item.unit_price }}</td>
                     <td>-</td>
                 </tr>
@@ -70,9 +83,15 @@
                 <tr v-for="doc_item in doc.doc_item" v-if="! doc_item.deleted" :class="{'table-info' : doc_item.editing, 'table-danger' : doc_item.deleting}">
                     <template v-if="doc_item.creating || doc_item.editing">
                         <td>
+                            <input type="hidden" id="ref_uuid" name="ref_uuid" v-model="doc_item.ref_uuid">
                             <input type="text" class="form-control form-control-sm line-number" id="line_number" name="line_number" v-model="doc_item.line_number" :class="{'is-invalid': doc_item.errors.hasOwnProperty('line_number')}">
                             <div class="invalid-feedback" v-if="doc_item.errors.hasOwnProperty('line_number')" v-text="doc_item.errors['line_number'][0]"></div>
                         </td>
+                        <template v-if="refer">
+                            <td>
+                                <input type="text" class="form-control-plaintext" :value="doc_item.refer" :readonly="true">
+                            </td>
+                        </template>
                         <td>
                             <doc-item-code :doc_item="doc_item"></doc-item-code>
                         </td>
@@ -88,7 +107,10 @@
                     <template v-else>
                         <td>@{{ doc_item.line_number }}</td>
                         <td>@{{ doc_item.item_code }}</td>
-                        <td>@{{ doc_item.quantity }}</td>
+                        <td>
+                            @{{ doc_item.pending_quantity }} /
+                            @{{ doc_item.quantity }}
+                        </td>
                         <td>@{{ doc_item.unit_price }}</td>
                     </template>
 
@@ -133,8 +155,10 @@
 
             @if ($action == 'create' || $action == 'edit')
                 <tr>
-                    <td colspan="4"></td>
-                    <td><button type="button" class="btn btn-sm btn-outline-success" @click="addDocItemLine()">add</button></td>
+                    <template v-if="! refer">
+                        <td colspan="4"></td>
+                        <td><button type="button" class="btn btn-sm btn-outline-success" @click="addDocItemLine()">add</button></td>
+                    </template>
                 </tr>
             @endif
         </tbody>

@@ -14,6 +14,7 @@
                     name: '',
                     issued_at: '2018-04-26',
                 }),
+                refer: false,
             }
         },
         mounted() {
@@ -25,20 +26,53 @@
                     this.items = response.data.data;
                 });
 
-            // TODO: should refactor
-            this.doc.doc_item.push({
-                uuid: '',
-                line_number: '',
-                item_uuid: '',
-                item_code: '',
-                quantity: '',
-                unit_price: '',
-                creating: true,
-                editing: false,
-                deleting: false,
-                deleted: false,
-                errors: {},
-            })
+            if (this.input.doc_item.length == 0) {
+                // TODO: should refactor
+                this.doc.doc_item.push({
+                    uuid: '',
+                    line_number: 1,
+                    item_uuid: '',
+                    item_code: '',
+                    quantity: '',
+                    unit_price: '',
+                    creating: true,
+                    editing: false,
+                    deleting: false,
+                    deleted: false,
+                    errors: {},
+                    refer: '',
+                })
+            } else {
+                this.refer = true;
+
+                var line_number = 1;
+
+                for (var doc_item_uuid in this.input.doc_item) {
+                    axios.get('/api/doc_item/' + this.input.source_type + '/' + doc_item_uuid)
+                        .then(response => {
+                            var ref_doc_item = response.data.data;
+
+                            // TODO: should refactor
+                            this.doc.doc_item.push({
+                                uuid: '',
+                                line_number: line_number++,
+                                item_uuid: '',
+                                item_code: ref_doc_item.item_code,
+                                quantity: ref_doc_item.pending_quantity,
+                                unit_price: ref_doc_item.unit_price,
+                                creating: true,
+                                editing: false,
+                                deleting: false,
+                                deleted: false,
+                                errors: {},
+                                refer: ref_doc_item.doc_name,
+                                ref_uuid: ref_doc_item.uuid,
+                            })
+
+                        });
+                }
+            }
+
 
             // typeahead autocomplete
             let api_token = document.head.querySelector('meta[name="api-token"]').content;
@@ -125,6 +159,7 @@
                         this.doc.doc_item.forEach(function (doc_item) {
                             if (doc_item.creating) {
                                 axios.post('/api/doc_item/' + this.type + '/' + this.doc.uuid, {
+                                    ref_uuid: doc_item.ref_uuid,
                                     line_number: doc_item.line_number,
                                     item_code: doc_item.item_code,
                                     quantity: doc_item.quantity,

@@ -39,6 +39,11 @@ class DocItem extends Model
         return 'uuid';
     }
 
+    public function doc()
+    {
+        return $this->belongsTo(Doc::class);
+    }
+
     public function scopeFilter($builder, DocItemFilter $filter)
     {
         return $filter->apply($builder);
