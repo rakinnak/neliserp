@@ -8,8 +8,8 @@
         </div>
         <form method="DELETE" action="/docs/{{ $type }}/{{ $uuid }}" @submit.prevent="onSubmit">
             @include('docs.form', ['action' => 'delete'])
-            <button type="submit" id="submit" class="btn btn-danger" :disabled="form.errors.any()">{{ __('submit') }}</button>
-            <a href="/docs/{{ $type }}/{{ $uuid }}" class="btn btn-light">cancel</a>
+            <button type="submit" id="submit" class="btn btn-sm btn-danger" :disabled="form.errors.any()">{{ __('submit') }}</button>
+            <a href="/docs/{{ $type }}/{{ $uuid }}" class="btn btn-sm btn-light">cancel</a>
         </form>
     </div>
 </doc-delete>

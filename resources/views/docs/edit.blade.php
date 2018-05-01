@@ -8,8 +8,8 @@
         </div>
         <form method="PATCH" action="/docs/{{ $type }}/{{ $uuid }}" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)" @change="form.errors.clear($event.target.name)">
             @include('docs.form', ['action' => 'edit'])
-            <button type="submit" id="submit" class="btn btn-primary" :disabled="form.errors.any()">{{ __('submit') }}</button>
-            <a href="/docs/{{ $type }}/{{ $uuid }}" class="btn btn-light">cancel</a>
+            <button type="submit" id="submit" class="btn btn-sm btn-primary" :disabled="form.errors.any()">{{ __('submit') }}</button>
+            <a href="/docs/{{ $type }}/{{ $uuid }}" class="btn btn-sm btn-outline-dark">cancel</a>
         </form>
     </div>
 </doc-edit>

@@ -16865,6 +16865,7 @@ Vue.component('doc-show', __webpack_require__(70));
 Vue.component('doc-edit', __webpack_require__(72));
 Vue.component('doc-delete', __webpack_require__(76));
 Vue.component('doc-item-table', __webpack_require__(78));
+Vue.component('doc-move', __webpack_require__(87));
 
 Vue.component('doc-item-code', __webpack_require__(80));
 
@@ -50974,9 +50975,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 page = query ? query[1] : 1;
             }
 
-            var q = getParameterByName('q');
+            var name = getParameterByName('name');
 
-            return '/api' + location.pathname + '?q=' + q + '&page=' + page;
+            return '/api' + location.pathname + '?name=' + name + '&page=' + page;
         },
         refresh: function refresh(response) {
             this.dataset = response.data;
@@ -51119,7 +51120,7 @@ module.exports = function listToStyles (parentId, list) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['type'],
+    props: ['type', 'input'],
 
     data: function data() {
         return {
@@ -51137,6 +51138,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         var _this = this;
+
+        this.form.company_code = this.input.company_code;
 
         // TODO: show all items
         axios.get('/api/items?per_page=1000').then(function (response) {
@@ -51333,10 +51336,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
-            doc: {}
+            doc: {},
+            form: new Form({
+                company_code: '',
+                name: '',
+                issued_at: ''
+            })
         };
     },
-    created: function created() {
+    mounted: function mounted() {
         var _this = this;
 
         axios.get('/api/docs/' + this.type + '/' + this.uuid).then(function (response) {
@@ -52194,6 +52202,79 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-555471ca", module.exports)
   }
 }
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(88)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/docs/DocMove.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-018cdf68", Component.options)
+  } else {
+    hotAPI.reload("data-v-018cdf68", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 88 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['type', 'uuid'],
+
+    data: function data() {
+        return {
+            doc: {}
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/docs/' + this.type + '/' + this.uuid).then(function (response) {
+            _this.doc = response.data.data;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    }
+});
 
 /***/ })
 /******/ ]);

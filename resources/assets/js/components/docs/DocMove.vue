@@ -4,17 +4,11 @@
 
         data() {
             return {
-                doc: {
-                },
-                form: new Form({
-                    company_code: '',
-                    name: '',
-                    issued_at: '',
-                }),
+                doc: {},
             }
         },
 
-        mounted() {
+        created() {
             axios.get('/api/docs/' + this.type + '/' + this.uuid)
                 .then(response => {
                     this.doc = response.data.data;

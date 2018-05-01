@@ -17,7 +17,16 @@ class DocController extends Controller
     {
         //$this->authorize('create', Doc::class);
 
-        return view('docs.create', compact('type'));
+        if (session('input')) {
+            $input = session('input');
+        } else {
+            $input = [
+                'company_code' => '',
+                'doc_item' => [],
+            ];
+        }
+
+        return view('docs.create', compact('type', 'input'));
     }
 
     public function show($type, $uuid)
@@ -39,5 +48,16 @@ class DocController extends Controller
         // $this->authorize('edit', $doc);
 
         return view('docs.delete', compact('type', 'uuid'));
+    }
+
+    public function move()
+    {
+        // $this->authorize('edit', $doc);
+
+        $input = request()->all();
+
+        return redirect()->action('DocController@create', ['type' => $input['destination_type']])
+            ->with('input', $input);
+
     }
 }

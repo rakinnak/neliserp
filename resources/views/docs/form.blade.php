@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-md-4 mb-3">
         <label for="company_code" id="company">{{ __('docs.company_code') }}</label>
-        @if ($action == 'show' || $action == 'delete')
-            <input type="text" class="form-control-plaintext" id="company_code" company_code="company_code" :value="doc.company_code" :readonly="true">
+        @if ($action == 'show' || $action == 'delete' || $action == 'move')
+            <input type="text" class="form-control-plaintext" id="company_code" name="company_code" :value="doc.company_code" :readonly="true">
         @elseif ($action == 'create' || $action == 'edit')
             <div id="company">
-                <input class="form-control typeahead" type="text" id="company_code" name="company_code" placeholder="code..." 
+                <input class="form-control form-control-sm typeahead" type="text" id="company_code" name="company_code" placeholder="code..." 
                     autocomplete="off" v-model="form.company_code" :class="{'is-invalid': form.errors.has('company_code')}">
                 <!-- TODO: temp solution to display invalid-feedback -->
                 <input class="form-control form-control-sm" type="hidden" :class="{'is-invalid': form.errors.has('company_code')}">
@@ -16,7 +16,7 @@
 
     <div class="col-md-4 mb-3">
         <label for="name">{{ __('docs.name') }}</label>
-        @if ($action == 'show' || $action == 'delete')
+        @if ($action == 'show' || $action == 'delete' || $action == 'move')
             <input type="text" class="form-control-plaintext" id="name" name="name" :value="doc.name" :readonly="true">
         @elseif ($action == 'create' || $action == 'edit')
             <input type="text" class="form-control form-control-sm" :class="{'is-invalid': form.errors.has('name')}"
@@ -27,7 +27,7 @@
 
     <div class="col-md-4 mb-3">
         <label for="issued_at">{{ __('docs.issued_at') }}</label>
-        @if ($action == 'show' || $action == 'delete')
+        @if ($action == 'show' || $action == 'delete' || $action == 'move')
             <input type="text" class="form-control-plaintext" id="issued_at" name="issued_at" :value="doc.issued_at" :readonly="true">
         @elseif ($action == 'create' || $action == 'edit')
             <input type="text" class="form-control form-control-sm" :class="{'is-invalid': form.errors.has('issued_at')}" id="issued_at" name="issued_at" value="" v-model="form.issued_at" placeholder="YYYY-MM-DD">
@@ -40,6 +40,11 @@
     <table class="table table-bordered">
         <thead>
             <tr>
+                <template v-if="doc.moving">
+                    <th>
+                        <input type="checkbox">
+                    </th>
+                </template>
                 <th>{{ __('doc_item.line_number') }}</th>
                 <th>{{ __('doc_item.item_code') }}</th>
                 <th>{{ __('doc_item.quantity') }}</th>
@@ -48,8 +53,13 @@
             </tr>
         </thead>
         <tbody>
-            @if ($action == 'show' || $action == 'delete')
+            @if ($action == 'show' || $action == 'delete' || $action == 'move')
                 <tr v-for="doc_item in doc.doc_item" :class="{'table-info' : doc_item.editing, 'table-danger' : doc_item.deleting}">
+                    <template v-if="doc.moving">
+                        <td>
+                            <input type="checkbox" :name="'doc_item[' + doc_item.uuid + ']'" :value="doc_item.item_code">
+                        </td>
+                    </template>
                     <td>@{{ doc_item.line_number }}</td>
                     <td>@{{ doc_item.item_code }}</td>
                     <td>@{{ doc_item.quantity }}</td>

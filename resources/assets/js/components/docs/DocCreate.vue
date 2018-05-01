@@ -1,6 +1,6 @@
 <script>
     export default {
-        props: ['type'],
+        props: ['type', 'input'],
 
         data() {
             return {
@@ -17,6 +17,8 @@
             }
         },
         mounted() {
+            this.form.company_code = this.input.company_code;
+
             // TODO: show all items
             axios.get('/api/items?per_page=1000')
                 .then(response => {

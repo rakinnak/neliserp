@@ -25,9 +25,9 @@
                     page = query ? query[1] : 1;
                 }
 
-                var q = getParameterByName('q');
+                var name = getParameterByName('name');
 
-                return '/api' + location.pathname + '?q=' + q + '&page=' + page;
+                return '/api' + location.pathname + '?name=' + name + '&page=' + page;
             },
 
             refresh(response) {

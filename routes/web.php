@@ -25,4 +25,6 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('docs/{type}/{uuid}', 'DocController@show');
     Route::get('docs/{type}/{uuid}/edit', 'DocController@edit');
     Route::get('docs/{type}/{uuid}/delete', 'DocController@delete');
+
+    Route::put('docs/move', 'DocController@move');
 });

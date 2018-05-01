@@ -7,7 +7,7 @@
             <h5>{{ __('index') }}</h5>
             <form method="GET" action="/docs/{{ $type }}" id="docs-search" class="form-inline">
                 <label class="mr-2" for="name">{{ __('docs.name') }}</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ request('name') }}">
+                <input type="text" class="form-control form-control-sm" id="name" name="name" value="{{ request('name') }}">
                 <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
             </form>
             <div class="btn-toolbar mb-2 mb-md-0">
