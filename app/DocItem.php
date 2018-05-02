@@ -14,16 +14,16 @@ class DocItem extends Model
         'doc_id',
         'item_id',
         'ref_id',
-        'line_number',
+        'doc_uuid',
         'item_uuid',
+        'ref_uuid',
+        'line_number',
         'item_code',
         'item_name',
         'quantity',
         'pending_quantity',
         'unit_price',
     ];
-
-    protected $table = 'doc_item';
 
     public static function boot()
     {

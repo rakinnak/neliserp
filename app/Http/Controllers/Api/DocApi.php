@@ -31,7 +31,7 @@ class DocApi extends ApiController
             return response([], 404);
         }
 
-        $doc = $doc->load('doc_item');
+        $doc = $doc->load('doc_items');
 
         return new DocResource($doc);
     }

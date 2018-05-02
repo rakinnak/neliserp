@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDocItemTable extends Migration
+class CreateDocItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateDocItemTable extends Migration
      */
     public function up()
     {
-        Schema::create('doc_item', function (Blueprint $table) {
+        Schema::create('doc_items', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('doc_id');
             $table->unsignedInteger('item_id');
             $table->unsignedInteger('ref_id')->nullable();
+            $table->uuid('doc_uuid');
+            $table->uuid('item_uuid');
+            $table->uuid('ref_uuid')->nullable();
             $table->uuid('uuid')->unique();
             $table->unsignedInteger('line_number');
-            $table->string('item_uuid');
             $table->string('item_code');
             $table->string('item_name');
             $table->integer('quantity');
@@ -40,7 +42,7 @@ class CreateDocItemTable extends Migration
 
             $table->foreign('ref_id')
                 ->references('id')
-                ->on('doc_item')
+                ->on('doc_items')
                 ->onDelete('cascade');
         });
     }
@@ -52,6 +54,6 @@ class CreateDocItemTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('doc_item');
+        Schema::dropIfExists('doc_items');
     }
 }

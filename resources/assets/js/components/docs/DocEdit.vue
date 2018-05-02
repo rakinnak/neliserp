@@ -83,7 +83,7 @@
                 this.form.submit('patch', '/api/docs/' + this.type + '/' + this.uuid)
                     .then(data => {
                         // this.doc.doc_item.forEach(function (doc_item) {
-                        //     axios.patch('/api/doc_item/' + doc_item.uuid, {
+                        //     axios.patch('/api/doc_items/' + this.type + '/' + doc_item.uuid, {
                         //         line_number: doc_item.line_number,
                         //         item_uuid: doc_item.item_uuid,
                         //         quantity: doc_item.quantity,

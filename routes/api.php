@@ -19,9 +19,9 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::patch('docs/{type}/{doc}', 'Api\DocApi@update')->name('api.docs.update');
     Route::delete('docs/{type}/{doc}', 'Api\DocApi@destroy')->name('api.docs.destroy');
 
-    Route::get('doc_item/{type}', 'Api\DocItemApi@index')->name('api.doc_item.index');
-    Route::post('doc_item/{type}/{doc}', 'Api\DocItemApi@store')->name('api.doc_item.store');
-    Route::get('doc_item/{type}/{doc_item}', 'Api\DocItemApi@show')->name('api.doc_item.show');
-    Route::patch('doc_item/{doc_item}', 'Api\DocItemApi@update')->name('api.doc_item.update');
-    Route::delete('doc_item/{doc_item}', 'Api\DocItemApi@destroy')->name('api.doc_item.destroy');
+    Route::get('doc_items/{type}', 'Api\DocItemApi@index')->name('api.doc_items.index');
+    Route::post('doc_items/{type}/{doc}', 'Api\DocItemApi@store')->name('api.doc_items.store');
+    Route::get('doc_items/{type}/{doc_item}', 'Api\DocItemApi@show')->name('api.doc_items.show');
+    Route::patch('doc_items/{type}/{doc_item}', 'Api\DocItemApi@update')->name('api.doc_items.update');
+    Route::delete('doc_items/{type}/{doc_item}', 'Api\DocItemApi@destroy')->name('api.doc_items.destroy');
 });

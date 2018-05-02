@@ -18,10 +18,10 @@ class DocItemApi extends ApiController
         $this->authorize('index', DocItem::class);
 
         // TODO: search by type
-        $doc_item = DocItem::filter($filter)
+        $doc_items = DocItem::filter($filter)
             ->paginate(10); // TODO: per page configuration
 
-        return DocItemResource::collection($doc_item);
+        return DocItemResource::collection($doc_items);
     }
 
     public function show($type, DocItem $doc_item)
@@ -42,10 +42,12 @@ class DocItemApi extends ApiController
 
         if ($request['ref_uuid'] == '') {
             $ref_id = null;
+            $ref_uuid = null;
         } else {
             $ref_doc_item = DocItem::where('uuid', $request['ref_uuid'])
                 ->first();
             $ref_id = $ref_doc_item->id;
+            $ref_uuid = $ref_doc_item->uuid;
 
             $ref_doc_item->pending_quantity = $ref_doc_item->pending_quantity - $request['quantity'];
             $ref_doc_item->save();
@@ -53,9 +55,11 @@ class DocItemApi extends ApiController
 
         $created = DocItem::create([
             'doc_id' => $doc->id,
+            'doc_uuid' => $doc->uuid,
             'line_number' => $request['line_number'],
             'item_id' => $item->id,
             'ref_id' => $ref_id,
+            'ref_uuid' => $ref_uuid,
             'item_code' => $request['item_code'],
             'item_uuid' => $item->uuid,
             'item_name' => $item->name,
@@ -67,7 +71,7 @@ class DocItemApi extends ApiController
         return $created;
     }
 
-    public function update(DocItemRequest $request, DocItem $doc_item)
+    public function update(DocItemRequest $request, $type, DocItem $doc_item)
     {
         $this->authorize('update', $doc_item);
 
@@ -88,7 +92,7 @@ class DocItemApi extends ApiController
         return $doc_item;
     }
 
-    public function destroy(DocItem $doc_item)
+    public function destroy($type, DocItem $doc_item)
     {
         $this->authorize('delete', $doc_item);
 

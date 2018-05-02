@@ -22,26 +22,26 @@ class DocItemApiTest extends TestCase
     }
 
 
-    // *** doc_item.index ***
+    // *** doc_items.index ***
 
     /** @test */
-    public function guest_user_cannot_index_doc_item()
+    public function guest_user_cannot_index_doc_items()
     {
-        $this->json('GET', route('api.doc_item.index', $this->type))
+        $this->json('GET', route('api.doc_items.index', $this->type))
             ->assertStatus(401);
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_index_doc_item()
+    public function unauthorized_user_denied_to_index_doc_items()
     {
         $this->signIn();
 
-        $this->json('GET', route('api.doc_item.index', $this->type))
+        $this->json('GET', route('api.doc_items.index', $this->type))
             ->assertStatus(403);
     }
 
     /** @test */
-    public function authorized_user_can_index_doc_item()
+    public function authorized_user_can_index_doc_items()
     {
         $this->signInWithPermission('docs.index');
 
@@ -58,7 +58,7 @@ class DocItemApiTest extends TestCase
 
         $user = auth()->user();
 
-        $this->json('GET', route('api.doc_item.index', $this->type))
+        $this->json('GET', route('api.doc_items.index', $this->type))
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
@@ -70,8 +70,8 @@ class DocItemApiTest extends TestCase
                     ]
                 ],
                 'links' => [
-                    'first' => "http://localhost/api/doc_item/{$this->type}?page=1",
-                    'last' => "http://localhost/api/doc_item/{$this->type}?page=1",
+                    'first' => "http://localhost/api/doc_items/{$this->type}?page=1",
+                    'last' => "http://localhost/api/doc_items/{$this->type}?page=1",
                     'prev' => null,
                     'next' => null
                 ],
@@ -79,7 +79,7 @@ class DocItemApiTest extends TestCase
                     'current_page' => 1,
                     'from' => 1,
                     'last_page' => 1,
-                    'path' => "http://localhost/api/doc_item/{$this->type}",
+                    'path' => "http://localhost/api/doc_items/{$this->type}",
                     'per_page' => 10,
                     'to' => 2,
                     'total' => 2
@@ -88,9 +88,9 @@ class DocItemApiTest extends TestCase
     }
 
 //    /** @test */
-//    public function authorized_user_can_filter_doc_item_by_doc_name()
+//    public function authorized_user_can_filter_doc_items_by_doc_name()
 //    {
-//        $this->signInWithPermission('doc_item.index');
+//        $this->signInWithPermission('doc_items.index');
 //
 //        $doc_item_a1 = factory(DocItem::class)->create([
 //            'name' => 'a-001',
@@ -107,7 +107,7 @@ class DocItemApiTest extends TestCase
 //            'type' => $this->type,
 //        ]);
 //
-//        $this->json('GET', route('api.doc_item.index', $this->type) . '?name=a-00')
+//        $this->json('GET', route('api.doc_items.index', $this->type) . '?name=a-00')
 //            ->assertStatus(200)
 //            ->assertJson([
 //                'data' => [
@@ -147,9 +147,9 @@ class DocItemApiTest extends TestCase
 //    }
 //
 //    /** @test */
-//    public function authorized_user_can_index_only_specified_type()
+//    public function authorized_user_can_index_doc_items_only_specified_type()
 //    {
-//        $this->signInWithPermission('doc_item.index');
+//        $this->signInWithPermission('doc_items.index');
 //
 //        $doc_item1 = factory(DocItem::class)->create([
 //            'type' => $this->type . '-another',
@@ -161,7 +161,7 @@ class DocItemApiTest extends TestCase
 //
 //        $user = auth()->user();
 //
-//        $this->json('GET', route('api.doc_item.index', $this->type))
+//        $this->json('GET', route('api.doc_items.index', $this->type))
 //            ->assertStatus(200)
 //            ->assertJson([
 //                'data' => [
@@ -191,14 +191,14 @@ class DocItemApiTest extends TestCase
 //            ]);
 //    }
 
-    // *** doc_item.show ***
+    // *** doc_items.show ***
 
     /** @test */
     public function guest_user_cannot_view_a_doc_item()
     {
         $doc_item1 = factory(DocItem::class)->create();
 
-        $this->json('GET', route('api.doc_item.show', [$this->type, $doc_item1->uuid]))
+        $this->json('GET', route('api.doc_items.show', [$this->type, $doc_item1->uuid]))
             ->assertStatus(401);
     }
 
@@ -209,7 +209,7 @@ class DocItemApiTest extends TestCase
 
         $doc_item1 = factory(DocItem::class)->create();
 
-        $this->json('GET', route('api.doc_item.show', [$this->type, $doc_item1->uuid]))
+        $this->json('GET', route('api.doc_items.show', [$this->type, $doc_item1->uuid]))
             ->assertStatus(403);
     }
 
@@ -220,7 +220,7 @@ class DocItemApiTest extends TestCase
 
         $doc_item1 = factory(DocItem::class)->create();
 
-        $this->json('GET', route('api.doc_item.show', [$this->type, $doc_item1->uuid]))
+        $this->json('GET', route('api.doc_items.show', [$this->type, $doc_item1->uuid]))
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
@@ -229,7 +229,7 @@ class DocItemApiTest extends TestCase
             ]);
     }
 
-    // *** doc_item.store ***
+    // *** doc_items.store ***
 
     /** @test */
     public function guest_user_cannot_create_a_doc_item()
@@ -240,7 +240,7 @@ class DocItemApiTest extends TestCase
 
         $doc_item1 = factory(DocItem::class)->make();
 
-        $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]), $doc_item1->toArray())
+        $this->json('POST', route('api.doc_items.store', [$this->type, $doc->uuid]), $doc_item1->toArray())
             ->assertStatus(401);
     }
 
@@ -255,20 +255,20 @@ class DocItemApiTest extends TestCase
 
         $doc_item1 = factory(DocItem::class)->make();
 
-        $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]), $doc_item1->toArray())
+        $this->json('POST', route('api.doc_items.store', [$this->type, $doc->uuid]), $doc_item1->toArray())
             ->assertStatus(403);
     }
 
     /**  @test */
     public function create_a_doc_item_requires_required_fields()
     {
-        $this->signInWithPermission('doc_item.create');
+        $this->signInWithPermission('docs.create');
 
         $doc = factory(Doc::class)->create([
             'type' => $this->type,
         ]);
 
-        $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]))
+        $this->json('POST', route('api.doc_items.store', [$this->type, $doc->uuid]))
             ->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
@@ -289,7 +289,7 @@ class DocItemApiTest extends TestCase
     /**  @test */
     public function create_a_doc_item_requires_valid_fields()
     {
-        $this->signInWithPermission('doc_item.create');
+        $this->signInWithPermission('docs.create');
 
         $doc = factory(Doc::class)->create([
             'type' => $this->type,
@@ -297,7 +297,7 @@ class DocItemApiTest extends TestCase
 
         $doc_item1 = factory(DocItem::class)->make();
 
-        $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]),
+        $this->json('POST', route('api.doc_items.store', [$this->type, $doc->uuid]),
             [
                 'ref_uuid' => 'a',
                 'line_number' => 'a',
@@ -339,7 +339,7 @@ class DocItemApiTest extends TestCase
 
         $doc_item1 = factory(DocItem::class)->make();
 
-        $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]),
+        $this->json('POST', route('api.doc_items.store', [$this->type, $doc->uuid]),
             [
                 'line_number' => $doc_item1->line_number,
                 'item_code' => $doc_item1->item_code,
@@ -348,12 +348,14 @@ class DocItemApiTest extends TestCase
             ])
             ->assertStatus(201);
 
-        $this->assertDatabaseHas('doc_item', [
+        $this->assertDatabaseHas('doc_items', [
             'doc_id' => $doc->id,
             'line_number' => $doc_item1->line_number,
             'ref_id' => null,
-            'item_id' => $doc_item1->item_id,
+            'doc_uuid' => $doc->uuid,
             'item_uuid' => $doc_item1->item_uuid,
+            'ref_uuid' => null,
+            'item_id' => $doc_item1->item_id,
             'item_code' => $doc_item1->item_code,
             'item_name' => $doc_item1->item_name,
             'quantity' => $doc_item1->quantity,
@@ -377,7 +379,7 @@ class DocItemApiTest extends TestCase
 
         $doc_item1 = factory(DocItem::class)->make();
 
-        $this->json('POST', route('api.doc_item.store', [$this->type, $doc->uuid]),
+        $this->json('POST', route('api.doc_items.store', [$this->type, $doc->uuid]),
             [
                 'ref_uuid' => $ref_doc_item->uuid,
                 'line_number' => $doc_item1->line_number,
@@ -388,7 +390,7 @@ class DocItemApiTest extends TestCase
             ->assertStatus(201);
 
         // ref doc_item
-        $this->assertDatabaseHas('doc_item', [
+        $this->assertDatabaseHas('doc_items', [
             'doc_id' => $ref_doc_item->doc_id,
             'line_number' => $ref_doc_item->line_number,
             'ref_id' => null,
@@ -402,7 +404,7 @@ class DocItemApiTest extends TestCase
         ]);
 
         // new doc_item
-        $this->assertDatabaseHas('doc_item', [
+        $this->assertDatabaseHas('doc_items', [
             'doc_id' => $doc->id,
             'line_number' => $doc_item1->line_number,
             'ref_id' => $ref_doc_item->id,
@@ -416,7 +418,7 @@ class DocItemApiTest extends TestCase
         ]);
     }
 
-    // *** doc_item.update ***
+    // *** doc_items.update ***
 
     /** @test */
     public function guest_user_cannot_update_a_doc_item()
@@ -425,7 +427,7 @@ class DocItemApiTest extends TestCase
 
         $doc_item_updated = factory(DocItem::class)->make();
 
-        $this->json('PATCH', route('api.doc_item.update', $doc_item1->uuid),
+        $this->json('PATCH', route('api.doc_items.update', [$this->type, $doc_item1->uuid]),
             [
                 'line_number' => $doc_item_updated->line_number,
                 'item_code' => $doc_item_updated->item_code,
@@ -444,7 +446,7 @@ class DocItemApiTest extends TestCase
 
         $doc_item_updated = factory(DocItem::class)->make();
 
-        $this->json('PATCH', route('api.doc_item.update', $doc_item1->uuid),
+        $this->json('PATCH', route('api.doc_items.update', [$this->type, $doc_item1->uuid]),
             [
                 'line_number' => $doc_item_updated->line_number,
                 'item_code' => $doc_item_updated->item_code,
@@ -461,7 +463,7 @@ class DocItemApiTest extends TestCase
 
         $doc_item1 = factory(DocItem::class)->create();
 
-        $this->json('PATCH', route('api.doc_item.update', $doc_item1->uuid))
+        $this->json('PATCH', route('api.doc_items.update', [$this->type, $doc_item1->uuid]))
             ->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
@@ -482,13 +484,13 @@ class DocItemApiTest extends TestCase
     /**  @test */
     public function update_a_doc_item_requires_valid_fields()
     {
-        $this->signInWithPermission('doc_item.update');
+        $this->signInWithPermission('docs.update');
 
         $doc_item1 = factory(DocItem::class)->create();
 
         //$doc_item_updated = factory(DocItem::class)->make();
 
-        $this->json('PATCH', route('api.doc_item.update', $doc_item1->uuid),
+        $this->json('PATCH', route('api.doc_items.update', [$this->type, $doc_item1->uuid]),
             [
                 'line_number' => 'a',
                 'item_code' => 'a',
@@ -524,7 +526,7 @@ class DocItemApiTest extends TestCase
 
         $doc_item_updated = factory(DocItem::class)->make();
 
-        $this->json('PATCH', route('api.doc_item.update', $doc_item1->uuid),
+        $this->json('PATCH', route('api.doc_items.update', [$this->type, $doc_item1->uuid]),
             [
                 'line_number' => $doc_item_updated->line_number,
                 'item_code' => $doc_item_updated->item_code,
@@ -533,7 +535,7 @@ class DocItemApiTest extends TestCase
             ])
             ->assertStatus(200);
 
-        $this->assertDatabaseHas('doc_item', [
+        $this->assertDatabaseHas('doc_items', [
             'id' => $doc_item1->id,
             'uuid' => $doc_item1->uuid,
             'line_number' => $doc_item_updated->line_number,
@@ -548,14 +550,14 @@ class DocItemApiTest extends TestCase
         ]);
     }
 
-    // *** doc_item.delete ***
+    // *** doc_items.delete ***
 
     /** @test */
     public function guest_user_cannot_delete_a_doc_item()
     {
         $doc_item1 = factory(DocItem::class)->create();
 
-        $this->json('DELETE', route('api.doc_item.destroy', $doc_item1->uuid))
+        $this->json('DELETE', route('api.doc_items.destroy', [$this->type, $doc_item1->uuid]))
             ->assertStatus(401);
     }
 
@@ -566,7 +568,7 @@ class DocItemApiTest extends TestCase
 
         $doc_item1 = factory(DocItem::class)->create();
 
-        $this->json('DELETE', route('api.doc_item.destroy', $doc_item1->uuid))
+        $this->json('DELETE', route('api.doc_items.destroy', [$this->type, $doc_item1->uuid]))
             ->assertStatus(403);
     }
 
@@ -577,10 +579,10 @@ class DocItemApiTest extends TestCase
 
         $doc_item1 = factory(DocItem::class)->create();
 
-        $this->json('DELETE', route('api.doc_item.destroy', $doc_item1->uuid))
+        $this->json('DELETE', route('api.doc_items.destroy', [$this->type, $doc_item1->uuid]))
             ->assertStatus(200);
 
-        $this->assertDatabaseMissing('doc_item', [
+        $this->assertDatabaseMissing('doc_items', [
             'id' => $doc_item1->id,
         ]);
     }

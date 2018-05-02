@@ -59,11 +59,11 @@
         </thead>
         <tbody>
             @if ($action == 'show' || $action == 'delete' || $action == 'move')
-                <tr v-for="doc_item in doc.doc_item" :class="{'table-info' : doc_item.editing, 'table-danger' : doc_item.deleting}">
+                <tr v-for="doc_item in doc.doc_items" :class="{'table-info' : doc_item.editing, 'table-danger' : doc_item.deleting}">
                     <template v-if="doc.moving">
                         <td>
                             <template v-if="doc_item.pending_quantity > 0">
-                                <input type="checkbox" checked :name="'doc_item[' + doc_item.uuid + ']'" :value="doc_item.item_code">
+                                <input type="checkbox" checked :name="'doc_items[' + doc_item.uuid + ']'" :value="doc_item.item_code">
                             </template>
                             <template v-else>
                                 -
@@ -80,7 +80,7 @@
                     <td>-</td>
                 </tr>
             @elseif ($action == 'create' || $action == 'edit')
-                <tr v-for="doc_item in doc.doc_item" v-if="! doc_item.deleted" :class="{'table-info' : doc_item.editing, 'table-danger' : doc_item.deleting}">
+                <tr v-for="doc_item in doc.doc_items" v-if="! doc_item.deleted" :class="{'table-info' : doc_item.editing, 'table-danger' : doc_item.deleting}">
                     <template v-if="doc_item.creating || doc_item.editing">
                         <td>
                             <input type="hidden" id="ref_uuid" name="ref_uuid" v-model="doc_item.ref_uuid">
@@ -93,7 +93,12 @@
                             </td>
                         </template>
                         <td>
-                            <doc-item-code :doc_item="doc_item"></doc-item-code>
+                            <template v-if="refer">
+                                <input type="text" class="form-control-plaintext" :value="doc_item.item_code" :readonly="true">
+                            </template>
+                            <template v-else>
+                                <doc-item-code :doc_item="doc_item"></doc-item-code>
+                            </template>
                         </td>
                         <td>
                             <input type="text" class="form-control form-control-sm" id="quantity" name="quantity" v-model="doc_item.quantity" :class="{'is-invalid': doc_item.errors.hasOwnProperty('quantity')}">

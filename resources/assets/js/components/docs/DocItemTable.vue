@@ -18,7 +18,7 @@
 
         methods: {
             addDocItemLine() {
-                this.doc.doc_item.push({
+                this.doc.doc_items.push({
                     uuid: '',
                     line_number: '',
                     item_uuid: '',
@@ -33,7 +33,7 @@
                 })
             },
             createDocItem(doc_item) {
-                axios.post('/api/doc_item/' + this.type + '/' + this.doc.uuid, {
+                axios.post('/api/doc_items/' + this.type + '/' + this.doc.uuid, {
                     line_number: doc_item.line_number,
                     item_code: doc_item.item_code,
                     quantity: doc_item.quantity,
@@ -52,7 +52,7 @@
             },
             editDocItem(doc_item) {
                 console.log('edit');
-                axios.patch('/api/doc_item/' + doc_item.uuid, {
+                axios.patch('/api/doc_items/' + this.type + '/' + doc_item.uuid, {
                     line_number: doc_item.line_number,
                     item_code: doc_item.item_code,
                     quantity: doc_item.quantity,
@@ -69,7 +69,7 @@
                 })
             },
             deleteDocItem(doc_item) {
-                axios.delete('/api/doc_item/' + doc_item.uuid)
+                axios.delete('/api/doc_items/' + this.type + '/' + doc_item.uuid)
                 .then(data => {
                     console.log(data);
                     doc_item.deleting = false;

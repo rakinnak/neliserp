@@ -51126,7 +51126,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             doc: {
                 uuid: '',
-                doc_item: []
+                doc_items: []
             },
             // companies: [],
             form: new Form({
@@ -51147,9 +51147,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.items = response.data.data;
         });
 
-        if (this.input.doc_item.length == 0) {
+        if (this.input.doc_items.length == 0) {
             // TODO: should refactor
-            this.doc.doc_item.push({
+            this.doc.doc_items.push({
                 uuid: '',
                 line_number: 1,
                 item_uuid: '',
@@ -51168,12 +51168,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var line_number = 1;
 
-            for (var doc_item_uuid in this.input.doc_item) {
-                axios.get('/api/doc_item/' + this.input.source_type + '/' + doc_item_uuid).then(function (response) {
+            for (var doc_item_uuid in this.input.doc_items) {
+                axios.get('/api/doc_items/' + this.input.source_type + '/' + doc_item_uuid).then(function (response) {
                     var ref_doc_item = response.data.data;
 
                     // TODO: should refactor
-                    _this.doc.doc_item.push({
+                    _this.doc.doc_items.push({
                         uuid: '',
                         line_number: line_number++,
                         item_uuid: '',
@@ -51261,7 +51261,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 // TODO: redirect to show page after added
                 var doc_item_creating_count = 0;
 
-                _this2.doc.doc_item.forEach(function (doc_item) {
+                _this2.doc.doc_items.forEach(function (doc_item) {
                     if (doc_item.creating) {
                         doc_item_creating_count++;
                     }
@@ -51275,11 +51275,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 var doc_item_creating_success = 0;
 
-                _this2.doc.doc_item.forEach(function (doc_item) {
+                _this2.doc.doc_items.forEach(function (doc_item) {
                     var _this3 = this;
 
                     if (doc_item.creating) {
-                        axios.post('/api/doc_item/' + this.type + '/' + this.doc.uuid, {
+                        axios.post('/api/doc_items/' + this.type + '/' + this.doc.uuid, {
                             ref_uuid: doc_item.ref_uuid,
                             line_number: doc_item.line_number,
                             item_code: doc_item.item_code,
@@ -51570,7 +51570,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.form.submit('patch', '/api/docs/' + this.type + '/' + this.uuid).then(function (data) {
                 // this.doc.doc_item.forEach(function (doc_item) {
-                //     axios.patch('/api/doc_item/' + doc_item.uuid, {
+                //     axios.patch('/api/doc_items/' + this.type + '/' + doc_item.uuid, {
                 //         line_number: doc_item.line_number,
                 //         item_uuid: doc_item.item_uuid,
                 //         quantity: doc_item.quantity,
@@ -51756,7 +51756,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         addDocItemLine: function addDocItemLine() {
-            this.doc.doc_item.push({
+            this.doc.doc_items.push({
                 uuid: '',
                 line_number: '',
                 item_uuid: '',
@@ -51771,7 +51771,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         createDocItem: function createDocItem(doc_item) {
-            axios.post('/api/doc_item/' + this.type + '/' + this.doc.uuid, {
+            axios.post('/api/doc_items/' + this.type + '/' + this.doc.uuid, {
                 line_number: doc_item.line_number,
                 item_code: doc_item.item_code,
                 quantity: doc_item.quantity,
@@ -51788,7 +51788,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         editDocItem: function editDocItem(doc_item) {
             console.log('edit');
-            axios.patch('/api/doc_item/' + doc_item.uuid, {
+            axios.patch('/api/doc_items/' + this.type + '/' + doc_item.uuid, {
                 line_number: doc_item.line_number,
                 item_code: doc_item.item_code,
                 quantity: doc_item.quantity,
@@ -51803,7 +51803,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         deleteDocItem: function deleteDocItem(doc_item) {
-            axios.delete('/api/doc_item/' + doc_item.uuid).then(function (data) {
+            axios.delete('/api/doc_items/' + this.type + '/' + doc_item.uuid).then(function (data) {
                 console.log(data);
                 doc_item.deleting = false;
                 doc_item.deleted = true;

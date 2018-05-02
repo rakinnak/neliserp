@@ -29,7 +29,7 @@ class DocItemRequest extends FormRequest
             'item_code' => 'required|exists:items,code',
             'quantity' => 'required|numeric|min:0',
             'unit_price' => 'required|numeric|min:0',
-            'ref_uuid' => 'nullable|exists:doc_item,uuid',
+            'ref_uuid' => 'nullable|exists:doc_items,uuid',
         ];
         
     }

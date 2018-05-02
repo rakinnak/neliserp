@@ -6,7 +6,7 @@
             return {
                 doc: {
                     uuid: '',
-                    doc_item: [],
+                    doc_items: [],
                 },
                 // companies: [],
                 form: new Form({
@@ -26,9 +26,9 @@
                     this.items = response.data.data;
                 });
 
-            if (this.input.doc_item.length == 0) {
+            if (this.input.doc_items.length == 0) {
                 // TODO: should refactor
-                this.doc.doc_item.push({
+                this.doc.doc_items.push({
                     uuid: '',
                     line_number: 1,
                     item_uuid: '',
@@ -47,13 +47,13 @@
 
                 var line_number = 1;
 
-                for (var doc_item_uuid in this.input.doc_item) {
-                    axios.get('/api/doc_item/' + this.input.source_type + '/' + doc_item_uuid)
+                for (var doc_item_uuid in this.input.doc_items) {
+                    axios.get('/api/doc_items/' + this.input.source_type + '/' + doc_item_uuid)
                         .then(response => {
                             var ref_doc_item = response.data.data;
 
                             // TODO: should refactor
-                            this.doc.doc_item.push({
+                            this.doc.doc_items.push({
                                 uuid: '',
                                 line_number: line_number++,
                                 item_uuid: '',
@@ -142,7 +142,7 @@
                         // TODO: redirect to show page after added
                         var doc_item_creating_count = 0;
 
-                        this.doc.doc_item.forEach(function (doc_item) {
+                        this.doc.doc_items.forEach(function (doc_item) {
                             if (doc_item.creating) {
                                 doc_item_creating_count++;
                             }
@@ -156,9 +156,9 @@
 
                         var doc_item_creating_success = 0;
 
-                        this.doc.doc_item.forEach(function (doc_item) {
+                        this.doc.doc_items.forEach(function (doc_item) {
                             if (doc_item.creating) {
-                                axios.post('/api/doc_item/' + this.type + '/' + this.doc.uuid, {
+                                axios.post('/api/doc_items/' + this.type + '/' + this.doc.uuid, {
                                     ref_uuid: doc_item.ref_uuid,
                                     line_number: doc_item.line_number,
                                     item_code: doc_item.item_code,

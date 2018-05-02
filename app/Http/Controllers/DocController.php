@@ -24,7 +24,7 @@ class DocController extends Controller
         } else {
             $input = [
                 'company_code' => '',
-                'doc_item' => [],
+                'doc_items' => [],
             ];
         }
 
