@@ -13,7 +13,7 @@ $factory->define(App\DocItem::class, function (Faker $faker) {
         'doc_id' => $doc->id,
         'item_id' => $item->id,
         'ref_id' => null,
-        'doc_uuid' => $item->uuid,
+        'doc_uuid' => $doc->uuid,
         'item_uuid' => $item->uuid,
         'ref_uuid' => null,
         'line_number' => $line_number,

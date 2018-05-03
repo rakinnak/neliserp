@@ -38,6 +38,8 @@ Vue.component('doc-move', require('./components/docs/DocMove.vue'));
 
 Vue.component('doc-item-code', require('./components/docs/DocItemCode.vue'));
 
+Vue.component('doc-item-index', require('./components/doc_items/DocItemIndex.vue'));
+
 Vue.component('pagination', require('./components/Pagination.vue'));
 
 window.Form = require('./Form');

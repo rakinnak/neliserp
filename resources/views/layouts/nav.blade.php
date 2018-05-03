@@ -3,17 +3,29 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="purchase" data-toggle="dropdown">{{ __('purchase') }}</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="/docs/po">{{ __('docs.po') }}</a>
-              <a class="dropdown-item" href="/docs/ro">{{ __('docs.ro') }}</a>
-              <a class="dropdown-item" href="/docs/ri">{{ __('docs.ri') }}</a>
+              <h6 class="dropdown-header">pending</h6>
+              <a class="dropdown-item" href="/doc_items/po">&middot; {{ __('doc_items.po') }}</a>
+              <a class="dropdown-item" href="/doc_items/ro">&middot; {{ __('doc_items.ro') }}</a>
+              <a class="dropdown-item" href="/doc_items/ri">&middot; {{ __('doc_items.ri') }}</a>
+              <div class="dropdown-divider"></div>
+              <h6 class="dropdown-header">history</h6>
+              <a class="dropdown-item" href="/docs/po">&middot; {{ __('docs.po') }}</a>
+              <a class="dropdown-item" href="/docs/ro">&middot; {{ __('docs.ro') }}</a>
+              <a class="dropdown-item" href="/docs/ri">&middot; {{ __('docs.ri') }}</a>
             </div>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="sales" data-toggle="dropdown">{{ __('sales') }}</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="/docs/so">{{ __('docs.so') }}</a>
-              <a class="dropdown-item" href="/docs/do">{{ __('docs.do') }}</a>
-              <a class="dropdown-item" href="/docs/si">{{ __('docs.si') }}</a>
+              <h6 class="dropdown-header">pending</h6>
+              <a class="dropdown-item" href="/doc_items/so">&middot; {{ __('doc_items.so') }}</a>
+              <a class="dropdown-item" href="/doc_items/do">&middot; {{ __('doc_items.do') }}</a>
+              <a class="dropdown-item" href="/doc_items/si">&middot; {{ __('doc_items.si') }}</a>
+              <div class="dropdown-divider"></div>
+              <h6 class="dropdown-header">history</h6>
+              <a class="dropdown-item" href="/docs/so">&middot; {{ __('docs.so') }}</a>
+              <a class="dropdown-item" href="/docs/do">&middot; {{ __('docs.do') }}</a>
+              <a class="dropdown-item" href="/docs/si">&middot; {{ __('docs.si') }}</a>
             </div>
         </li>
     

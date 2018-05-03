@@ -20,6 +20,7 @@ class DocSeeder extends Seeder
             for ($line = 1; $line <= 3; $line++) {
                 factory(DocItem::class)->create([
                     'doc_id' => $doc->id,
+                    'doc_uuid' => $doc->uuid,
                     'line_number' => $line,
                 ]);
             }

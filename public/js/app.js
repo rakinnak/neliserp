@@ -16869,11 +16869,13 @@ Vue.component('doc-move', __webpack_require__(80));
 
 Vue.component('doc-item-code', __webpack_require__(82));
 
-Vue.component('pagination', __webpack_require__(85));
+Vue.component('doc-item-index', __webpack_require__(85));
 
-window.Form = __webpack_require__(87);
+Vue.component('pagination', __webpack_require__(87));
 
-window.getParameterByName = __webpack_require__(88);
+window.Form = __webpack_require__(89);
+
+window.getParameterByName = __webpack_require__(90);
 
 var app = new Vue({
   el: '#app'
@@ -52091,6 +52093,97 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "resources/assets/js/components/doc_items/DocItemIndex.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7bd4abf4", Component.options)
+  } else {
+    hotAPI.reload("data-v-7bd4abf4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 86 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            dataset: false,
+            doc_items: [],
+            done: false
+        };
+    },
+    created: function created() {
+        this.fetch();
+    },
+
+
+    methods: {
+        fetch: function fetch(page) {
+            axios.get(this.url(page)).then(this.refresh);
+        },
+        url: function url(page) {
+            if (!page) {
+                var query = location.search.match(/page=(\d+)/);
+
+                page = query ? query[1] : 1;
+            }
+
+            var name = getParameterByName('name');
+
+            return '/api' + location.pathname + '?name=' + name + '&page=' + page;
+        },
+        refresh: function refresh(response) {
+            this.dataset = response.data;
+            this.doc_items = response.data.data;
+
+            this.done = true;
+        }
+    }
+});
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(88)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
 Component.options.__file = "resources/assets/js/components/Pagination.vue"
 
 /* hot reload */
@@ -52113,7 +52206,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 86 */
+/* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52178,7 +52271,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 87 */
+/* 89 */
 /***/ (function(module, exports) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -52296,7 +52389,7 @@ var Form = function () {
 module.exports = Form;
 
 /***/ }),
-/* 88 */
+/* 90 */
 /***/ (function(module, exports) {
 
 function getParameterByName(name) {

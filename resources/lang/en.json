@@ -20,5 +20,21 @@
     "doc_item.item_code": "item",
     "doc_item.quantity": "quantity",
     "doc_item.unit_price": "unit price",
-    "doc_item.action": "action"
+    "doc_item.action": "action",
+    "doc_items.po": "purchase order",
+    "doc_items.ro": "receive order",
+    "doc_items.ri": "receive invoice",
+    "doc_items.so": "sales order",
+    "doc_items.do": "delivery order",
+    "doc_items.si": "sales invoice",
+    "doc_items.line_number": "#",
+    "doc_items.item_code": "item code",
+    "doc_items.pending_quantity": "pending",
+    "doc_items.quantity": "quantity",
+    "doc_items.unit_price": "unit price",
+    "doc_items.action": "action",
+    "doc_items.doc_name": "doc name",
+    "doc_items.company_code": "company",
+    "doc_items.name": "name",
+    "doc_items.issued_at": "issued at"
 }

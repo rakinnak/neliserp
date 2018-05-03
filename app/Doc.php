@@ -54,6 +54,11 @@ class Doc extends Model
         return Carbon::parse($value)->format('Y-m-d');
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     public function doc_items()
     {
         return $this->hasMany(DocItem::class);

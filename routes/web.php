@@ -27,4 +27,7 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('docs/{type}/{uuid}/delete', 'DocController@delete');
 
     Route::put('docs/move', 'DocController@move');
+
+    Route::get('doc_items/{type}', 'DocItemController@index')->name('doc_items.index');
+
 });

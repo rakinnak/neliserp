@@ -19,6 +19,10 @@ class DocItemApi extends ApiController
 
         // TODO: search by type
         $doc_items = DocItem::filter($filter)
+            ->whereHas('doc', function($query) use ($type) {
+                $query->where('type', $type);
+            })
+            ->where('pending_quantity', '>', 0)
             ->paginate(10); // TODO: per page configuration
 
         return DocItemResource::collection($doc_items);

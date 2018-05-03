@@ -90,7 +90,7 @@ class DocItemApiTest extends TestCase
 //    /** @test */
 //    public function authorized_user_can_filter_doc_items_by_doc_name()
 //    {
-//        $this->signInWithPermission('doc_items.index');
+//        $this->signInWithPermission('docs.index');
 //
 //        $doc_item_a1 = factory(DocItem::class)->create([
 //            'name' => 'a-001',
@@ -145,18 +145,26 @@ class DocItemApiTest extends TestCase
 //                ]
 //            ]);
 //    }
-//
+
 //    /** @test */
 //    public function authorized_user_can_index_doc_items_only_specified_type()
 //    {
-//        $this->signInWithPermission('doc_items.index');
+//        $this->signInWithPermission('docs.index');
 //
-//        $doc_item1 = factory(DocItem::class)->create([
+//        $doc1 = factory(Doc::class)->create([
 //            'type' => $this->type . '-another',
 //        ]);
 //
-//        $doc_item2 = factory(DocItem::class)->create([
+//        $doc2 = factory(Doc::class)->create([
 //            'type' => $this->type,
+//        ]);
+//
+//        $doc_item1 = factory(DocItem::class)->create([
+//            'doc_id' => $doc1->id,
+//        ]);
+//
+//        $doc_item2 = factory(DocItem::class)->create([
+//            'doc_id' => $doc2->id,
 //        ]);
 //
 //        $user = auth()->user();
@@ -168,20 +176,21 @@ class DocItemApiTest extends TestCase
 //                    [
 //                        'uuid' => $doc_item2->uuid,
 //                        'name' => $doc_item2->name,
-//                        'type' => $this->type,
+//                        'type' => $doc2->type,
 //                        'company_uuid' => $doc_item2->company_uuid,
 //                        'company_code' => $doc_item2->company_code,
 //                        'company_name' => $doc_item2->company_name,
 //                        'issued_at' => $doc_item2->issued_at,
 //                    ],
 //                ]
-//            ])
+//            ]);
+//
 //            ->assertJsonMissing([
 //                'data' => [
 //                    [
 //                        'uuid' => $doc_item1->uuid,
 //                        'name' => $doc_item1->name,
-//                        'type' => $this->type . '-another',
+//                        'type' => $doc1->type . '-another',
 //                        'company_uuid' => $doc_item1->company_uuid,
 //                        'company_code' => $doc_item1->company_code,
 //                        'company_name' => $doc_item1->company_name,

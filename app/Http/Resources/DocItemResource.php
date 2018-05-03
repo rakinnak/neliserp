@@ -18,6 +18,7 @@ class DocItemResource extends JsonResource
             'uuid' => $this->uuid,
             'ref_id' => $this->ref_id,
             'line_number' => $this->line_number,
+            'doc_uuid' => $this->doc_uuid,
             'item_uuid' => $this->item_uuid,
             'item_code' => $this->item_code,
             'item_name' => $this->item_name,
@@ -31,8 +32,10 @@ class DocItemResource extends JsonResource
             'moving' => false,      // TODO: temp assign, should be definied in Vue
             'errors' => [],
             'refer' => '',
-            'doc_name' => $this->doc->name,
             'ref_uuid' => '',
+            'doc_name' => $this->doc->name,
+            'doc_issued_at' => $this->doc->issued_at,
+            'doc_company_code' => $this->doc->company->code,
         ];
     }
 }
