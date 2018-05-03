@@ -42,17 +42,18 @@ class DocApi extends ApiController
 
         $user = auth()->user();
 
-        $company = Company::where('code', $request['company_code'])
+        $partner = Company::where('code', $request['partner_code'])
             ->first();
 
         $created = Doc::create([
             'name' => $request['name'],
             'type' => $type,
-            'company_code' => $request['company_code'],
             'issued_at' => $request['issued_at'],
-            'company_id' => $company->id,
-            'company_uuid' => $company->uuid,
-            'company_name' => $company->name,
+            'partner_type' => 'App\Company',
+            'partner_id' => $partner->id,
+            'partner_uuid' => $partner->uuid,
+            'partner_code' => $partner->code,
+            'partner_name' => $partner->name,
             'user_id' => $user->id,
             'user_uuid' => $user->uuid,
             'user_username' => $user->username,
@@ -65,15 +66,16 @@ class DocApi extends ApiController
     {
         $this->authorize('update', $doc);
 
-        $company = Company::where('code', $request['company_code'])
+        $partner = Company::where('code', $request['partner_code'])
             ->first();
 
         $doc->name = $request['name'];
-        $doc->company_code = $request['company_code'];
-        $doc->company_id = $company->id;
-        $doc->company_uuid = $company->uuid;
-        $doc->company_code = $company->code;
-        $doc->company_name = $company->name;
+        $doc->partner_code = $request['partner_code'];
+        $doc->partner_type = 'App\Company';
+        $doc->partner_id = $partner->id;
+        $doc->partner_uuid = $partner->uuid;
+        $doc->partner_code = $partner->code;
+        $doc->partner_name = $partner->name;
 
         $doc->save();
 

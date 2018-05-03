@@ -30,7 +30,7 @@ class DocRequest extends FormRequest
                 Rule::unique('docs')
                     ->ignore($this->doc ? $this->doc->id : null),
             ],
-            'company_code' => 'required|exists:companies,code',
+            'partner_code' => 'required|exists:companies,code',
             'issued_at' => 'required|date',
         ];
         

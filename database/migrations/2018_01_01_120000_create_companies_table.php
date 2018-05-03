@@ -18,6 +18,8 @@ class CreateCompaniesTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('code')->unique();
             $table->string('name')->index();
+            $table->boolean('is_customer')->default(false);
+            $table->boolean('is_supplier')->default(false);
             $table->timestamps();
         });
     }

@@ -15,14 +15,15 @@ class CreateDocsTable extends Migration
     {
         Schema::create('docs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('company_id');
             $table->unsignedInteger('user_id');
             $table->uuid('uuid')->unique();
             $table->string('name')->index();
             $table->string('type'); // purchase_order, receive_order, receive_invoice, sales_order, delivery_order, sales_invoice
-            $table->uuid('company_uuid');
-            $table->string('company_code');
-            $table->string('company_name');
+            $table->string('partner_type')->index();
+            $table->unsignedInteger('partner_id')->index();
+            $table->uuid('partner_uuid');
+            $table->string('partner_code');
+            $table->string('partner_name');
             $table->uuid('user_uuid');
             $table->uuid('user_username');
             $table->timestamp('issued_at');
@@ -32,11 +33,6 @@ class CreateDocsTable extends Migration
 
             // keys
             //$table->unique(['name', 'type']);
-
-            $table->foreign('company_id')
-                ->references('id')
-                ->on('companies')
-                ->onDelete('cascade');
         });
     }
 

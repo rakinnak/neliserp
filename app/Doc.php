@@ -14,14 +14,15 @@ class Doc extends Model
     protected $fillable = [
         'name',
         'type',
-        'company_id',
-        'company_uuid',
-        'company_code',
-        'company_name',
         'user_id',
         'user_uuid',
         'user_username',
         'issued_at',
+        'partner_type',
+        'partner_id',
+        'partner_uuid',
+        'partner_code',
+        'partner_name',
     ];
 
     protected $dates = [
@@ -54,13 +55,13 @@ class Doc extends Model
         return Carbon::parse($value)->format('Y-m-d');
     }
 
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
-
     public function doc_items()
     {
         return $this->hasMany(DocItem::class);
+    }
+
+    public function partner()
+    {
+        return $this->morphTo();
     }
 }
