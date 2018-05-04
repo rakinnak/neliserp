@@ -4,8 +4,17 @@
     "password": "password",
     "items.code": "code",
     "items.name": "name",
+
     "companies.code": "code",
     "companies.name": "name",
+
+    "persons.code": "code",
+    "persons.name": "name",
+
+    "partners.subject": "subject",
+    "partners.code": "code",
+    "partners.name": "name",
+
     "docs.code": "code",
     "docs.name": "name",
     "docs.company_code": "company",
@@ -16,6 +25,7 @@
     "docs.so": "sales order",
     "docs.do": "delivery order",
     "docs.si": "sales invoice",
+
     "doc_item.line_number": "#",
     "doc_item.item_code": "item",
     "doc_item.quantity": "quantity",
@@ -37,6 +47,8 @@
     "doc_items.company_code": "company",
     "doc_items.name": "name",
     "doc_items.issued_at": "issued at",
+
     "partners.customer": "customer",
     "partners.supplier": "supplier"
+
 }

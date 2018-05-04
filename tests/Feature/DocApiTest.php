@@ -163,7 +163,7 @@ use App\Doc;
 //    }
 //
 //    /** @test */
-//    public function authorized_user_can_index_only_specified_type()
+//    public function authorized_user_can_index_docs_only_specified_type()
 //    {
 //        $this->signInWithPermission('docs.index');
 //

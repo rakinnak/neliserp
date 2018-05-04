@@ -18,6 +18,7 @@ class PartnerResource extends JsonResource
             'uuid' => $this->uuid,
             'code' => $this->code,
             'name' => $this->name,
+            'subject' => strtolower(str_replace('App\\', '', $this->subject_type)),
         ];
     }
 }

@@ -11,7 +11,7 @@ use App\Http\Resources\PartnerCollection;
 
 class PartnerApi extends ApiController
 {
-    public function index(PartnerFilter $filter)
+    public function index(PartnerFilter $filter, $role)
     {
         $this->authorize('index', Partner::class);
 
@@ -23,6 +23,7 @@ class PartnerApi extends ApiController
         }
 
         $partners = Partner::filter($filter)
+            ->where("is_{$role}", true)
             ->paginate($per_page); // TODO: per page configuration
 
         return PartnerResource::collection($partners);

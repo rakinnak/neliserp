@@ -28,6 +28,18 @@ Vue.component('company-show', require('./components/companies/CompanyShow.vue'))
 Vue.component('company-edit', require('./components/companies/CompanyEdit.vue'));
 Vue.component('company-delete', require('./components/companies/CompanyDelete.vue'));
 
+Vue.component('person-index', require('./components/persons/PersonIndex.vue'));
+Vue.component('person-create', require('./components/persons/PersonCreate.vue'));
+Vue.component('person-show', require('./components/persons/PersonShow.vue'));
+Vue.component('person-edit', require('./components/persons/PersonEdit.vue'));
+Vue.component('person-delete', require('./components/persons/PersonDelete.vue'));
+
+Vue.component('partner-index', require('./components/partners/PartnerIndex.vue'));
+Vue.component('partner-create', require('./components/partners/PartnerCreate.vue'));
+Vue.component('partner-show', require('./components/partners/PartnerShow.vue'));
+Vue.component('partner-edit', require('./components/partners/PartnerEdit.vue'));
+Vue.component('partner-delete', require('./components/partners/PartnerDelete.vue'));
+
 Vue.component('doc-index', require('./components/docs/DocIndex.vue'));
 Vue.component('doc-create', require('./components/docs/DocCreate.vue'));
 Vue.component('doc-show', require('./components/docs/DocShow.vue'));

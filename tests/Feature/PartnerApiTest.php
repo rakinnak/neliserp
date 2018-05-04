@@ -85,6 +85,39 @@ class PartnerApiTest extends TestCase
             ]);
     }
 
+    /** @test */
+    public function authorized_user_can_index_partners_only_specified_role()
+    {
+        $this->signInWithPermission('partners.index');
+
+        $partner1 = $this->create($this->role . '-another', $this->subject);
+
+        $partner2 = $this->create($this->role, $this->subject);
+
+        $user = auth()->user();
+
+        $this->json('GET', route('api.partners.index', [$this->role]))
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    [
+                        'uuid' => $partner2->uuid,
+                        'code' => $partner2->code,
+                        'name' => $partner2->name,
+                    ]
+                ]
+            ])
+            ->assertJsonMissing([
+                'data' => [
+                    [
+                        'uuid' => $partner1->uuid,
+                        'code' => $partner1->code,
+                        'name' => $partner1->name,
+                    ]
+                ]
+            ]);
+    }
+
 //    /** @test */
 //    public function authorized_user_can_filter_partners_by_code()
 //    {
@@ -427,8 +460,8 @@ class PartnerApiTest extends TestCase
             'subject_uuid' => $company1->uuid,
             'code' => $company1->code,
             'name' => $company1->name,
-            'is_customer' => $this->role == 'customer',
-            'is_supplier' => $this->role == 'supplier',
+            'is_customer' => $role == 'customer',
+            'is_supplier' => $role == 'supplier',
         ]);
     }
 
