@@ -36,5 +36,7 @@
     "doc_items.doc_name": "doc name",
     "doc_items.company_code": "company",
     "doc_items.name": "name",
-    "doc_items.issued_at": "issued at"
+    "doc_items.issued_at": "issued at",
+    "partners.customer": "customer",
+    "partners.supplier": "supplier"
 }

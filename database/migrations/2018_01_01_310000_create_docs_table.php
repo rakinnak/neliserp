@@ -15,12 +15,11 @@ class CreateDocsTable extends Migration
     {
         Schema::create('docs', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('partner_id')->index();
             $table->unsignedInteger('user_id');
             $table->uuid('uuid')->unique();
             $table->string('name')->index();
             $table->string('type'); // purchase_order, receive_order, receive_invoice, sales_order, delivery_order, sales_invoice
-            $table->string('partner_type')->index();
-            $table->unsignedInteger('partner_id')->index();
             $table->uuid('partner_uuid');
             $table->string('partner_code');
             $table->string('partner_name');

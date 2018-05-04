@@ -6,7 +6,6 @@ use App\Filters\CompanyFilter;
 use App\Company;
 use App\Http\Requests\CompanyRequest;
 use App\Http\Resources\CompanyResource;
-use App\Http\Resources\CompanyCollection;
 
 class CompanyApi extends ApiController
 {

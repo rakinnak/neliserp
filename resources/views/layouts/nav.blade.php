@@ -35,8 +35,12 @@
             </li>
         @endcan
     
-        <li class="nav-item">
-            <a class="nav-link" href="/companies">{{ __('companies') }}</a>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="partners" data-toggle="dropdown">{{ __('partners') }}</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/partners/customer">{{ __('partners.customer') }}</a>
+              <a class="dropdown-item" href="/partners/supplier">{{ __('partners.supplier') }}</a>
+            </div>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/reports">{{ __('reports') }}</a>

@@ -17,12 +17,11 @@ class Doc extends Model
         'user_id',
         'user_uuid',
         'user_username',
-        'issued_at',
-        'partner_type',
         'partner_id',
         'partner_uuid',
         'partner_code',
         'partner_name',
+        'issued_at',
     ];
 
     protected $dates = [

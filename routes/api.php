@@ -13,6 +13,18 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::patch('companies/{company}', 'Api\CompanyApi@update')->name('api.companies.update');
     Route::delete('companies/{company}', 'Api\CompanyApi@destroy')->name('api.companies.destroy');
 
+    Route::get('persons', 'Api\PersonApi@index')->name('api.persons.index');
+    Route::post('persons', 'Api\PersonApi@store')->name('api.persons.store');
+    Route::get('persons/{person}', 'Api\PersonApi@show')->name('api.persons.show');
+    Route::patch('persons/{person}', 'Api\PersonApi@update')->name('api.persons.update');
+    Route::delete('persons/{person}', 'Api\PersonApi@destroy')->name('api.persons.destroy');
+
+    Route::get('partners/{role}', 'Api\PartnerApi@index')->name('api.partners.index');
+    Route::post('partners/{role}', 'Api\PartnerApi@store')->name('api.partners.store');
+    Route::get('partners/{role}/{partner}', 'Api\PartnerApi@show')->name('api.partners.show');
+    Route::patch('partners/{role}/{partner}', 'Api\PartnerApi@update')->name('api.partners.update');
+    Route::delete('partners/{role}/{partner}', 'Api\PartnerApi@destroy')->name('api.partners.destroy');
+
     Route::get('docs/{type}', 'Api\DocApi@index')->name('api.docs.index');
     Route::post('docs/{type}', 'Api\DocApi@store')->name('api.docs.store');
     Route::get('docs/{type}/{doc}', 'Api\DocApi@show')->name('api.docs.show');

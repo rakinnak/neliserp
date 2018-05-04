@@ -25,6 +25,18 @@ class PermissionSeeder extends Seeder
             'companies.update',
             'companies.delete',
 
+            'persons.index',
+            'persons.show',
+            'persons.create',
+            'persons.update',
+            'persons.delete',
+
+            'partners.index',
+            'partners.show',
+            'partners.create',
+            'partners.update',
+            'partners.delete',
+
             'docs.index',
             'docs.show',
             'docs.create',
