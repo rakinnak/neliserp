@@ -91,7 +91,7 @@ class PartnerApiTest extends TestCase
     {
         $this->signInWithPermission('partners.index');
 
-        $partner1 = $this->create($this->role . '-another', $this->subject);
+        $partner1 = $this->create('person', $this->subject);
 
         $partner2 = $this->create($this->role, $this->subject);
 
@@ -613,6 +613,8 @@ class PartnerApiTest extends TestCase
 
     protected function create($role, $subject)
     {
+        return factory(Partner::class)->states($role, $subject)->create();
+
         switch ($subject) {
             case 'company':
                 $company1 = factory(Company::class)->create();
