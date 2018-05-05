@@ -12,8 +12,7 @@ $factory->define(App\Partner::class, function (Faker $faker) {
         'subject_uuid' => $company->uuid,
         'code' => $company->code,
         'name' => $company->name,
-        'is_customer' => false,
-        'is_supplier' => false,
+        'type' => $faker->randomElement(['customer', 'suppplier']),
     ];
 });
 
@@ -56,10 +55,10 @@ $factory->state(App\Partner::class, 'person', function (Faker $faker) {
 });
 
 $factory->state(App\Partner::class, 'customer', [
-    'is_customer' => true
+    'type' => 'customer',
 ]);
 
 $factory->state(App\Partner::class, 'supplier', [
-    'is_supplier' => true
+    'type' => 'supplier',
 ]);
 

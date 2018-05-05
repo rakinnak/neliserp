@@ -52109,7 +52109,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             limit: 100,
             templates: {
                 notFound: function notFound(data) {
-                    return '<div class="tt-empty">+ add <strong>' + data.query + '</strong></div>';
+                    return '<div class="tt-empty">not found <strong>' + data.query + '</strong></div>';
                 },
                 suggestion: function suggestion(partner) {
                     return '<div>' + partner.code + ' : ' + partner.name + '</div>';
@@ -52437,7 +52437,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             limit: 100,
             templates: {
                 notFound: function notFound(data) {
-                    return '<div class="tt-empty">+ add <strong>' + data.query + '</strong></div>';
+                    return '<div class="tt-empty">not found <strong>' + data.query + '</strong></div>';
                 },
                 suggestion: function suggestion(partner) {
                     return '<div>' + partner.code + ' : ' + partner.name + '</div>';
@@ -52876,7 +52876,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             limit: 100,
             templates: {
                 notFound: function notFound(data) {
-                    return '<div class="tt-empty">+ add <strong>' + data.query + '</strong></div>';
+                    return '<div class="tt-empty">not found <strong>' + data.query + '</strong></div>';
                 },
                 suggestion: function suggestion(item) {
                     return '<div>' + item.code + ' : ' + item.name + '</div>';

@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-6 mb-3">
-        @if ($action == 'show' || $action == 'delete')
+        @if ($action == 'show' || $action == 'edit' || $action == 'delete')
             <input type="text" class="form-control-plaintext" id="subject" name="subject" :value="partner.subject" :readonly="true">
-        @elseif ($action == 'create' || $action == 'edit')
+        @elseif ($action == 'create')
         <div class="custom-control custom-radio custom-control-inline">
             <input type="radio" id="subject-company" name="subject" v-model="form.subject" value="company"
                 class="custom-control-input"

@@ -45,6 +45,7 @@
     "doc_items.action": "action",
     "doc_items.doc_name": "doc name",
     "doc_items.company_code": "company",
+    "doc_items.partner_code": "partner",
     "doc_items.name": "name",
     "doc_items.issued_at": "issued at",
 

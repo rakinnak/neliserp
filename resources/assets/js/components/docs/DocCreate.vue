@@ -107,7 +107,7 @@
                 limit: 100,
                 templates: {
                     notFound: function (data) {
-                        return '<div class="tt-empty">+ add <strong>' + data.query + '</strong></div>';
+                        return '<div class="tt-empty">not found <strong>' + data.query + '</strong></div>';
                     },
                     suggestion: function(partner) {
                         return '<div>' + partner.code + ' : ' + partner.name + '</div>';

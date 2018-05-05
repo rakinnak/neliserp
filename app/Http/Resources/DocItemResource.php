@@ -35,8 +35,8 @@ class DocItemResource extends JsonResource
             'ref_uuid' => '',
             'doc_name' => $this->doc->name,
             'doc_issued_at' => $this->doc->issued_at,
+            'doc_partner_code' => $this->doc->partner_code,
         ];
 
-        //    'doc_company_code' => $this->doc->company->code,
     }
 }

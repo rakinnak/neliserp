@@ -21,7 +21,7 @@
             <thead class="thead-light">
                 <tr>
                     <th>{{ __('doc_items.doc_name') }}</th>
-                    <th>{{ __('doc_items.company_code') }}</th>
+                    <th>{{ __('doc_items.partner_code') }}</th>
                     <th>{{ __('doc_items.issued_at') }}</th>
                     <th>{{ __('doc_items.item_code') }}</th>
                     <th>{{ __('doc_items.pending_quantity') }}</th>
@@ -40,7 +40,7 @@
                 </tr>
                 <tr v-for="doc_item in doc_items" :key="doc_item.uuid">
                     <td><a :href="'/docs/{{ $type }}/' + doc_item.doc_uuid">@{{ doc_item.doc_name }}</a></td>
-                    <td>@{{ doc_item.doc_company_code }}</td>
+                    <td>@{{ doc_item.doc_partner_code }}</td>
                     <td>@{{ doc_item.doc_issued_at }}</td>
                     <td>@{{ doc_item.item_code }}</td>
                     <td>@{{ doc_item.pending_quantity }}</td>

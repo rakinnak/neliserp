@@ -13,11 +13,10 @@ class Partner extends Model
     protected $fillable = [
         'code',
         'name',
+        'type',
         'subject_type',
         'subject_id',
         'subject_uuid',
-        'is_customer',
-        'is_supplier',
     ];
 
     public static function boot()

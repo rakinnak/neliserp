@@ -24,7 +24,7 @@ class PartnerApi extends ApiController
         }
 
         $partners = Partner::filter($filter)
-            ->where("is_{$role}", true)
+            ->where('type', $role)
             ->paginate($per_page); // TODO: per page configuration
 
         return PartnerResource::collection($partners);
@@ -73,8 +73,7 @@ class PartnerApi extends ApiController
             'subject_uuid' => $subject->uuid,
             'code' => $request['code'],
             'name' => $subject_name,
-            'is_customer' => ($role == 'customer'),
-            'is_supplier' => ($role == 'supplier'),
+            'type' => $role,
         ]);
 
         return $created;

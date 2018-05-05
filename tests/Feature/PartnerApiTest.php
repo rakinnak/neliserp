@@ -91,13 +91,13 @@ class PartnerApiTest extends TestCase
     {
         $this->signInWithPermission('partners.index');
 
-        $partner1 = $this->create('person', $this->subject);
+        $partner1 = $this->create('customer', $this->subject);
 
-        $partner2 = $this->create($this->role, $this->subject);
+        $partner2 = $this->create('supplier', $this->subject);
 
         $user = auth()->user();
 
-        $this->json('GET', route('api.partners.index', [$this->role]))
+        $this->json('GET', route('api.partners.index', ['supplier']))
             ->assertStatus(200)
             ->assertJson([
                 'data' => [

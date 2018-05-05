@@ -4,7 +4,7 @@
 <partner-index inline-template>
     <div>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h5>{{ __('partners') }} - {{ __('index') }}</h5>
+            <h5>{{ __("partners.{$role}") }} - {{ __('index') }}</h5>
             <form method="GET" action="/partners/{{ $role }}" id="partners-search" class="form-inline">
                 <label class="mr-2" for="q">{{ __('partners.code') }}/{{ __('partners.name') }}</label>
                 <input type="text" class="form-control" id="q" name="q" value="{{ request('q') }}">
