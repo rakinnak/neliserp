@@ -16883,11 +16883,29 @@ Vue.component('doc-item-code', __webpack_require__(102));
 
 Vue.component('doc-item-index', __webpack_require__(105));
 
-Vue.component('pagination', __webpack_require__(107));
+Vue.component('user-index', __webpack_require__(107));
+Vue.component('user-create', __webpack_require__(109));
+Vue.component('user-show', __webpack_require__(111));
+Vue.component('user-edit', __webpack_require__(113));
+Vue.component('user-delete', __webpack_require__(115));
 
-window.Form = __webpack_require__(109);
+Vue.component('role-index', __webpack_require__(117));
+Vue.component('role-create', __webpack_require__(119));
+Vue.component('role-show', __webpack_require__(121));
+Vue.component('role-edit', __webpack_require__(123));
+Vue.component('role-delete', __webpack_require__(125));
 
-window.getParameterByName = __webpack_require__(110);
+Vue.component('permission-index', __webpack_require__(127));
+Vue.component('permission-create', __webpack_require__(129));
+Vue.component('permission-show', __webpack_require__(131));
+Vue.component('permission-edit', __webpack_require__(133));
+Vue.component('permission-delete', __webpack_require__(135));
+
+Vue.component('pagination', __webpack_require__(137));
+
+window.Form = __webpack_require__(139);
+
+window.getParameterByName = __webpack_require__(140);
 
 var app = new Vue({
   el: '#app'
@@ -53065,6 +53083,1275 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "resources/assets/js/components/users/UserIndex.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-53cc8f99", Component.options)
+  } else {
+    hotAPI.reload("data-v-53cc8f99", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 108 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            dataset: false,
+            users: [],
+            done: false
+        };
+    },
+    created: function created() {
+        this.fetch();
+    },
+
+
+    methods: {
+        fetch: function fetch(page) {
+            axios.get(this.url(page)).then(this.refresh);
+        },
+        url: function url(page) {
+            if (!page) {
+                var query = location.search.match(/page=(\d+)/);
+
+                page = query ? query[1] : 1;
+            }
+
+            var q = getParameterByName('q');
+
+            return '/api' + location.pathname + '?q=' + q + '&page=' + page;
+        },
+        refresh: function refresh(response) {
+            this.dataset = response.data;
+            this.users = response.data.data;
+
+            this.done = true;
+        }
+    }
+});
+
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(110)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/users/UserCreate.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4d79ae45", Component.options)
+  } else {
+    hotAPI.reload("data-v-4d79ae45", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 110 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            form: new Form({
+                code: '',
+                name: ''
+            })
+        };
+    },
+
+    methods: {
+        onSubmit: function onSubmit() {
+            this.form.submit('post', '/api/users').then(function (data) {
+                window.location.href = '/users';
+                //window.location.replace('/users');
+            }).catch(function (error) {
+                // console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(112)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/users/UserShow.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-42937806", Component.options)
+  } else {
+    hotAPI.reload("data-v-42937806", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 112 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['uuid'],
+
+    data: function data() {
+        return {
+            user: {}
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/users/' + this.uuid).then(function (response) {
+            _this.user = response.data.data;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    }
+});
+
+/***/ }),
+/* 113 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(114)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/users/UserEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-937a86da", Component.options)
+  } else {
+    hotAPI.reload("data-v-937a86da", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 114 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['uuid'],
+
+    data: function data() {
+        return {
+            user: {},
+            form: new Form({
+                code: '',
+                name: ''
+            })
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/users/' + this.uuid).then(function (response) {
+            _this.user = response.data.data;
+
+            _this.form.code = _this.user.code;
+            _this.form.name = _this.user.name;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    },
+
+
+    methods: {
+        onSubmit: function onSubmit() {
+            var _this2 = this;
+
+            this.form.submit('patch', '/api/users/' + this.uuid).then(function (data) {
+                // console.log(data);
+                window.location.href = '/users/' + _this2.uuid;
+            }).catch(function (error) {
+                // console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(116)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/users/UserDelete.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-650aa374", Component.options)
+  } else {
+    hotAPI.reload("data-v-650aa374", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 116 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['uuid'],
+
+    data: function data() {
+        return {
+            user: {},
+            form: new Form({
+                code: '',
+                name: ''
+            })
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/users/' + this.uuid).then(function (response) {
+            _this.user = response.data.data;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    },
+
+
+    methods: {
+        onSubmit: function onSubmit() {
+            this.form.submit('delete', '/api/users/' + this.uuid).then(function (data) {
+                // console.log(data);
+                window.location.href = '/users';
+            }).catch(function (error) {
+                // console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(118)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/roles/RoleIndex.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-58f92b43", Component.options)
+  } else {
+    hotAPI.reload("data-v-58f92b43", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 118 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            dataset: false,
+            roles: [],
+            done: false
+        };
+    },
+    created: function created() {
+        this.fetch();
+    },
+
+
+    methods: {
+        fetch: function fetch(page) {
+            axios.get(this.url(page)).then(this.refresh);
+        },
+        url: function url(page) {
+            if (!page) {
+                var query = location.search.match(/page=(\d+)/);
+
+                page = query ? query[1] : 1;
+            }
+
+            var q = getParameterByName('q');
+
+            return '/api' + location.pathname + '?q=' + q + '&page=' + page;
+        },
+        refresh: function refresh(response) {
+            this.dataset = response.data;
+            this.roles = response.data.data;
+
+            this.done = true;
+        }
+    }
+});
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(120)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/roles/RoleCreate.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-243ef04a", Component.options)
+  } else {
+    hotAPI.reload("data-v-243ef04a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 120 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            form: new Form({
+                code: '',
+                name: ''
+            })
+        };
+    },
+
+    methods: {
+        onSubmit: function onSubmit() {
+            this.form.submit('post', '/api/roles').then(function (data) {
+                window.location.href = '/roles';
+                //window.location.replace('/roles');
+            }).catch(function (error) {
+                // console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(122)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/roles/RoleShow.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-08efbf1c", Component.options)
+  } else {
+    hotAPI.reload("data-v-08efbf1c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 122 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['uuid'],
+
+    data: function data() {
+        return {
+            role: {}
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/roles/' + this.uuid).then(function (response) {
+            _this.role = response.data.data;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    }
+});
+
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(124)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/roles/RoleEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7c9f03a9", Component.options)
+  } else {
+    hotAPI.reload("data-v-7c9f03a9", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 124 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['uuid'],
+
+    data: function data() {
+        return {
+            role: {},
+            form: new Form({
+                code: '',
+                name: ''
+            })
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/roles/' + this.uuid).then(function (response) {
+            _this.role = response.data.data;
+
+            _this.form.code = _this.role.code;
+            _this.form.name = _this.role.name;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    },
+
+
+    methods: {
+        onSubmit: function onSubmit() {
+            var _this2 = this;
+
+            this.form.submit('patch', '/api/roles/' + this.uuid).then(function (data) {
+                // console.log(data);
+                window.location.href = '/roles/' + _this2.uuid;
+            }).catch(function (error) {
+                // console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(126)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/roles/RoleDelete.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-05717d0a", Component.options)
+  } else {
+    hotAPI.reload("data-v-05717d0a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 126 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['uuid'],
+
+    data: function data() {
+        return {
+            role: {},
+            form: new Form({
+                code: '',
+                name: ''
+            })
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/roles/' + this.uuid).then(function (response) {
+            _this.role = response.data.data;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    },
+
+
+    methods: {
+        onSubmit: function onSubmit() {
+            this.form.submit('delete', '/api/roles/' + this.uuid).then(function (data) {
+                // console.log(data);
+                window.location.href = '/roles';
+            }).catch(function (error) {
+                // console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(128)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/permissions/PermissionIndex.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a28e2b5e", Component.options)
+  } else {
+    hotAPI.reload("data-v-a28e2b5e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 128 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            dataset: false,
+            permissions: [],
+            done: false
+        };
+    },
+    created: function created() {
+        this.fetch();
+    },
+
+
+    methods: {
+        fetch: function fetch(page) {
+            axios.get(this.url(page)).then(this.refresh);
+        },
+        url: function url(page) {
+            if (!page) {
+                var query = location.search.match(/page=(\d+)/);
+
+                page = query ? query[1] : 1;
+            }
+
+            var q = getParameterByName('q');
+
+            return '/api' + location.pathname + '?q=' + q + '&page=' + page;
+        },
+        refresh: function refresh(response) {
+            this.dataset = response.data;
+            this.permissions = response.data.data;
+
+            this.done = true;
+        }
+    }
+});
+
+/***/ }),
+/* 129 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(130)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/permissions/PermissionCreate.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5018aa8d", Component.options)
+  } else {
+    hotAPI.reload("data-v-5018aa8d", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 130 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            form: new Form({
+                code: '',
+                name: ''
+            })
+        };
+    },
+
+    methods: {
+        onSubmit: function onSubmit() {
+            this.form.submit('post', '/api/permissions').then(function (data) {
+                window.location.href = '/permissions';
+                //window.location.replace('/permissions');
+            }).catch(function (error) {
+                // console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(132)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/permissions/PermissionShow.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e0563364", Component.options)
+  } else {
+    hotAPI.reload("data-v-e0563364", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 132 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['uuid'],
+
+    data: function data() {
+        return {
+            permission: {}
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/permissions/' + this.uuid).then(function (response) {
+            _this.permission = response.data.data;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    }
+});
+
+/***/ }),
+/* 133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(134)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/permissions/PermissionEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-03842adb", Component.options)
+  } else {
+    hotAPI.reload("data-v-03842adb", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 134 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['uuid'],
+
+    data: function data() {
+        return {
+            permission: {},
+            form: new Form({
+                code: '',
+                name: ''
+            })
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/permissions/' + this.uuid).then(function (response) {
+            _this.permission = response.data.data;
+
+            _this.form.code = _this.permission.code;
+            _this.form.name = _this.permission.name;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    },
+
+
+    methods: {
+        onSubmit: function onSubmit() {
+            var _this2 = this;
+
+            this.form.submit('patch', '/api/permissions/' + this.uuid).then(function (data) {
+                // console.log(data);
+                window.location.href = '/permissions/' + _this2.uuid;
+            }).catch(function (error) {
+                // console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(136)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/permissions/PermissionDelete.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-67a99fbc", Component.options)
+  } else {
+    hotAPI.reload("data-v-67a99fbc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 136 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['uuid'],
+
+    data: function data() {
+        return {
+            permission: {},
+            form: new Form({
+                code: '',
+                name: ''
+            })
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/permissions/' + this.uuid).then(function (response) {
+            _this.permission = response.data.data;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    },
+
+
+    methods: {
+        onSubmit: function onSubmit() {
+            this.form.submit('delete', '/api/permissions/' + this.uuid).then(function (data) {
+                // console.log(data);
+                window.location.href = '/permissions';
+            }).catch(function (error) {
+                // console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(138)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
 Component.options.__file = "resources/assets/js/components/Pagination.vue"
 
 /* hot reload */
@@ -53087,7 +54374,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 108 */
+/* 138 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53152,7 +54439,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 109 */
+/* 139 */
 /***/ (function(module, exports) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -53270,7 +54557,7 @@ var Form = function () {
 module.exports = Form;
 
 /***/ }),
-/* 110 */
+/* 140 */
 /***/ (function(module, exports) {
 
 function getParameterByName(name) {

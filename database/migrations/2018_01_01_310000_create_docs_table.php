@@ -15,16 +15,19 @@ class CreateDocsTable extends Migration
     {
         Schema::create('docs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('partner_id')->index();
             $table->unsignedInteger('user_id');
             $table->uuid('uuid')->unique();
             $table->string('name')->index();
             $table->string('type'); // purchase_order, receive_order, receive_invoice, sales_order, delivery_order, sales_invoice
+
+            $table->unsignedInteger('partner_id')->index();
             $table->uuid('partner_uuid');
             $table->string('partner_code');
             $table->string('partner_name');
+
             $table->uuid('user_uuid');
             $table->uuid('user_username');
+
             $table->timestamp('issued_at');
             //$table->timestamp('due_at')->nullable();
             $table->timestamps();

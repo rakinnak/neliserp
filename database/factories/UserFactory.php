@@ -4,7 +4,6 @@ use Faker\Generator as Faker;
 
 $factory->define(App\User::class, function (Faker $faker) {
     return [
-        'uuid' => uuid(),
         'username' => $faker->userName,
         'name' => $faker->name,
         'email' => $faker->safeEmail,

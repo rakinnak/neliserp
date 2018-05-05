@@ -36,4 +36,23 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('doc_items/{type}/{doc_item}', 'Api\DocItemApi@show')->name('api.doc_items.show');
     Route::patch('doc_items/{type}/{doc_item}', 'Api\DocItemApi@update')->name('api.doc_items.update');
     Route::delete('doc_items/{type}/{doc_item}', 'Api\DocItemApi@destroy')->name('api.doc_items.destroy');
+
+    Route::get('users', 'Api\UserApi@index')->name('api.users.index');
+    Route::post('users', 'Api\UserApi@store')->name('api.users.store');
+    Route::get('users/{user}', 'Api\UserApi@show')->name('api.users.show');
+    Route::patch('users/{user}', 'Api\UserApi@update')->name('api.users.update');
+    Route::delete('users/{user}', 'Api\UserApi@destroy')->name('api.users.destroy');
+
+    Route::get('roles', 'Api\RoleApi@index')->name('api.roles.index');
+    Route::post('roles', 'Api\RoleApi@store')->name('api.roles.store');
+    Route::get('roles/{role}', 'Api\RoleApi@show')->name('api.roles.show');
+    Route::patch('roles/{role}', 'Api\RoleApi@update')->name('api.roles.update');
+    Route::delete('roles/{role}', 'Api\RoleApi@destroy')->name('api.roles.destroy');
+
+    Route::get('permissions', 'Api\PermissionApi@index')->name('api.permissions.index');
+    Route::post('permissions', 'Api\PermissionApi@store')->name('api.permissions.store');
+    Route::get('permissions/{permission}', 'Api\PermissionApi@show')->name('api.permissions.show');
+    Route::patch('permissions/{permission}', 'Api\PermissionApi@update')->name('api.permissions.update');
+    Route::delete('permissions/{permission}', 'Api\PermissionApi@destroy')->name('api.permissions.destroy');
+
 });

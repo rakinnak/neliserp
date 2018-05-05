@@ -46,10 +46,6 @@ class PersonApi extends ApiController
     {
         $this->authorize('update', $person);
 
-        // foreach ($request->toArray() as $field => $value) {
-        //     $person->$field = $value;
-        // }
-
         $person->code = request('code');
         $person->first_name = request('first_name');
         $person->last_name = request('last_name');

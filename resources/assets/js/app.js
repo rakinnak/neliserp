@@ -52,6 +52,24 @@ Vue.component('doc-item-code', require('./components/docs/DocItemCode.vue'));
 
 Vue.component('doc-item-index', require('./components/doc_items/DocItemIndex.vue'));
 
+Vue.component('user-index', require('./components/users/UserIndex.vue'));
+Vue.component('user-create', require('./components/users/UserCreate.vue'));
+Vue.component('user-show', require('./components/users/UserShow.vue'));
+Vue.component('user-edit', require('./components/users/UserEdit.vue'));
+Vue.component('user-delete', require('./components/users/UserDelete.vue'));
+
+Vue.component('role-index', require('./components/roles/RoleIndex.vue'));
+Vue.component('role-create', require('./components/roles/RoleCreate.vue'));
+Vue.component('role-show', require('./components/roles/RoleShow.vue'));
+Vue.component('role-edit', require('./components/roles/RoleEdit.vue'));
+Vue.component('role-delete', require('./components/roles/RoleDelete.vue'));
+
+Vue.component('permission-index', require('./components/permissions/PermissionIndex.vue'));
+Vue.component('permission-create', require('./components/permissions/PermissionCreate.vue'));
+Vue.component('permission-show', require('./components/permissions/PermissionShow.vue'));
+Vue.component('permission-edit', require('./components/permissions/PermissionEdit.vue'));
+Vue.component('permission-delete', require('./components/permissions/PermissionDelete.vue'));
+
 Vue.component('pagination', require('./components/Pagination.vue'));
 
 window.Form = require('./Form');

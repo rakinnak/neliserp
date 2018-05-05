@@ -20,9 +20,9 @@
         <table class="table table-bordered table-hover">
             <thead class="thead-light">
                 <tr>
-                    <th>{{ __('partners.subject') }}</th>
                     <th>{{ __('partners.code') }}</th>
                     <th>{{ __('partners.name') }}</th>
+                    <th>{{ __('partners.subject') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,9 +37,9 @@
                     </td>
                 </tr>
                 <tr v-for="partner in partners" :key="partner.uuid">
-                    <td>@{{ partner.subject }}</td>
                     <td><a :href="'/partners/{{ $role }}/' + partner.uuid">@{{ partner.code }}</a></td>
                     <td>@{{ partner.name }}</td>
+                    <td>@{{ partner.subject }}</td>
                 </tr>
             </tbody>
         </table>

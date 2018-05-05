@@ -13,6 +13,10 @@ class PartnerSeeder extends Seeder
      */
     public function run()
     {
-        factory(Partner::class, 12)->create();
+        factory(Partner::class, 2)->states('customer', 'person')->create();
+        factory(Partner::class, 25)->states('customer', 'company')->create();
+
+        factory(Partner::class, 5)->states('supplier', 'person')->create();
+        factory(Partner::class, 12)->states('supplier', 'company')->create();
     }
 }

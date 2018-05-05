@@ -14,6 +14,7 @@
               <a class="dropdown-item" href="/docs/ri">&middot; {{ __('docs.ri') }}</a>
             </div>
         </li>
+
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="sales" data-toggle="dropdown">{{ __('sales') }}</a>
             <div class="dropdown-menu">
@@ -42,8 +43,19 @@
               <a class="dropdown-item" href="/partners/supplier">{{ __('partners.supplier') }}</a>
             </div>
         </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="users" data-toggle="dropdown">{{ __('users') }}</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/users">{{ __('users') }}</a>
+              <a class="dropdown-item" href="/roles">{{ __('roles') }}</a>
+              <a class="dropdown-item" href="/permissions">{{ __('permissions') }}</a>
+            </div>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link" href="/reports">{{ __('reports') }}</a>
         </li>
+
     @endauth
 </ul>

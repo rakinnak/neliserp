@@ -9,6 +9,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    use RecordsActivity;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'code',
     ];
 
     /**
@@ -28,6 +31,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            $model->uuid = uuid();
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+    public function scopeFilter($builder, UserFilter $filter)
+    {
+        return $filter->apply($builder);
+    }
 
     public function roles()
     {

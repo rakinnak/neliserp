@@ -46,10 +46,6 @@ class CompanyApi extends ApiController
     {
         $this->authorize('update', $company);
 
-        // foreach ($request->toArray() as $field => $value) {
-        //     $company->$field = $value;
-        // }
-
         $company->code = request('code');
         $company->name = request('name');
 

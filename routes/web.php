@@ -42,4 +42,21 @@ Route::group(['middleware' => ['auth:web']], function() {
 
     Route::get('doc_items/{type}', 'DocItemController@index')->name('doc_items.index');
 
+    Route::get('users', 'UserController@index')->name('users.index');
+    Route::get('users/create', 'UserController@create');
+    Route::get('users/{uuid}', 'UserController@show');
+    Route::get('users/{uuid}/edit', 'UserController@edit');
+    Route::get('users/{uuid}/delete', 'UserController@delete');
+
+    Route::get('roles', 'RoleController@index')->name('roles.index');
+    Route::get('roles/create', 'RoleController@create');
+    Route::get('roles/{uuid}', 'RoleController@show');
+    Route::get('roles/{uuid}/edit', 'RoleController@edit');
+    Route::get('roles/{uuid}/delete', 'RoleController@delete');
+
+    Route::get('permissions', 'PermissionController@index')->name('permissions.index');
+    Route::get('permissions/create', 'PermissionController@create');
+    Route::get('permissions/{uuid}', 'PermissionController@show');
+    Route::get('permissions/{uuid}/edit', 'PermissionController@edit');
+    Route::get('permissions/{uuid}/delete', 'PermissionController@delete');
 });
