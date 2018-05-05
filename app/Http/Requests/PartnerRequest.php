@@ -25,17 +25,38 @@ class PartnerRequest extends FormRequest
     public function rules()
     {
         return [
+            'subject' => 'required',
             'code' => [
                 'required',
                 Rule::unique('partners')
                     ->ignore($this->partner ? $this->partner->id : null),
-            ],
-            'name' => [
-                'required',
-                Rule::unique('partners')
-                    ->ignore($this->partner ? $this->partner->id : null),
-            ],
+            ]
         ];
         
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $input = request()->all();
+
+            switch (request()->get('subject')) {
+                case 'company':
+                    if (! request()->get('name')) {
+                        $validator->errors()->add("name", "The name field is required.");
+                    }
+                    break;
+
+                case 'person':
+                    if (! request()->get('first_name')) {
+                        $validator->errors()->add("first_name", "The first name field is required.");
+                    }
+
+                    if (! request()->get('last_name')) {
+                        $validator->errors()->add("last_name", "The last name field is required.");
+                    }
+                    break;
+            }
+        });
     }
 }

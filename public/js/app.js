@@ -51487,15 +51487,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             subject: '',
             form: new Form({
                 code: '',
-                name: ''
+                name: '',
+                subject: '',
+                first_name: '',
+                last_name: ''
             })
         };
     },
 
     methods: {
-        selectSubject: function selectSubject() {
-            console.log('select');
-        },
         onSubmit: function onSubmit() {
             var _this = this;
 
@@ -51563,18 +51563,20 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['uuid'],
+    props: ['role', 'uuid'],
 
     data: function data() {
         return {
+            subject: '',
             partner: {}
         };
     },
     created: function created() {
         var _this = this;
 
-        axios.get('/api/partners/' + this.uuid).then(function (response) {
+        axios.get('/api/partners/' + this.role + '/' + this.uuid).then(function (response) {
             _this.partner = response.data.data;
+            _this.subject = _this.partner.subject;
         }).catch(function (error) {
             alert(error.response.status + ': ' + error.response.statusText);
         });
@@ -51636,25 +51638,33 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['uuid'],
+    props: ['role', 'uuid'],
 
     data: function data() {
         return {
+            subject: '',
             partner: {},
             form: new Form({
                 code: '',
-                name: ''
+                name: '',
+                subject: '',
+                first_name: '',
+                last_name: ''
             })
         };
     },
     created: function created() {
         var _this = this;
 
-        axios.get('/api/partners/' + this.uuid).then(function (response) {
+        axios.get('/api/partners/' + this.role + '/' + this.uuid).then(function (response) {
             _this.partner = response.data.data;
 
             _this.form.code = _this.partner.code;
             _this.form.name = _this.partner.name;
+            _this.form.first_name = _this.partner.first_name;
+            _this.form.last_name = _this.partner.last_name;
+            _this.form.subject = _this.partner.subject;
+            _this.subject = _this.partner.subject;
         }).catch(function (error) {
             alert(error.response.status + ': ' + error.response.statusText);
         });
@@ -51665,9 +51675,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         onSubmit: function onSubmit() {
             var _this2 = this;
 
-            this.form.submit('patch', '/api/partners/' + this.uuid).then(function (data) {
+            this.form.submit('patch', '/api/partners/' + this.role + '/' + this.uuid).then(function (data) {
                 // console.log(data);
-                window.location.href = '/partners/' + _this2.uuid;
+                window.location.href = '/partners/' + _this2.role + '/' + _this2.uuid;
             }).catch(function (error) {
                 // console.log(error);
             });
@@ -51730,22 +51740,27 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['uuid'],
+    props: ['role', 'uuid'],
 
     data: function data() {
         return {
+            subject: '',
             partner: {},
             form: new Form({
                 code: '',
-                name: ''
+                name: '',
+                subject: '',
+                first_name: '',
+                last_name: ''
             })
         };
     },
     created: function created() {
         var _this = this;
 
-        axios.get('/api/partners/' + this.uuid).then(function (response) {
+        axios.get('/api/partners/' + this.role + '/' + this.uuid).then(function (response) {
             _this.partner = response.data.data;
+            _this.subject = _this.partner.subject;
         }).catch(function (error) {
             alert(error.response.status + ': ' + error.response.statusText);
         });
@@ -51754,9 +51769,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         onSubmit: function onSubmit() {
-            this.form.submit('delete', '/api/partners/' + this.uuid).then(function (data) {
+            var _this2 = this;
+
+            this.form.submit('delete', '/api/partners/' + this.role + '/' + this.uuid).then(function (data) {
                 // console.log(data);
-                window.location.href = '/partners';
+                window.location.href = '/partners/' + _this2.role;
             }).catch(function (error) {
                 // console.log(error);
             });

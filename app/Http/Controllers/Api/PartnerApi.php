@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Company;
+use App\Person;
 use App\Partner;
 use App\Filters\PartnerFilter;
 use App\Http\Requests\PartnerRequest;
@@ -40,17 +41,38 @@ class PartnerApi extends ApiController
     {
         $this->authorize('create', Partner::class);
 
-        $company = Company::create([
-            'code' => $request['code'],
-            'name' => $request['name'],
-        ]);
+        switch ($request['subject']) {
+            case 'company':
+                $subject = Company::create([
+                    'code' => $request['code'],
+                    'name' => $request['name'],
+                ]);
+
+                $subject_type = 'App\Company';
+                $subject_name = $subject->name;
+                break;
+
+            case 'person':
+                $subject = Person::create([
+                    'code' => $request['code'],
+                    'first_name' => $request['first_name'],
+                    'last_name' => $request['last_name'],
+                ]);
+
+                $subject_type = 'App\Person';
+                $subject_name = "{$subject->first_name} {$subject->last_name}";
+                break;
+
+            default:
+                abort(422);
+        }
 
         $created = Partner::create([
-            'subject_type' => 'App\Company',
-            'subject_id' => $company->id,
-            'subject_uuid' => $company->uuid,
+            'subject_type' => $subject_type,
+            'subject_id' => $subject->id,
+            'subject_uuid' => $subject->uuid,
             'code' => $request['code'],
-            'name' => $request['name'],
+            'name' => $subject_name,
             'is_customer' => ($role == 'customer'),
             'is_supplier' => ($role == 'supplier'),
         ]);
@@ -62,10 +84,40 @@ class PartnerApi extends ApiController
     {
         $this->authorize('update', $partner);
 
-        $partner->code = request('code');
-        $partner->name = request('name');
+        switch ($request['subject']) {
+            case 'company':
+                //$subject_type = 'App\Company';
+                $subject_name = $request['name'];
+                break;
 
+            case 'person':
+                //$subject_type = 'App\Person';
+                $subject_name = $request['first_name'] . ' ' . $request['last_name'];
+                break;
+
+            default:
+                abort(422);
+        }
+
+        $partner->code = request('code');
+        $partner->name = $subject_name;
         $partner->save();
+
+        // update back to subject
+        switch ($partner->subject_type) {
+         case 'App\Company':
+            $company = $partner->subject;
+            $company->name = $request['name'];
+            $company->save();
+            break;
+
+         case 'App\Person':
+            $person = $partner->subject;
+            $person->first_name = $request['first_name'];
+            $person->last_name = $request['last_name'];
+            $person->save();
+            break;
+        }
 
         return $partner;
     }

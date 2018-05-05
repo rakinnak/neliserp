@@ -38,4 +38,9 @@ class Partner extends Model
     {
         return $filter->apply($builder);
     }
+
+    public function subject()
+    {
+        return $this->morphTo();
+    }
 }

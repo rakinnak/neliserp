@@ -32,8 +32,7 @@
     "doc_item.unit_price": "unit price",
     "doc_item.action": "action",
     "doc_items.po": "purchase order",
-    "doc_items.ro": "receive order",
-    "doc_items.ri": "receive invoice",
+    "doc_items.ro": "receive order", "doc_items.ri": "receive invoice",
     "doc_items.so": "sales order",
     "doc_items.do": "delivery order",
     "doc_items.si": "sales invoice",
@@ -49,6 +48,7 @@
     "doc_items.issued_at": "issued at",
 
     "partners.customer": "customer",
-    "partners.supplier": "supplier"
-
+    "partners.supplier": "supplier",
+    "partners.first_name": "first name",
+    "partners.last_name": "last name"
 }

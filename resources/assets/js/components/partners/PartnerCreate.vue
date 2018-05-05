@@ -7,17 +7,14 @@
                 subject: '',
                 form: new Form({
                     code: '',
-                    name: ''
+                    name: '',
+                    subject: '',
+                    first_name: '',
+                    last_name: ''
                 }),
             }
         },
         methods: {
-            selectSubject()
-            {
-                console.log('select')
-
-            },
-
             onSubmit() {
                 this.form.submit('post', '/api/partners/' + this.role)
                     .then(data => {

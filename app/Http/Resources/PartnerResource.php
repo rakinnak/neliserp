@@ -19,6 +19,8 @@ class PartnerResource extends JsonResource
             'code' => $this->code,
             'name' => $this->name,
             'subject' => strtolower(str_replace('App\\', '', $this->subject_type)),
+            'first_name' => $this->subject_type == 'App\Person' ? $this->subject->first_name : '',
+            'last_name' => $this->subject_type == 'App\Person' ? $this->subject->last_name : '',
         ];
     }
 }

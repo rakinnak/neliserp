@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Company;
+use App\Person;
 use App\Partner;
 
 class PartnerApiTest extends TestCase
@@ -20,7 +21,7 @@ class PartnerApiTest extends TestCase
         parent::setUp();
 
         $this->role = 'customer';   // customer, supplier
-        $this->subject = 'copany';  // company, person
+        $this->subject = 'company';  // company, person
     }
 
     // *** partners.index ***
@@ -290,16 +291,43 @@ class PartnerApiTest extends TestCase
 
         $partner1 = factory(Partner::class)->make();
 
-        $this->json('POST', route('api.partners.store', $this->role), $partner1->toArray())
+        $this->json('POST', route('api.partners.store', $this->role),
+            [
+                'subject' => 'company',
+                'code' => $partner1->code,
+                'name' => $partner1->name,
+            ])
             ->assertStatus(403);
     }
 
     /**  @test */
-    public function create_a_partner_requires_valid_fields()
+    public function create_a_partner_requires_required_fields()
     {
         $this->signInWithPermission('partners.create');
 
         $this->json('POST', route('api.partners.store', $this->role))
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'subject' => [
+                        'The subject field is required.'
+                    ],
+                    'code' => [
+                        'The code field is required.'
+                    ],
+                ],
+            ]);
+    }
+
+    /**  @test */
+    public function create_a_partner_company_requires_required_fields()
+    {
+        $this->signInWithPermission('partners.create');
+
+        $this->json('POST', route('api.partners.store', $this->role), [
+                'subject' => 'company'
+            ])
             ->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
@@ -314,8 +342,33 @@ class PartnerApiTest extends TestCase
             ]);
     }
 
+    /**  @test */
+    public function create_a_partner_person_requires_required_fields()
+    {
+        $this->signInWithPermission('partners.create');
+
+        $this->json('POST', route('api.partners.store', $this->role), [
+                'subject' => 'person'
+            ])
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'code' => [
+                        'The code field is required.'
+                    ],
+                    'first_name' => [
+                        'The first name field is required.'
+                    ],
+                    'last_name' => [
+                        'The last name field is required.'
+                    ],
+                ],
+            ]);
+    }
+
     /** @test */
-    public function authorized_user_can_create_a_partner()
+    public function authorized_user_can_create_a_partner_company()
     {
         $this->signInWithPermission('partners.create');
 
@@ -323,14 +376,41 @@ class PartnerApiTest extends TestCase
 
         $this->json('POST', route('api.partners.store', $this->role),
             [
+                'subject' => 'company',
                 'code' => $partner1->code,
                 'name' => $partner1->name,
             ])
             ->assertStatus(201);
 
         $this->assertDatabaseHas('partners', [
+            'subject_type' => 'App\Company',
             'code' => $partner1->code,
             'name' => $partner1->name,
+        ]);
+    }
+
+    /** @test */
+    public function authorized_user_can_create_a_partner_person()
+    {
+        $this->signInWithPermission('partners.create');
+
+        $person1 = factory(Person::class)->make();
+
+        $partner1 = factory(Partner::class)->make();
+
+        $this->json('POST', route('api.partners.store', $this->role),
+            [
+                'subject' => 'person',
+                'code' => $partner1->code,
+                'first_name' => $person1->first_name,
+                'last_name' => $person1->last_name,
+            ])
+            ->assertStatus(201);
+
+        $this->assertDatabaseHas('partners', [
+            'subject_type' => 'App\Person',
+            'code' => $partner1->code,
+            'name' => "{$person1->first_name} {$person1->last_name}",
         ]);
     }
 
@@ -346,7 +426,6 @@ class PartnerApiTest extends TestCase
         $this->json('PATCH', route('api.partners.update', [$this->role, $partner1->uuid]),
             [
                 'code' => $partner_updated->code,
-                'name' => $partner_updated->name,
             ])
             ->assertStatus(401);
     }
@@ -362,6 +441,7 @@ class PartnerApiTest extends TestCase
 
         $this->json('PATCH', route('api.partners.update', [$this->role, $partner1->uuid]),
             [
+                'subject' => 'company',
                 'code' => $partner_updated->code,
                 'name' => $partner_updated->name,
             ])
@@ -369,13 +449,37 @@ class PartnerApiTest extends TestCase
     }
 
     /**  @test */
-    public function update_a_partner_requires_valid_fields()
+    public function update_a_partner_requires_required_fields()
     {
         $this->signInWithPermission('partners.update');
 
         $partner1 = $this->create($this->role, $this->subject);
 
         $this->json('PATCH', route('api.partners.update', [$this->role, $partner1->uuid]))
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'subject' => [
+                        'The subject field is required.'
+                    ],
+                    'code' => [
+                        'The code field is required.'
+                    ],
+                ],
+            ]);
+    }
+
+    /**  @test */
+    public function update_a_partner_company_requires_required_fields()
+    {
+        $this->signInWithPermission('partners.update');
+
+        $partner1 = $this->create($this->role, $this->subject);
+
+        $this->json('PATCH', route('api.partners.update', [$this->role, $partner1->uuid]), [
+                'subject' => 'company',
+            ])
             ->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
@@ -390,8 +494,35 @@ class PartnerApiTest extends TestCase
             ]);
     }
 
+    /**  @test */
+    public function update_a_partner_person_requires_required_fields()
+    {
+        $this->signInWithPermission('partners.update');
+
+        $partner1 = $this->create($this->role, $this->subject);
+
+        $this->json('PATCH', route('api.partners.update', [$this->role, $partner1->uuid]), [
+                'subject' => 'person',
+            ])
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'code' => [
+                        'The code field is required.'
+                    ],
+                    'first_name' => [
+                        'The first name field is required.'
+                    ],
+                    'last_name' => [
+                        'The last name field is required.'
+                    ],
+                ],
+            ]);
+    }
+
     /** @test */
-    public function authorized_user_can_update_a_partner()
+    public function authorized_user_can_update_a_partner_company()
     {
         $this->signInWithPermission('partners.update');
 
@@ -401,6 +532,7 @@ class PartnerApiTest extends TestCase
 
         $this->json('PATCH', route('api.partners.update', [$this->role, $partner1->uuid]),
             [
+                'subject' => 'company',
                 'code' => $partner_updated->code,
                 'name' => $partner_updated->name,
             ])
@@ -411,6 +543,34 @@ class PartnerApiTest extends TestCase
             'uuid' => $partner1->uuid,
             'code' => $partner_updated->code,
             'name' => $partner_updated->name,
+        ]);
+    }
+
+    /** @test */
+    public function authorized_user_can_update_a_partner_person()
+    {
+        $this->signInWithPermission('partners.update');
+
+        $this->subject = 'person';
+
+        $partner1 = $this->create($this->role, $this->subject);
+
+        $person1_updated = factory(Person::class)->make();
+
+        $this->json('PATCH', route('api.partners.update', [$this->role, $partner1->uuid]),
+            [
+                'subject' => 'person',
+                'code' => $person1_updated->code,
+                'first_name' => $person1_updated->first_name,
+                'last_name' => $person1_updated->last_name,
+            ])
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas('partners', [
+            'id' => $partner1->id,
+            'uuid' => $partner1->uuid,
+            'code' => $person1_updated->code,
+            'name' => "{$person1_updated->first_name} {$person1_updated->last_name}",
         ]);
     }
 
@@ -453,16 +613,34 @@ class PartnerApiTest extends TestCase
 
     protected function create($role, $subject)
     {
-        $company1 = factory(Company::class)->create();
-        
-        return factory(Partner::class)->create([
-            'subject_id' => $company1->id,
-            'subject_uuid' => $company1->uuid,
-            'code' => $company1->code,
-            'name' => $company1->name,
-            'is_customer' => $role == 'customer',
-            'is_supplier' => $role == 'supplier',
-        ]);
-    }
+        switch ($subject) {
+            case 'company':
+                $company1 = factory(Company::class)->create();
+                
+                return factory(Partner::class)->create([
+                    'subject_type' => 'App\Company',
+                    'subject_id' => $company1->id,
+                    'subject_uuid' => $company1->uuid,
+                    'code' => $company1->code,
+                    'name' => $company1->name,
+                    'is_customer' => $role == 'customer',
+                    'is_supplier' => $role == 'supplier',
+                ]);
+                break;
 
+            case 'person':
+                $person1 = factory(Person::class)->create();
+                
+                return factory(Partner::class)->create([
+                    'subject_type' => 'App\Person',
+                    'subject_id' => $person1->id,
+                    'subject_uuid' => $person1->uuid,
+                    'code' => $person1->code,
+                    'name' => "{$person1->first_name} {$person1->first_name}",
+                    'is_customer' => $role == 'customer',
+                    'is_supplier' => $role == 'supplier',
+                ]);
+                break;
+        }
+    }
 }
