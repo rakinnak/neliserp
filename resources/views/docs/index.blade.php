@@ -21,7 +21,7 @@
             <thead class="thead-light">
                 <tr>
                     <th>{{ __('docs.name') }}</th>
-                    <th>{{ __('docs.company_code') }}</th>
+                    <th>{{ __('docs.partner_code') }}</th>
                     <th>{{ __('docs.issued_at') }}</th>
                 </tr>
             </thead>
@@ -38,7 +38,7 @@
                 </tr>
                 <tr v-for="doc in docs" :key="doc.uuid">
                     <td><a :href="'/docs/{{ $type }}/' + doc.uuid">@{{ doc.name }}</a></td>
-                    <td>@{{ doc.company_code }}</td>
+                    <td>@{{ doc.partner_code }}</td>
                     <td>@{{ doc.issued_at }}</td>
                 </tr>
             </tbody>

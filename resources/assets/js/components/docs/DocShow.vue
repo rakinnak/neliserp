@@ -7,7 +7,7 @@
                 doc: {
                 },
                 form: new Form({
-                    company_code: '',
+                    partner_code: '',
                     name: '',
                     issued_at: '',
                 }),

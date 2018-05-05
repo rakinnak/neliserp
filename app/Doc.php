@@ -58,9 +58,4 @@ class Doc extends Model
     {
         return $this->hasMany(DocItem::class);
     }
-
-    public function partner()
-    {
-        return $this->morphTo();
-    }
 }

@@ -52253,7 +52253,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             doc: {},
             form: new Form({
-                company_code: '',
+                partner_code: '',
                 name: '',
                 issued_at: ''
             }),
@@ -52370,14 +52370,14 @@ exports.push([module.i, "\n.typeahead,\n.tt-query,\n.tt-hint {\n  /* width: 396p
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['type', 'uuid'],
+    props: ['partner_role', 'type', 'uuid'],
 
     data: function data() {
         return {
             doc: {},
-            companies: [],
+            partners: [],
             form: new Form({
-                company_code: '',
+                partner_code: '',
                 name: '',
                 issued_at: ''
             }),
@@ -52387,16 +52387,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
 
-        // TODO: show all companies
-        // axios.get('/api/companies?per_page=1000')
+        // TODO: show all partners
+        // axios.get('/api/partners?per_page=1000')
         //     .then(response => {
-        //         this.companies = response.data.data;
+        //         this.partners = response.data.data;
         //     });
 
         axios.get('/api/docs/' + this.type + '/' + this.uuid).then(function (response) {
             _this.doc = response.data.data;
 
-            _this.form.company_code = _this.doc.company_code;
+            _this.form.partner_code = _this.doc.partner_code;
             _this.form.name = _this.doc.name;
             _this.form.issued_at = _this.doc.issued_at;
         }).catch(function (error) {
@@ -52406,11 +52406,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // typeahead autocomplete
         var api_token = document.head.querySelector('meta[name="api-token"]').content;
 
-        var companies = new Bloodhound({
+        var partners = new Bloodhound({
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('code'),
             remote: {
-                url: '/api/companies?api_token=' + api_token + '&per_page=1000&code=%QUERY',
+                url: '/api/partners/' + this.partner_role + '?api_token=' + api_token + '&per_page=1000&q=%QUERY',
                 wildcard: '%QUERY',
                 transform: function transform(data) {
                     return data.data;
@@ -52422,25 +52422,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var vm = this;
 
         $('.typeahead').bind('typeahead:idle', function (ev) {
-            vm.form.company_code = $(this).val();
+            vm.form.partner_code = $(this).val();
         });
 
-        $('#company .typeahead').typeahead({
+        $('#partner .typeahead').typeahead({
             hint: true,
             highlight: true,
             minLength: 1,
             dynamic: true,
             debug: true
         }, {
-            source: companies,
+            source: partners,
             display: 'code',
             limit: 100,
             templates: {
                 notFound: function notFound(data) {
                     return '<div class="tt-empty">+ add <strong>' + data.query + '</strong></div>';
                 },
-                suggestion: function suggestion(company) {
-                    return '<div>' + company.code + ' : ' + company.name + '</div>';
+                suggestion: function suggestion(partner) {
+                    return '<div>' + partner.code + ' : ' + partner.name + '</div>';
                 }
             }
         });

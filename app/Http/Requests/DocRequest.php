@@ -25,12 +25,12 @@ class DocRequest extends FormRequest
     public function rules()
     {
         return [
+            'partner_code' => 'required|exists:partners,code',
             'name' => [
                 'required',
                 Rule::unique('docs')
                     ->ignore($this->doc ? $this->doc->id : null),
             ],
-            'partner_code' => 'required|exists:partners,code',
             'issued_at' => 'required|date',
         ];
         

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<doc-edit :uuid="'{{ $uuid }}'" :type="'{{ $type }}'" inline-template>
+<doc-edit :partner_role="'{{ $partner_role }}'" :type="'{{ $type }}'" :uuid="'{{ $uuid }}'" inline-template>
     <div>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <h5>{{ __('edit') }}</h5>

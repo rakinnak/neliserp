@@ -1,13 +1,13 @@
 <script>
     export default {
-        props: ['type', 'uuid'],
+        props: ['partner_role', 'type', 'uuid'],
 
         data() {
             return {
                 doc: {},
-                companies: [],
+                partners: [],
                 form: new Form({
-                    company_code: '',
+                    partner_code: '',
                     name: '',
                     issued_at: '',
                 }),
@@ -16,17 +16,17 @@
         },
 
         mounted() {
-            // TODO: show all companies
-            // axios.get('/api/companies?per_page=1000')
+            // TODO: show all partners
+            // axios.get('/api/partners?per_page=1000')
             //     .then(response => {
-            //         this.companies = response.data.data;
+            //         this.partners = response.data.data;
             //     });
 
             axios.get('/api/docs/' + this.type + '/' + this.uuid)
                 .then(response => {
                     this.doc = response.data.data;
 
-                    this.form.company_code = this.doc.company_code;
+                    this.form.partner_code = this.doc.partner_code;
                     this.form.name = this.doc.name;
                     this.form.issued_at = this.doc.issued_at;
                 })
@@ -37,11 +37,11 @@
             // typeahead autocomplete
             let api_token = document.head.querySelector('meta[name="api-token"]').content;
 
-            var companies = new Bloodhound({
+            var partners = new Bloodhound({
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('code'),
                 remote: {
-                    url: '/api/companies?api_token=' + api_token + '&per_page=1000&code=%QUERY',
+                    url: '/api/partners/' + this.partner_role + '?api_token=' + api_token + '&per_page=1000&q=%QUERY',
                     wildcard: '%QUERY',
                     transform: function(data) {
                         return data.data;
@@ -53,10 +53,10 @@
             var vm = this;
 
             $('.typeahead').bind('typeahead:idle', function(ev) {
-                vm.form.company_code = $(this).val();
+                vm.form.partner_code = $(this).val();
             });
 
-            $('#company .typeahead').typeahead({
+            $('#partner .typeahead').typeahead({
                 hint: true,
                 highlight: true,
                 minLength: 1,
@@ -64,15 +64,15 @@
                 debug: true,
             },
             {
-                source: companies,
+                source: partners,
                 display: 'code',
                 limit: 100,
                 templates: {
                     notFound: function (data) {
                         return '<div class="tt-empty">+ add <strong>' + data.query + '</strong></div>';
                     },
-                    suggestion: function(company) {
-                        return '<div>' + company.code + ' : ' + company.name + '</div>';
+                    suggestion: function(partner) {
+                        return '<div>' + partner.code + ' : ' + partner.name + '</div>';
                     },
                 },
             });

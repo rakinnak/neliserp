@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Company;
+use App\Partner;
 use App\Doc;
 
 use App\Filters\DocFilter;
@@ -42,7 +43,7 @@ class DocApi extends ApiController
 
         $user = auth()->user();
 
-        $partner = Company::where('code', $request['partner_code'])
+        $partner = Partner::where('code', $request['partner_code'])
             ->first();
 
         $created = Doc::create([
@@ -66,16 +67,16 @@ class DocApi extends ApiController
     {
         $this->authorize('update', $doc);
 
-        $partner = Company::where('code', $request['partner_code'])
+        $partner = Partner::where('code', $request['partner_code'])
             ->first();
 
         $doc->name = $request['name'];
         $doc->partner_code = $request['partner_code'];
-        $doc->partner_type = 'App\Company';
         $doc->partner_id = $partner->id;
         $doc->partner_uuid = $partner->uuid;
         $doc->partner_code = $partner->code;
         $doc->partner_name = $partner->name;
+        $doc->issued_at = $request['issued_at'];
 
         $doc->save();
 

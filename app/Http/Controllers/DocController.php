@@ -43,8 +43,9 @@ class DocController extends Controller
     public function edit($type, $uuid)
     {
         // $this->authorize('edit', $doc);
+        $partner_role = $this->getPartnerRole($type);
 
-        return view('docs.edit', compact('type', 'uuid'));
+        return view('docs.edit', compact('type', 'uuid', 'partner_role'));
     }
 
     public function delete($type, $uuid)

@@ -18,6 +18,7 @@
     "docs.code": "code",
     "docs.name": "name",
     "docs.company_code": "company",
+    "docs.partner_code": "partner",
     "docs.issued_at": "issued date",
     "docs.po": "purchase order",
     "docs.ro": "receive order",
