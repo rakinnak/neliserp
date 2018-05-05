@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<doc-create :type="'{{ $type }}'" :input='{!! json_encode($input) !!}' inline-template>
+    <doc-create :partner_role="'{{ $partner_role }}'" :type="'{{ $type }}'" :input='{!! json_encode($input) !!}' inline-template>
     <div>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <h5>{{ __('create') }} {{ __('docs.' . $type) }}</h5>

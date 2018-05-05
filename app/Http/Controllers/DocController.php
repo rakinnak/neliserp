@@ -17,6 +17,8 @@ class DocController extends Controller
     {
         //$this->authorize('create', Doc::class);
 
+        $partner_role = $this->getPartnerRole($type);
+
         if (session('input')) {
             $input = session('input');
             unset($input['_method']);
@@ -28,7 +30,7 @@ class DocController extends Controller
             ];
         }
 
-        return view('docs.create', compact('type', 'input'));
+        return view('docs.create', compact('type', 'input', 'partner_role'));
     }
 
     public function show($type, $uuid)
@@ -60,6 +62,19 @@ class DocController extends Controller
 
         return redirect()->action('DocController@create', ['type' => $input['destination_type']])
             ->with('input', $input);
+    }
 
+    protected function getPartnerRole($doc_type)
+    {
+        $doc_partner_roles = [
+            'so' => 'customer',
+            'do' => 'customer',
+            'si' => 'customer',
+            'po' => 'supplier',
+            'ro' => 'supplier',
+            'ri' => 'supplier',
+        ];
+
+        return $doc_partner_roles[$doc_type];
     }
 }

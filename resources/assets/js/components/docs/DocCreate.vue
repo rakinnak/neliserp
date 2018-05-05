@@ -1,6 +1,6 @@
 <script>
     export default {
-        props: ['type', 'input'],
+        props: ['partner_role', 'type', 'input'],
 
         data() {
             return {
@@ -8,9 +8,8 @@
                     uuid: '',
                     doc_items: [],
                 },
-                // companies: [],
                 form: new Form({
-                    company_code: '',
+                    partner_code: '',
                     name: '',
                     issued_at: '2018-04-26',
                 }),
@@ -18,7 +17,7 @@
             }
         },
         mounted() {
-            this.form.company_code = this.input.company_code;
+            this.form.partner_code = this.input.partner_code;
 
             // TODO: show all items
             axios.get('/api/items?per_page=1000')
@@ -73,15 +72,14 @@
                 }
             }
 
-
             // typeahead autocomplete
             let api_token = document.head.querySelector('meta[name="api-token"]').content;
 
-            var companies = new Bloodhound({
+            var partners = new Bloodhound({
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('code'),
                 remote: {
-                    url: '/api/companies?api_token=' + api_token + '&per_page=1000&code=%QUERY',
+                    url: '/api/partners/' + this.partner_role + '?api_token=' + api_token + '&per_page=1000&q=%QUERY',
                     wildcard: '%QUERY',
                     transform: function(data) {
                         return data.data;
@@ -92,11 +90,11 @@
             // TODO: temp solution to assign Vue variable from jQuery
             var vm = this;
 
-            $('#company .typeahead').bind('typeahead:idle', function(ev) {
-                vm.form.company_code = $(this).val();
+            $('#partner .typeahead').bind('typeahead:idle', function(ev) {
+                vm.form.partner_code = $(this).val();
             });
 
-            $('#company .typeahead').typeahead({
+            $('#partner .typeahead').typeahead({
                 hint: true,
                 highlight: true,
                 minLength: 1,
@@ -104,15 +102,15 @@
                 debug: true,
             },
             {
-                source: companies,
+                source: partners,
                 display: 'code',
                 limit: 100,
                 templates: {
                     notFound: function (data) {
                         return '<div class="tt-empty">+ add <strong>' + data.query + '</strong></div>';
                     },
-                    suggestion: function(company) {
-                        return '<div>' + company.code + ' : ' + company.name + '</div>';
+                    suggestion: function(partner) {
+                        return '<div>' + partner.code + ' : ' + partner.name + '</div>';
                     },
                 },
             });
@@ -132,7 +130,7 @@
                     .then(data => {
                         console.log(data);
                         this.doc.uuid = data.uuid;
-                        this.form.company_code = data.company_code;
+                        this.form.partner_code = data.partner_code;
                         this.form.name = data.name;
                         this.form.issued_at = data.issued_at;
 

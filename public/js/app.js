@@ -52004,7 +52004,7 @@ module.exports = function listToStyles (parentId, list) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['type', 'input'],
+    props: ['partner_role', 'type', 'input'],
 
     data: function data() {
         return {
@@ -52012,9 +52012,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 uuid: '',
                 doc_items: []
             },
-            // companies: [],
             form: new Form({
-                company_code: '',
+                partner_code: '',
                 name: '',
                 issued_at: '2018-04-26'
             }),
@@ -52024,7 +52023,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
 
-        this.form.company_code = this.input.company_code;
+        this.form.partner_code = this.input.partner_code;
 
         // TODO: show all items
         axios.get('/api/items?per_page=1000').then(function (response) {
@@ -52079,11 +52078,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // typeahead autocomplete
         var api_token = document.head.querySelector('meta[name="api-token"]').content;
 
-        var companies = new Bloodhound({
+        var partners = new Bloodhound({
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('code'),
             remote: {
-                url: '/api/companies?api_token=' + api_token + '&per_page=1000&code=%QUERY',
+                url: '/api/partners/' + this.partner_role + '?api_token=' + api_token + '&per_page=1000&q=%QUERY',
                 wildcard: '%QUERY',
                 transform: function transform(data) {
                     return data.data;
@@ -52094,26 +52093,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // TODO: temp solution to assign Vue variable from jQuery
         var vm = this;
 
-        $('#company .typeahead').bind('typeahead:idle', function (ev) {
-            vm.form.company_code = $(this).val();
+        $('#partner .typeahead').bind('typeahead:idle', function (ev) {
+            vm.form.partner_code = $(this).val();
         });
 
-        $('#company .typeahead').typeahead({
+        $('#partner .typeahead').typeahead({
             hint: true,
             highlight: true,
             minLength: 1,
             dynamic: true,
             debug: true
         }, {
-            source: companies,
+            source: partners,
             display: 'code',
             limit: 100,
             templates: {
                 notFound: function notFound(data) {
                     return '<div class="tt-empty">+ add <strong>' + data.query + '</strong></div>';
                 },
-                suggestion: function suggestion(company) {
-                    return '<div>' + company.code + ' : ' + company.name + '</div>';
+                suggestion: function suggestion(partner) {
+                    return '<div>' + partner.code + ' : ' + partner.name + '</div>';
                 }
             }
         });
@@ -52135,7 +52134,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.submit(method, '/api/docs/' + this.type + '/' + this.doc.uuid).then(function (data) {
                 console.log(data);
                 _this2.doc.uuid = data.uuid;
-                _this2.form.company_code = data.company_code;
+                _this2.form.partner_code = data.partner_code;
                 _this2.form.name = data.name;
                 _this2.form.issued_at = data.issued_at;
 

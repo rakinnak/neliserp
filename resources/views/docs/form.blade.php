@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-md-4 mb-3">
-        <label for="company_code" id="company">{{ __('docs.company_code') }}</label>
+        <label for="partner_code" id="partner">{{ __('docs.partner_code') }}</label>
         @if ($action == 'show' || $action == 'delete' || $action == 'move')
-            <input type="text" class="form-control-plaintext" id="company_code" name="company_code" :value="doc.company_code" :readonly="true">
+            <input type="text" class="form-control-plaintext" id="partner_code" name="partner_code" :value="doc.partner_code" :readonly="true">
         @elseif ($action == 'create' || $action == 'edit')
-            <div id="company">
-                <input class="form-control form-control-sm typeahead" type="text" id="company_code" name="company_code" placeholder="code..." 
-                    autocomplete="off" v-model="form.company_code" :class="{'is-invalid': form.errors.has('company_code')}">
+            <div id="partner">
+                <input class="form-control form-control-sm typeahead" type="text" id="partner_code" name="partner_code" placeholder="code..." 
+                    autocomplete="off" v-model="form.partner_code" :class="{'is-invalid': form.errors.has('partner_code')}">
                 <!-- TODO: temp solution to display invalid-feedback -->
-                <input class="form-control form-control-sm" type="hidden" :class="{'is-invalid': form.errors.has('company_code')}">
-                <div class="invalid-feedback" v-if="form.errors.has('company_code')" v-text="form.errors.get('company_code')"></div>
+                <input class="form-control form-control-sm" type="hidden" :class="{'is-invalid': form.errors.has('partner_code')}">
+                <div class="invalid-feedback" v-if="form.errors.has('partner_code')" v-text="form.errors.get('partner_code')"></div>
             </div>
         @endif
     </div>
