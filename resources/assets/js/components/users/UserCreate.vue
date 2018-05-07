@@ -3,7 +3,7 @@
         data() {
             return {
                 form: new Form({
-                    code: '',
+                    username: '',
                     name: ''
                 }),
             }

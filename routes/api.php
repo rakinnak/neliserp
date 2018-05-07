@@ -50,9 +50,18 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::delete('roles/{role}', 'Api\RoleApi@destroy')->name('api.roles.destroy');
 
     Route::get('permissions', 'Api\PermissionApi@index')->name('api.permissions.index');
-    Route::post('permissions', 'Api\PermissionApi@store')->name('api.permissions.store');
+    //Route::post('permissions', 'Api\PermissionApi@store')->name('api.permissions.store');
     Route::get('permissions/{permission}', 'Api\PermissionApi@show')->name('api.permissions.show');
-    Route::patch('permissions/{permission}', 'Api\PermissionApi@update')->name('api.permissions.update');
-    Route::delete('permissions/{permission}', 'Api\PermissionApi@destroy')->name('api.permissions.destroy');
+    //Route::patch('permissions/{permission}', 'Api\PermissionApi@update')->name('api.permissions.update');
+    //Route::delete('permissions/{permission}', 'Api\PermissionApi@destroy')->name('api.permissions.destroy');
 
+    Route::get('profiles/account', 'Api\ProfileApi@account_show')->name('api.profiles.account_show');
+    //Route::get('profiles/password', 'Api\ProfileApi@password_show')->name('api.profiles.password_show');
+    Route::get('profiles/settings', 'Api\ProfileApi@settings_show')->name('api.profiles.settings_show');
+    Route::get('profiles/activities', 'Api\ProfileApi@activities_show')->name('api.profiles.activities_show');
+
+    Route::patch('profiles/account', 'Api\ProfileApi@account_update')->name('api.profiles.account_update');
+    Route::patch('profiles/password', 'Api\ProfileApi@password_update')->name('api.profiles.password_update');
+    Route::patch('profiles/settings', 'Api\ProfileApi@settings_update')->name('api.profiles.settings_update');
+    Route::patch('profiles/activities', 'Api\ProfileApi@activities_update')->name('api.profiles.activities_update');
 });

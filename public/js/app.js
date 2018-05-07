@@ -16901,11 +16901,13 @@ Vue.component('permission-show', __webpack_require__(131));
 Vue.component('permission-edit', __webpack_require__(133));
 Vue.component('permission-delete', __webpack_require__(135));
 
-Vue.component('pagination', __webpack_require__(137));
+Vue.component('profile-account-edit', __webpack_require__(137));
 
-window.Form = __webpack_require__(139);
+Vue.component('pagination', __webpack_require__(139));
 
-window.getParameterByName = __webpack_require__(140);
+window.Form = __webpack_require__(141);
+
+window.getParameterByName = __webpack_require__(142);
 
 var app = new Vue({
   el: '#app'
@@ -53206,7 +53208,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             form: new Form({
-                code: '',
+                username: '',
                 name: ''
             })
         };
@@ -53358,7 +53360,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             user: {},
             form: new Form({
-                code: '',
+                username: '',
                 name: ''
             })
         };
@@ -53369,7 +53371,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         axios.get('/api/users/' + this.uuid).then(function (response) {
             _this.user = response.data.data;
 
-            _this.form.code = _this.user.code;
+            _this.form.username = _this.user.username;
             _this.form.name = _this.user.name;
         }).catch(function (error) {
             alert(error.response.status + ': ' + error.response.statusText);
@@ -53452,7 +53454,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             user: {},
             form: new Form({
-                code: '',
+                username: '',
                 name: ''
             })
         };
@@ -54352,6 +54354,95 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "resources/assets/js/components/profiles/ProfileAccountEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-76b7070c", Component.options)
+  } else {
+    hotAPI.reload("data-v-76b7070c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 138 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    // props: ['uuid'],
+
+    data: function data() {
+        return {
+            form: new Form({
+                // first_name: 'f',
+                // last_name: 'l',
+                name: ''
+            })
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/profiles/account').then(function (response) {
+            _this.form.name = response.data.data.name;
+        }).catch(function (error) {
+            alert(error.response.status + ': ' + error.response.statusText);
+        });
+    },
+
+
+    methods: {
+        onSubmit: function onSubmit() {
+            this.form.submit('patch', '/api/profiles/account').then(function (data) {
+                // console.log(data);
+                window.location.href = '/profiles/account';
+            }).catch(function (error) {
+                // console.log(error);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 139 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(140)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
 Component.options.__file = "resources/assets/js/components/Pagination.vue"
 
 /* hot reload */
@@ -54374,7 +54465,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 138 */
+/* 140 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54439,7 +54530,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 139 */
+/* 141 */
 /***/ (function(module, exports) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -54557,7 +54648,7 @@ var Form = function () {
 module.exports = Form;
 
 /***/ }),
-/* 140 */
+/* 142 */
 /***/ (function(module, exports) {
 
 function getParameterByName(name) {

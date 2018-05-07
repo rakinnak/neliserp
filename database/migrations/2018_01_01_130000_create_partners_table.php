@@ -21,7 +21,7 @@ class CreatePartnersTable extends Migration
             $table->uuid('subject_uuid');
             $table->string('code')->unique();
             $table->string('name')->index();
-            $table->string('type'); // customer, supplier
+            $table->string('role'); // customer, supplier
             $table->timestamps();
         });
     }

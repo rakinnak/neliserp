@@ -6,7 +6,7 @@
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <h5>{{ __('users') }} - {{ __('index') }}</h5>
             <form method="GET" action="/users" id="users-search" class="form-inline">
-                <label class="mr-2" for="q">{{ __('users.code') }}/{{ __('users.name') }}</label>
+                <label class="mr-2" for="q">{{ __('users.username') }}/{{ __('users.name') }}</label>
                 <input type="text" class="form-control" id="q" name="q" value="{{ request('q') }}">
                 <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
             </form>
@@ -20,7 +20,7 @@
         <table class="table table-bordered table-hover">
             <thead class="thead-light">
                 <tr>
-                    <th>{{ __('users.code') }}</th>
+                    <th>{{ __('users.username') }}</th>
                     <th>{{ __('users.name') }}</th>
                 </tr>
             </thead>
@@ -36,7 +36,7 @@
                     </td>
                 </tr>
                 <tr v-for="user in users" :key="user.uuid">
-                    <td><a :href="'/users/' + user.uuid">@{{ user.code }}</a></td>
+                    <td><a :href="'/users/' + user.uuid">@{{ user.username }}</a></td>
                     <td>@{{ user.name }}</td>
                 </tr>
             </tbody>

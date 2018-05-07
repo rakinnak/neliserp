@@ -70,6 +70,8 @@ Vue.component('permission-show', require('./components/permissions/PermissionSho
 Vue.component('permission-edit', require('./components/permissions/PermissionEdit.vue'));
 Vue.component('permission-delete', require('./components/permissions/PermissionDelete.vue'));
 
+Vue.component('profile-account-edit', require('./components/profiles/ProfileAccountEdit.vue'));
+
 Vue.component('pagination', require('./components/Pagination.vue'));
 
 window.Form = require('./Form');

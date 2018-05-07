@@ -18,6 +18,7 @@ class RoleResource extends JsonResource
             'uuid' => $this->uuid,
             'code' => $this->code,
             'name' => $this->name,
+            'permissions' => PermissionResource::collection($this->permissions),
         ];
     }
 }

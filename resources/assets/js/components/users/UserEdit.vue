@@ -6,7 +6,7 @@
             return {
                 user: {},
                 form: new Form({
-                    code: '',
+                    username: '',
                     name: '',
                 }),
             }
@@ -17,7 +17,7 @@
                 .then(response => {
                     this.user = response.data.data;
 
-                    this.form.code = this.user.code;
+                    this.form.username = this.user.username;
                     this.form.name = this.user.name;
                 })
                 .catch(error => {

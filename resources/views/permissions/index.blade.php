@@ -11,9 +11,11 @@
                 <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
             </form>
             <div class="btn-toolbar mb-2 mb-md-0">
+                {{--
                 <div class="btn-group">
                     <a href="/permissions/create" class="btn btn-sm btn-outline-success">{{ __('create') }}</a>
                 </div>
+                --}}
             </div>
         </div>
 

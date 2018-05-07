@@ -1,21 +1,21 @@
 <script>
     export default {
-        props: ['uuid'],
+        // props: ['uuid'],
 
         data() {
             return {
-                user: {},
                 form: new Form({
-                    username: '',
+                    // first_name: 'f',
+                    // last_name: 'l',
                     name: '',
                 }),
             }
         },
 
         created() {
-            axios.get('/api/users/' + this.uuid)
+            axios.get('/api/profiles/account')
                 .then(response => {
-                    this.user = response.data.data;
+                    this.form.name = response.data.data.name;
                 })
                 .catch(error => {
                     alert(error.response.status + ': ' + error.response.statusText);
@@ -24,10 +24,10 @@
 
         methods: {
             onSubmit() {
-                this.form.submit('delete', '/api/users/' + this.uuid)
+                this.form.submit('patch', '/api/profiles/account')
                     .then(data => {
                         // console.log(data);
-                        window.location.href = '/users';
+                        window.location.href = '/profiles/account';
                     })
                     .catch(error => {
                         // console.log(error);

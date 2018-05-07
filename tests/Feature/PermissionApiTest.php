@@ -205,180 +205,180 @@ class PermissionApiTest extends TestCase
 
     // *** permissions.store ***
 
-    /** @test */
-    public function guest_user_cannot_create_a_permission()
-    {
-        $permission1 = factory(Permission::class)->make();
+    // /** @test */
+    // public function guest_user_cannot_create_a_permission()
+    // {
+    //     $permission1 = factory(Permission::class)->make();
 
-        $this->json('POST', route('api.permissions.store'), $permission1->toArray())
-            ->assertStatus(401);
-    }
+    //     $this->json('POST', route('api.permissions.store'), $permission1->toArray())
+    //         ->assertStatus(401);
+    // }
 
-    /** @test */
-    public function unauthorized_user_denied_to_create_a_permission()
-    {
-        $this->signIn();
+    // /** @test */
+    // public function unauthorized_user_denied_to_create_a_permission()
+    // {
+    //     $this->signIn();
 
-        $permission1 = factory(Permission::class)->make();
+    //     $permission1 = factory(Permission::class)->make();
 
-        $this->json('POST', route('api.permissions.store'), $permission1->toArray())
-            ->assertStatus(403);
-    }
+    //     $this->json('POST', route('api.permissions.store'), $permission1->toArray())
+    //         ->assertStatus(403);
+    // }
 
-    /**  @test */
-    public function create_a_permission_requires_valid_fields()
-    {
-        $this->signInWithPermission('permissions.create');
+    // /**  @test */
+    // public function create_a_permission_requires_valid_fields()
+    // {
+    //     $this->signInWithPermission('permissions.create');
 
-        $this->json('POST', route('api.permissions.store'))
-            ->assertStatus(422)
-            ->assertJson([
-                'message' => 'The given data was invalid.',
-                'errors' => [
-                    'code' => [
-                        'The code field is required.'
-                    ],
-                    'name' => [
-                        'The name field is required.'
-                    ],
-                ],
-            ]);
-    }
+    //     $this->json('POST', route('api.permissions.store'))
+    //         ->assertStatus(422)
+    //         ->assertJson([
+    //             'message' => 'The given data was invalid.',
+    //             'errors' => [
+    //                 'code' => [
+    //                     'The code field is required.'
+    //                 ],
+    //                 'name' => [
+    //                     'The name field is required.'
+    //                 ],
+    //             ],
+    //         ]);
+    // }
 
-    /** @test */
-    public function authorized_user_can_create_a_permission()
-    {
-        $this->signInWithPermission('permissions.create');
+    // /** @test */
+    // public function authorized_user_can_create_a_permission()
+    // {
+    //     $this->signInWithPermission('permissions.create');
 
-        $permission1 = factory(Permission::class)->make();
+    //     $permission1 = factory(Permission::class)->make();
 
-        $this->json('POST', route('api.permissions.store'),
-            [
-                'code' => $permission1->code,
-                'name' => $permission1->name,
-            ])
-            ->assertStatus(201);
+    //     $this->json('POST', route('api.permissions.store'),
+    //         [
+    //             'code' => $permission1->code,
+    //             'name' => $permission1->name,
+    //         ])
+    //         ->assertStatus(201);
 
-        $this->assertDatabaseHas('permissions', [
-            'code' => $permission1->code,
-            'name' => $permission1->name,
-        ]);
-    }
+    //     $this->assertDatabaseHas('permissions', [
+    //         'code' => $permission1->code,
+    //         'name' => $permission1->name,
+    //     ]);
+    // }
 
-    // *** permissions.update ***
+    // // *** permissions.update ***
 
-    /** @test */
-    public function guest_user_cannot_update_a_permission()
-    {
-        $permission1 = factory(Permission::class)->create();
+    // /** @test */
+    // public function guest_user_cannot_update_a_permission()
+    // {
+    //     $permission1 = factory(Permission::class)->create();
 
-        $permission_updated = factory(Permission::class)->make();
+    //     $permission_updated = factory(Permission::class)->make();
 
-        $this->json('PATCH', route('api.permissions.update', $permission1->uuid),
-            [
-                'code' => $permission_updated->code,
-                'name' => $permission_updated->name,
-            ])
-            ->assertStatus(401);
-    }
+    //     $this->json('PATCH', route('api.permissions.update', $permission1->uuid),
+    //         [
+    //             'code' => $permission_updated->code,
+    //             'name' => $permission_updated->name,
+    //         ])
+    //         ->assertStatus(401);
+    // }
 
-    /** @test */
-    public function unauthorized_user_denied_to_update_a_permission()
-    {
-        $this->signIn();
+    // /** @test */
+    // public function unauthorized_user_denied_to_update_a_permission()
+    // {
+    //     $this->signIn();
 
-        $permission1 = factory(Permission::class)->create();
+    //     $permission1 = factory(Permission::class)->create();
 
-        $permission_updated = factory(Permission::class)->make();
+    //     $permission_updated = factory(Permission::class)->make();
 
-        $this->json('PATCH', route('api.permissions.update', $permission1->uuid),
-            [
-                'code' => $permission_updated->code,
-                'name' => $permission_updated->name,
-            ])
-            ->assertStatus(403);
-    }
+    //     $this->json('PATCH', route('api.permissions.update', $permission1->uuid),
+    //         [
+    //             'code' => $permission_updated->code,
+    //             'name' => $permission_updated->name,
+    //         ])
+    //         ->assertStatus(403);
+    // }
 
-    /**  @test */
-    public function update_a_permission_requires_valid_fields()
-    {
-        $this->signInWithPermission('permissions.update');
+    // /**  @test */
+    // public function update_a_permission_requires_valid_fields()
+    // {
+    //     $this->signInWithPermission('permissions.update');
 
-        $permission1 = factory(Permission::class)->create();
+    //     $permission1 = factory(Permission::class)->create();
 
-        $this->json('PATCH', route('api.permissions.update', $permission1->uuid))
-            ->assertStatus(422)
-            ->assertJson([
-                'message' => 'The given data was invalid.',
-                'errors' => [
-                    'code' => [
-                        'The code field is required.'
-                    ],
-                    'name' => [
-                        'The name field is required.'
-                    ],
-                ],
-            ]);
-    }
+    //     $this->json('PATCH', route('api.permissions.update', $permission1->uuid))
+    //         ->assertStatus(422)
+    //         ->assertJson([
+    //             'message' => 'The given data was invalid.',
+    //             'errors' => [
+    //                 'code' => [
+    //                     'The code field is required.'
+    //                 ],
+    //                 'name' => [
+    //                     'The name field is required.'
+    //                 ],
+    //             ],
+    //         ]);
+    // }
 
-    /** @test */
-    public function authorized_user_can_update_a_permission()
-    {
-        $this->signInWithPermission('permissions.update');
+    // /** @test */
+    // public function authorized_user_can_update_a_permission()
+    // {
+    //     $this->signInWithPermission('permissions.update');
 
-        $permission1 = factory(Permission::class)->create();
+    //     $permission1 = factory(Permission::class)->create();
 
-        $permission_updated = factory(Permission::class)->make();
+    //     $permission_updated = factory(Permission::class)->make();
 
-        $this->json('PATCH', route('api.permissions.update', $permission1->uuid),
-            [
-                'code' => $permission_updated->code,
-                'name' => $permission_updated->name,
-            ])
-            ->assertStatus(200);
+    //     $this->json('PATCH', route('api.permissions.update', $permission1->uuid),
+    //         [
+    //             'code' => $permission_updated->code,
+    //             'name' => $permission_updated->name,
+    //         ])
+    //         ->assertStatus(200);
 
-        $this->assertDatabaseHas('permissions', [
-            'id' => $permission1->id,
-            'uuid' => $permission1->uuid,
-            'code' => $permission_updated->code,
-            'name' => $permission_updated->name,
-        ]);
-    }
+    //     $this->assertDatabaseHas('permissions', [
+    //         'id' => $permission1->id,
+    //         'uuid' => $permission1->uuid,
+    //         'code' => $permission_updated->code,
+    //         'name' => $permission_updated->name,
+    //     ]);
+    // }
 
-    // *** permissions.delete ***
+    // // *** permissions.delete ***
 
-    /** @test */
-    public function guest_user_cannot_delete_a_permission()
-    {
-        $permission1 = factory(Permission::class)->create();
+    // /** @test */
+    // public function guest_user_cannot_delete_a_permission()
+    // {
+    //     $permission1 = factory(Permission::class)->create();
 
-        $this->json('DELETE', route('api.permissions.destroy', $permission1->uuid))
-            ->assertStatus(401);
-    }
+    //     $this->json('DELETE', route('api.permissions.destroy', $permission1->uuid))
+    //         ->assertStatus(401);
+    // }
 
-    /** @test */
-    public function unauthorized_user_denied_to_delete_a_permission()
-    {
-        $this->signIn();
+    // /** @test */
+    // public function unauthorized_user_denied_to_delete_a_permission()
+    // {
+    //     $this->signIn();
 
-        $permission1 = factory(Permission::class)->create();
+    //     $permission1 = factory(Permission::class)->create();
 
-        $this->json('DELETE', route('api.permissions.destroy', $permission1->uuid))
-            ->assertStatus(403);
-    }
+    //     $this->json('DELETE', route('api.permissions.destroy', $permission1->uuid))
+    //         ->assertStatus(403);
+    // }
 
-    /** @test */
-    public function authorized_user_can_delete_a_permission()
-    {
-        $this->signInWithPermission('permissions.delete');
+    // /** @test */
+    // public function authorized_user_can_delete_a_permission()
+    // {
+    //     $this->signInWithPermission('permissions.delete');
 
-        $permission1 = factory(Permission::class)->create();
+    //     $permission1 = factory(Permission::class)->create();
 
-        $this->json('DELETE', route('api.permissions.destroy', $permission1->uuid))
-            ->assertStatus(200);
+    //     $this->json('DELETE', route('api.permissions.destroy', $permission1->uuid))
+    //         ->assertStatus(200);
 
-        $this->assertDatabaseMissing('permissions', [
-            'id' => $permission1->id,
-        ]);
-    }
+    //     $this->assertDatabaseMissing('permissions', [
+    //         'id' => $permission1->id,
+    //     ]);
+    // }
 }

@@ -13,7 +13,7 @@ class Partner extends Model
     protected $fillable = [
         'code',
         'name',
-        'type',
+        'role',
         'subject_type',
         'subject_id',
         'subject_uuid',

@@ -6,7 +6,7 @@ class UserFilter extends Filter
 {
     protected $filters = [
         'q',
-        'code',
+        'username',
         'name',
         'sort',
     ];
@@ -14,14 +14,14 @@ class UserFilter extends Filter
     protected function q($q)
     {
         return $this->builder->where(function ($query) use ($q) {
-            $query->where('code', 'LIKE', "%{$q}%")
+            $query->where('username', 'LIKE', "%{$q}%")
                   ->orWhere('name', 'LIKE', "%{$q}%");
         });
     }
 
-    protected function code($code)
+    protected function username($username)
     {
-        return $this->builder->where('code', 'LIKE', "%{$code}%");
+        return $this->builder->where('username', 'LIKE', "%{$username}%");
     }
 
     protected function name($name)

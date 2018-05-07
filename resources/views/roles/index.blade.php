@@ -22,6 +22,7 @@
                 <tr>
                     <th>{{ __('roles.code') }}</th>
                     <th>{{ __('roles.name') }}</th>
+                    <th>{{ __('roles.permissions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,6 +39,11 @@
                 <tr v-for="role in roles" :key="role.uuid">
                     <td><a :href="'/roles/' + role.uuid">@{{ role.code }}</a></td>
                     <td>@{{ role.name }}</td>
+                    <td>
+                        <ul>
+                            <li v-for="permission in role.permissions" v-text="permission.code"></li>
+                        </ul>
+                    </td>
                 </tr>
             </tbody>
         </table>

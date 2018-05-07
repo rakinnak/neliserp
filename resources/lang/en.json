@@ -52,5 +52,26 @@
     "partners.customer": "customer",
     "partners.supplier": "supplier",
     "partners.first_name": "first name",
-    "partners.last_name": "last name"
+    "partners.last_name": "last name",
+
+    "users.username": "username",
+    "users.name": "name",
+    "users.first_name": "first_name",
+    "users.last_name": "last_name",
+    "users.old_password": "old password",
+    "users.password": "new password",
+    "users.password_confirmation": "confirm new password",
+
+    "roles.code": "code",
+    "roles.name": "name",
+    "roles.permissions": "permissions",
+
+    "permissions.code": "code",
+    "permissions.name": "name",
+
+    "profiles.index": "profiles",
+    "profiles.account": "account",
+    "profiles.password": "password",
+    "profiles.settings": "settings",
+    "profiles.activities": "activities"
 }

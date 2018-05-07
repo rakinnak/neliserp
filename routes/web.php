@@ -55,8 +55,14 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('roles/{uuid}/delete', 'RoleController@delete');
 
     Route::get('permissions', 'PermissionController@index')->name('permissions.index');
-    Route::get('permissions/create', 'PermissionController@create');
+    //Route::get('permissions/create', 'PermissionController@create');
     Route::get('permissions/{uuid}', 'PermissionController@show');
-    Route::get('permissions/{uuid}/edit', 'PermissionController@edit');
-    Route::get('permissions/{uuid}/delete', 'PermissionController@delete');
+    //Route::get('permissions/{uuid}/edit', 'PermissionController@edit');
+    //Route::get('permissions/{uuid}/delete', 'PermissionController@delete');
+
+    Route::get('profiles', 'ProfileController@index')->name('profiles.index');
+    Route::get('profiles/account', 'ProfileController@account')->name('profiles.account');
+    Route::get('profiles/password', 'ProfileController@password')->name('profiles.password');
+    Route::get('profiles/settings', 'ProfileController@settings')->name('profiles.settings');
+    Route::get('profiles/activities', 'ProfileController@activities')->name('profiles.activities');
 });

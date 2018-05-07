@@ -24,7 +24,7 @@ class PartnerApi extends ApiController
         }
 
         $partners = Partner::filter($filter)
-            ->where('type', $role)
+            ->where('role', $role)
             ->paginate($per_page); // TODO: per page configuration
 
         return PartnerResource::collection($partners);
@@ -73,13 +73,13 @@ class PartnerApi extends ApiController
             'subject_uuid' => $subject->uuid,
             'code' => $request['code'],
             'name' => $subject_name,
-            'type' => $role,
+            'role' => $role,
         ]);
 
         return $created;
     }
 
-    public function update(PartnerRequest $request, $type, Partner $partner)
+    public function update(PartnerRequest $request, $role, Partner $partner)
     {
         $this->authorize('update', $partner);
 
@@ -121,7 +121,7 @@ class PartnerApi extends ApiController
         return $partner;
     }
 
-    public function destroy($type, Partner $partner)
+    public function destroy($role, Partner $partner)
     {
         $this->authorize('delete', $partner);
 

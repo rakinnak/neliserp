@@ -37,7 +37,12 @@ class UserApi extends ApiController
     {
         $this->authorize('create', User::class);
 
-        $created = User::create($request->toArray());
+        $created = User::create([
+            'username' => $request['username'],
+            'name' => $request['name'],
+            'password' => bcrypt(str_random(10)),
+            'api_token' => str_random(60),
+        ]);
 
         return $created;
     }
@@ -46,7 +51,7 @@ class UserApi extends ApiController
     {
         $this->authorize('update', $user);
 
-        $user->code = request('code');
+        $user->username = request('username');
         $user->name = request('name');
 
         $user->save();

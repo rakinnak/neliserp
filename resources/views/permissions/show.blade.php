@@ -7,8 +7,10 @@
             <h5>{{ __('permissions') }} - {{ __('show') }}</h5>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group">
+                    {{--
                     <a href="/permissions/{{ $uuid }}/edit" class="btn btn-sm btn-outline-success">{{ __('edit') }}</a>
                     <a href="/permissions/{{ $uuid }}/delete" class="btn btn-sm btn-outline-danger">{{ __('delete') }}</a>
+                    --}}
                 </div>
             </div>
         </div>
