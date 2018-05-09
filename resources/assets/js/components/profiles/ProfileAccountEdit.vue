@@ -5,9 +5,9 @@
         data() {
             return {
                 form: new Form({
-                    // first_name: 'f',
-                    // last_name: 'l',
                     name: '',
+                    first_name: '',
+                    last_name: '',
                 }),
             }
         },
@@ -16,6 +16,8 @@
             axios.get('/api/profiles/account')
                 .then(response => {
                     this.form.name = response.data.data.name;
+                    this.form.first_name = response.data.data.first_name;
+                    this.form.last_name = response.data.data.last_name;
                 })
                 .catch(error => {
                     alert(error.response.status + ': ' + error.response.statusText);

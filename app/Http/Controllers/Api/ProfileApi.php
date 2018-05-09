@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use Hash;
+
+use App\Person;
+use App\User;
 use App\Http\Requests\ProfileAccountRequest;
 use App\Http\Requests\ProfilePasswordRequest;
 use App\Http\Resources\UserResource;
-
-use Hash;
-
-// Note:
-// auth()->user() returns wasRecentlyCreated: true
-// User::first()  returns wasRecentlyCreated: false
 
 class ProfileApi extends ApiController
 {
@@ -19,7 +17,7 @@ class ProfileApi extends ApiController
     {
         //$this->authorize('show', $profile);
 
-        $user = \App\User::find(auth()->user()->id);
+        $user = User::find(auth()->user()->id);
 
         return new UserResource($user);
     }
@@ -28,9 +26,14 @@ class ProfileApi extends ApiController
     {
         //$this->authorize('update', $profile);
 
-        $user = \App\User::find(auth()->user()->id);
+        $user = User::find(auth()->user()->id);
         $user->name = request('name');
         $user->save();
+
+        $person = Person::find($user->person_id);
+        $person->first_name = request('first_name');
+        $person->last_name = request('last_name');
+        $person->save();
 
         return $user;
     }
@@ -42,10 +45,14 @@ class ProfileApi extends ApiController
 
         // TODO: update api_token
 
-        $user = \App\User::find(auth()->user()->id);
+        $user = User::find(auth()->user()->id);
         $user->password = Hash::make($request['password']);
         $user->save();
 
         return $user;
     }
 }
+
+// Note:
+// auth()->user() returns wasRecentlyCreated: true
+// User::first()  returns wasRecentlyCreated: false

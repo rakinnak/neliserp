@@ -43,18 +43,6 @@ class PersonApiTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    [
-                        'uuid' => $person1->uuid,
-                        'code' => $person1->code,
-                        'first_name' => $person1->first_name,
-                        'last_name' => $person1->last_name,
-                    ],
-                    [
-                        'uuid' => $person2->uuid,
-                        'code' => $person2->code,
-                        'first_name' => $person2->first_name,
-                        'last_name' => $person2->last_name,
-                    ]
                 ],
                 'links' => [
                     'first' => 'http://localhost/api/persons?page=1',
@@ -68,9 +56,21 @@ class PersonApiTest extends TestCase
                     'last_page' => 1,
                     'path' => 'http://localhost/api/persons',
                     'per_page' => 10,
-                    'to' => 2,
-                    'total' => 2
+                    'to' => 3,      // +1 for logged user's person
+                    'total' => 3,   // +1 for logged user's person
                 ],
+            ])
+            ->assertJsonFragment([
+                'uuid' => $person1->uuid,
+                'code' => $person1->code,
+                'first_name' => $person1->first_name,
+                'last_name' => $person1->last_name,
+            ])
+            ->assertJsonFragment([
+                'uuid' => $person2->uuid,
+                'code' => $person2->code,
+                'first_name' => $person2->first_name,
+                'last_name' => $person2->last_name,
             ]);
     }
 

@@ -25,7 +25,9 @@ class ProfileAccountRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required'
+            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
         ];
     }
 }

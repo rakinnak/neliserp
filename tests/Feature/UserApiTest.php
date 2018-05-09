@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+use App\Person;
 use App\User;
 
 class UserApiTest extends TestCase
@@ -253,18 +254,18 @@ class UserApiTest extends TestCase
     {
         $this->signInWithPermission('users.create');
 
-        $user1 = factory(User::class)->make();
+        $user = factory(User::class)->make();
 
         $this->json('POST', route('api.users.store'),
             [
-                'username' => $user1->username,
-                'name' => $user1->name,
+                'username' => $user->username,
+                'name' => $user->name,
             ])
             ->assertStatus(201);
 
         $this->assertDatabaseHas('users', [
-            'username' => $user1->username,
-            'name' => $user1->name,
+            'username' => $user->username,
+            'name' => $user->name,
         ]);
     }
 

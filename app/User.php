@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Person;
 use App\Filters\UserFilter;
 
 class User extends Authenticatable
@@ -24,6 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'api_token',
+        'person_id',
+        'person_uuid',
     ];
 
     /**
@@ -33,6 +36,11 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    protected $appends = [
+        'first_name',
+        'last_name',
     ];
 
     public static function boot()
@@ -52,6 +60,11 @@ class User extends Authenticatable
     public function scopeFilter($builder, UserFilter $filter)
     {
         return $filter->apply($builder);
+    }
+
+    public function person()
+    {
+        return $this->belongsTo(Person::class);
     }
 
     public function roles()
@@ -78,5 +91,15 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    public function getFirstNameAttribute()
+    {
+        return $this->person->first_name;
+    }
+
+    public function getLastNameAttribute()
+    {
+        return $this->person->last_name;
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Filters\UserFilter;
+use App\Person;
 use App\User;
+
+use App\Filters\UserFilter;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 
@@ -37,11 +39,19 @@ class UserApi extends ApiController
     {
         $this->authorize('create', User::class);
 
+        $person = Person::create([
+            'code' => '',
+            'first_name' => $request['name'],
+            'last_name' => '',
+        ]);
+
         $created = User::create([
             'username' => $request['username'],
             'name' => $request['name'],
             'password' => bcrypt(str_random(10)),
             'api_token' => str_random(60),
+            'person_id' => $person->id,
+            'person_uuid' => $person->uuid,
         ]);
 
         return $created;

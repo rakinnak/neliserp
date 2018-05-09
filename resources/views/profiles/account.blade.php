@@ -25,7 +25,6 @@
                     </div>
                 </div>
 
-                {{--
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="first_name">{{ __('users.first_name') }}</label>
@@ -38,7 +37,7 @@
                         <div class="invalid-feedback" v-if="form.errors.has('last_name')" v-text="form.errors.get('last_name')"></div>
                     </div>
                 </div>
-                --}}
+
                 <button type="submit" id="submit" class="btn btn-sm btn-primary" :disabled="form.errors.any()">{{ __('update') }}</button>
             </form>
         </profile-account-edit>
