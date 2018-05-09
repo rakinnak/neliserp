@@ -71,6 +71,7 @@ Vue.component('permission-edit', require('./components/permissions/PermissionEdi
 Vue.component('permission-delete', require('./components/permissions/PermissionDelete.vue'));
 
 Vue.component('profile-account-edit', require('./components/profiles/ProfileAccountEdit.vue'));
+Vue.component('profile-password-edit', require('./components/profiles/ProfilePasswordEdit.vue'));
 
 Vue.component('pagination', require('./components/Pagination.vue'));
 

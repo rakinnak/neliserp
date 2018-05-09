@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\User;
 
-class ProfileApiTest extends TestCase
+class ProfileAccountApiTest extends TestCase
 {
     use RefreshDatabase;
 

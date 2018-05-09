@@ -16902,6 +16902,7 @@ Vue.component('permission-edit', __webpack_require__(133));
 Vue.component('permission-delete', __webpack_require__(135));
 
 Vue.component('profile-account-edit', __webpack_require__(137));
+Vue.component('profile-password-edit', __webpack_require__(143));
 
 Vue.component('pagination', __webpack_require__(139));
 
@@ -54664,6 +54665,87 @@ function getParameterByName(name) {
 }
 
 module.exports = getParameterByName;
+
+/***/ }),
+/* 143 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(144)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/profiles/ProfilePasswordEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7fd1ce40", Component.options)
+  } else {
+    hotAPI.reload("data-v-7fd1ce40", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 144 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    // props: ['uuid'],
+
+    data: function data() {
+        return {
+            form: new Form({
+                old_password: '',
+                password: '',
+                password_confirmation: ''
+            })
+        };
+    },
+    created: function created() {},
+
+
+    methods: {
+        onSubmit: function onSubmit() {
+            this.form.submit('patch', '/api/profiles/password').then(function (data) {
+                console.log(data);
+                // window.location.href = '/profiles/password';
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+});
 
 /***/ })
 /******/ ]);
