@@ -7,6 +7,8 @@
 
     "locations.code": "code",
     "locations.name": "name",
+    "locations.lft": "lft",
+    "locations.rgt": "rgt",
 
     "companies.code": "code",
     "companies.name": "name",

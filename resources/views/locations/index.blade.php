@@ -22,6 +22,8 @@
                 <tr>
                     <th>{{ __('locations.code') }}</th>
                     <th>{{ __('locations.name') }}</th>
+                    <th>{{ __('locations.lft') }}</th>
+                    <th>{{ __('locations.rgt') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,6 +40,8 @@
                 <tr v-for="location in locations" :key="location.uuid">
                     <td><a :href="'/locations/' + location.uuid">@{{ location.code }}</a></td>
                     <td>@{{ location.name }}</td>
+                    <td>@{{ location.lft }}</td>
+                    <td>@{{ location.rgt }}</td>
                 </tr>
             </tbody>
         </table>

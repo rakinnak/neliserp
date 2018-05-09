@@ -13,6 +13,8 @@ class Location extends Model
     protected $fillable = [
         'code',
         'name',
+        'lft',
+        'rgt',
     ];
 
     public static function boot()
@@ -21,6 +23,15 @@ class Location extends Model
 
         self::creating(function ($model) {
             $model->uuid = uuid();
+
+            // calculate lft, rgt
+            $locations = self::all();
+            $rgt = $locations->max('rgt') ?: 0;
+            $lft = $rgt + 1;
+            $rgt = $lft + 1;
+
+            $model->lft = $lft;
+            $model->rgt = $rgt;
         });
     }
 

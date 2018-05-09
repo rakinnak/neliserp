@@ -38,7 +38,10 @@ class LocationApi extends ApiController
     {
         $this->authorize('create', Location::class);
 
-        $created = Location::create($request->toArray());
+        $created = Location::create([
+            'code' => request('code'),
+            'name' => request('name'),
+        ]);
 
         return $created;
     }

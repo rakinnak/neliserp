@@ -8,6 +8,8 @@ $factory->define(App\Location::class, function (Faker $faker) {
 
     return [
         'code' => $code,
+        'lft' => $faker->unique()->randomNumber(),
+        'rgt' => $faker->unique()->randomNumber(),
         'name' => $name,
     ];
 });

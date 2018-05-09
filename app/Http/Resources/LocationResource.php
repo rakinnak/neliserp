@@ -18,6 +18,8 @@ class LocationResource extends JsonResource
             'uuid' => $this->uuid,
             'code' => $this->code,
             'name' => $this->name,
+            'lft' => $this->lft,
+            'rgt' => $this->rgt,
         ];
     }
 }

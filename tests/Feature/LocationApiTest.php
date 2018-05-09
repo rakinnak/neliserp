@@ -187,7 +187,7 @@ class LocationApiTest extends TestCase
     // *** locations.show ***
 
     /** @test */
-    public function guest_user_cannot_view_an_location()
+    public function guest_user_cannot_view_a_location()
     {
         $location1 = factory(Location::class)->create();
 
@@ -196,7 +196,7 @@ class LocationApiTest extends TestCase
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_view_an_location()
+    public function unauthorized_user_denied_to_view_a_location()
     {
         $this->signIn();
 
@@ -207,7 +207,7 @@ class LocationApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_view_an_location()
+    public function authorized_user_can_view_a_location()
     {
         $this->signInWithPermission('locations.show');
 
@@ -227,7 +227,7 @@ class LocationApiTest extends TestCase
     // *** locations.store ***
 
     /** @test */
-    public function guest_user_cannot_create_an_location()
+    public function guest_user_cannot_create_a_location()
     {
         $location1 = factory(Location::class)->make();
 
@@ -236,7 +236,7 @@ class LocationApiTest extends TestCase
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_create_an_location()
+    public function unauthorized_user_denied_to_create_a_location()
     {
         $this->signIn();
 
@@ -247,7 +247,7 @@ class LocationApiTest extends TestCase
     }
 
     /**  @test */
-    public function create_an_location_requires_valid_fields()
+    public function create_a_location_requires_valid_fields()
     {
         $this->signInWithPermission('locations.create');
 
@@ -267,7 +267,7 @@ class LocationApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_create_an_location()
+    public function authorized_user_can_create_a_location()
     {
         $this->signInWithPermission('locations.create');
 
@@ -286,10 +286,16 @@ class LocationApiTest extends TestCase
         ]);
     }
 
+    // create a new root location
+    // create a child location under parent_id
+    // move a location to be under parent_id
+    // delete a child location
+    // delete a parent location
+
     // *** locations.update ***
 
     /** @test */
-    public function guest_user_cannot_update_an_location()
+    public function guest_user_cannot_update_a_location()
     {
         $location1 = factory(Location::class)->create();
 
@@ -304,7 +310,7 @@ class LocationApiTest extends TestCase
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_update_an_location()
+    public function unauthorized_user_denied_to_update_a_location()
     {
         $this->signIn();
 
@@ -321,7 +327,7 @@ class LocationApiTest extends TestCase
     }
 
     /**  @test */
-    public function update_an_location_requires_valid_fields()
+    public function update_a_location_requires_valid_fields()
     {
         $this->signInWithPermission('locations.update');
 
@@ -343,7 +349,7 @@ class LocationApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_update_an_location()
+    public function authorized_user_can_update_a_location()
     {
         $this->signInWithPermission('locations.update');
 
@@ -369,7 +375,7 @@ class LocationApiTest extends TestCase
     // *** locations.delete ***
 
     /** @test */
-    public function guest_user_cannot_delete_an_location()
+    public function guest_user_cannot_delete_a_location()
     {
         $location1 = factory(Location::class)->create();
 
@@ -378,7 +384,7 @@ class LocationApiTest extends TestCase
     }
 
     /** @test */
-    public function unauthorized_user_denied_to_delete_an_location()
+    public function unauthorized_user_denied_to_delete_a_location()
     {
         $this->signIn();
 
@@ -389,7 +395,7 @@ class LocationApiTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_delete_an_location()
+    public function authorized_user_can_delete_a_location()
     {
         $this->signInWithPermission('locations.delete');
 
