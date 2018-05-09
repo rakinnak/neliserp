@@ -36,6 +36,8 @@ trait RecordsActivity
             return $this->activity()->create([
                 'uuid' => uuid(),
                 'user_id' => auth()->id(),
+                'user_uuid' => auth()->user()->uuid,
+                'user_username' => auth()->user()->username,
                 'type' => $this->getActivityType($event),
                 'before' => $diff['before'],
                 'after' => $diff['after'],
@@ -45,6 +47,8 @@ trait RecordsActivity
         return $this->activity()->create([
             'uuid' => uuid(),
             'user_id' => auth()->id(),
+            'user_uuid' => auth()->user()->uuid,
+            'user_username' => auth()->user()->username,
             'type' => $this->getActivityType($event),
         ]);
     }

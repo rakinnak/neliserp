@@ -12,13 +12,25 @@ class Activity extends Model
     protected $fillable = [
         'uuid',
         'user_id',
+        'user_uuid',
+        'user_username',
         'type',
         'subject_id',
+        'subject_uuid',
         'subject_type',
         'before',
         'after',
         'created_at',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            $model->uuid = uuid();
+        });
+    }
 
     public function subject()
     {

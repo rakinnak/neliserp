@@ -17,7 +17,10 @@ class CreateActivitiesTable extends Migration
             $table->increments('id');
             $table->uuid('uuid')->unique();
             $table->unsignedInteger('user_id')->index();
+            $table->uuid('user_uuid');
+            $table->string('user_username');
             $table->unsignedInteger('subject_id')->index();
+            //$table->uuid('subject_uuid');     // TODO
             $table->string('subject_type');
             $table->string('type');
             $table->text('before')->nullable();

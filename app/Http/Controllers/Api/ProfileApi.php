@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use Hash;
 
+use App\Activity;
 use App\Person;
 use App\User;
 use App\Http\Requests\ProfileAccountRequest;
 use App\Http\Requests\ProfilePasswordRequest;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\ActivityResource;
 
 class ProfileApi extends ApiController
 {
@@ -51,6 +53,21 @@ class ProfileApi extends ApiController
 
         return $user;
     }
+
+    // *** profiles.activities
+    public function activities_show()
+    {
+        //$this->authorize('show', $profile);
+
+        $user = auth()->user();
+
+        // TODO: should be $user->activities
+        $activities = Activity::where('user_id', $user->id)
+            ->get();
+
+        return ActivityResource::collection($activities);
+    }
+
 }
 
 // Note:
