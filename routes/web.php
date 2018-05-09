@@ -14,6 +14,12 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('items/{uuid}/edit', 'ItemController@edit');
     Route::get('items/{uuid}/delete', 'ItemController@delete');
 
+    Route::get('locations', 'LocationController@index')->name('locations.index');
+    Route::get('locations/create', 'LocationController@create');
+    Route::get('locations/{uuid}', 'LocationController@show');
+    Route::get('locations/{uuid}/edit', 'LocationController@edit');
+    Route::get('locations/{uuid}/delete', 'LocationController@delete');
+
     Route::get('companies', 'CompanyController@index')->name('companies.index');
     Route::get('companies/create', 'CompanyController@create');
     Route::get('companies/{uuid}', 'CompanyController@show');

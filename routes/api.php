@@ -7,6 +7,12 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::patch('items/{item}', 'Api\ItemApi@update')->name('api.items.update');
     Route::delete('items/{item}', 'Api\ItemApi@destroy')->name('api.items.destroy');
 
+    Route::get('locations', 'Api\LocationApi@index')->name('api.locations.index');
+    Route::post('locations', 'Api\LocationApi@store')->name('api.locations.store');
+    Route::get('locations/{location}', 'Api\LocationApi@show')->name('api.locations.show');
+    Route::patch('locations/{location}', 'Api\LocationApi@update')->name('api.locations.update');
+    Route::delete('locations/{location}', 'Api\LocationApi@destroy')->name('api.locations.destroy');
+
     Route::get('companies', 'Api\CompanyApi@index')->name('api.companies.index');
     Route::post('companies', 'Api\CompanyApi@store')->name('api.companies.store');
     Route::get('companies/{company}', 'Api\CompanyApi@show')->name('api.companies.show');

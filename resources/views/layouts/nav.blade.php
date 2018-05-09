@@ -35,6 +35,12 @@
                 <a class="nav-link" href="/items">{{ __('items') }}</a>
             </li>
         @endcan
+
+        @can('index', App\Location::class)
+            <li class="nav-item">
+                <a class="nav-link" href="/locations">{{ __('locations') }}</a>
+            </li>
+        @endcan
     
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="partners" data-toggle="dropdown">{{ __('partners') }}</a>

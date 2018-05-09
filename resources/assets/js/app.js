@@ -22,6 +22,12 @@ Vue.component('item-show', require('./components/items/ItemShow.vue'));
 Vue.component('item-edit', require('./components/items/ItemEdit.vue'));
 Vue.component('item-delete', require('./components/items/ItemDelete.vue'));
 
+Vue.component('location-index', require('./components/locations/LocationIndex.vue'));
+Vue.component('location-create', require('./components/locations/LocationCreate.vue'));
+Vue.component('location-show', require('./components/locations/LocationShow.vue'));
+Vue.component('location-edit', require('./components/locations/LocationEdit.vue'));
+Vue.component('location-delete', require('./components/locations/LocationDelete.vue'));
+
 Vue.component('company-index', require('./components/companies/CompanyIndex.vue'));
 Vue.component('company-create', require('./components/companies/CompanyCreate.vue'));
 Vue.component('company-show', require('./components/companies/CompanyShow.vue'));

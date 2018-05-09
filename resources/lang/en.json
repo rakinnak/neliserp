@@ -5,6 +5,9 @@
     "items.code": "code",
     "items.name": "name",
 
+    "locations.code": "code",
+    "locations.name": "name",
+
     "companies.code": "code",
     "companies.name": "name",
 

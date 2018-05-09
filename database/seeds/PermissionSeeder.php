@@ -19,6 +19,12 @@ class PermissionSeeder extends Seeder
             'items.update',
             'items.delete',
 
+            'locations.index',
+            'locations.show',
+            'locations.create',
+            'locations.update',
+            'locations.delete',
+
             'companies.index',
             'companies.show',
             'companies.create',

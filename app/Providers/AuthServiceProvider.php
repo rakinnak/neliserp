@@ -9,6 +9,7 @@ use App\Company;
 use App\Doc;
 use App\DocItem;
 use App\Item;
+use App\Location;
 use App\Partner;
 use App\Person;
 use App\User;
@@ -18,6 +19,7 @@ use App\Policies\CompanyPolicy;
 use App\Policies\DocPolicy;
 use App\Policies\DocItemPolicy;
 use App\Policies\ItemPolicy;
+use App\Policies\LocationPolicy;
 use App\Policies\PartnerPolicy;
 use App\Policies\PersonPolicy;
 use App\Policies\UserPolicy;
@@ -36,6 +38,7 @@ class AuthServiceProvider extends ServiceProvider
         Doc::class => DocPolicy::class,
         DocItem::class => DocItemPolicy::class,
         Item::class => ItemPolicy::class,
+        Location::class => LocationPolicy::class,
         Partner::class => PartnerPolicy::class,
         Person::class => PersonPolicy::class,
         User::class => UserPolicy::class,
