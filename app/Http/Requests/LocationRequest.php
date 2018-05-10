@@ -35,6 +35,7 @@ class LocationRequest extends FormRequest
                 Rule::unique('locations')
                     ->ignore($this->location ? $this->location->id : null),
             ],
+            'parent_uuid' => 'nullable|exists:locations,uuid',
         ];
         
     }

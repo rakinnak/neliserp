@@ -247,7 +247,7 @@ class LocationApiTest extends TestCase
     }
 
     /**  @test */
-    public function create_a_location_requires_valid_fields()
+    public function create_a_location_requires_required_fields()
     {
         $this->signInWithPermission('locations.create');
 
@@ -266,28 +266,203 @@ class LocationApiTest extends TestCase
             ]);
     }
 
-    /** @test */
-    public function authorized_user_can_create_a_location()
+    /**  @test */
+    public function create_a_location_requires_valid_fields()
     {
         $this->signInWithPermission('locations.create');
 
-        $location1 = factory(Location::class)->make();
+        $location = factory(Location::class)->make();
 
+        $this->json('POST', route('api.locations.store'), [
+            'code' => $location->code,
+            'name' => $location->name,
+            'parent_uuid' => 'invalid',
+        ])
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'parent_uuid' => [
+                        'The selected parent uuid is invalid.',
+                    ],
+                ],
+            ]);
+    }
+
+    /** @test */
+    public function authorized_user_can_create_root_locations()
+    {
+        $this->signInWithPermission('locations.create');
+
+        $root1 = factory(Location::class)->make();
+        $root2 = factory(Location::class)->make();
+
+        // create root1
         $this->json('POST', route('api.locations.store'),
             [
-                'code' => $location1->code,
-                'name' => $location1->name,
+                'code' => $root1->code,
+                'name' => $root1->name,
+            ])
+            ->assertStatus(201);
+
+        // create root2
+        $this->json('POST', route('api.locations.store'),
+            [
+                'code' => $root2->code,
+                'name' => $root2->name,
             ])
             ->assertStatus(201);
 
         $this->assertDatabaseHas('locations', [
-            'code' => $location1->code,
-            'name' => $location1->name,
+            'code' => $root1->code,
+            'name' => $root1->name,
+            'lft' => 1,
+            'rgt' => 2,
+        ]);
+
+        $this->assertDatabaseHas('locations', [
+            'code' => $root2->code,
+            'name' => $root2->name,
+            'lft' => 3,
+            'rgt' => 4,
         ]);
     }
 
-    // create a new root location
-    // create a child location under parent_id
+    /** @test */
+    public function authorized_user_can_create_child_locations()
+    {
+        $this->signInWithPermission('locations.create');
+
+        $root1 = factory(Location::class)->create();
+        $root2 = factory(Location::class)->create();
+
+        // create child1 under root1
+        // -------------------------
+        $child1 = factory(Location::class)->make();
+
+        $this->json('POST', route('api.locations.store'),
+            [
+                'code' => $child1->code,
+                'name' => $child1->name,
+                'parent_uuid' => $root1->uuid,
+            ])
+            ->assertStatus(201);
+
+        $this->assertDatabaseHas('locations', [
+            'id' => $root1->id,
+            'lft' => 1,
+            'rgt' => 4,
+        ]);
+
+        $this->assertDatabaseHas('locations', [
+            'id' => $root2->id,
+            'lft' => 5,
+            'rgt' => 6,
+        ]);
+
+        $this->assertDatabaseHas('locations', [
+            'code' => $child1->code,
+            'name' => $child1->name,
+            'parent_id' => $root1->id,
+            'parent_uuid' => $root1->uuid,
+            'lft' => 2,
+            'rgt' => 3,
+        ]);
+
+        // create child2 under root2
+        // -------------------------
+        $child2 = factory(Location::class)->make();
+
+        $this->json('POST', route('api.locations.store'),
+            [
+                'code' => $child2->code,
+                'name' => $child2->name,
+                'parent_uuid' => $root2->uuid,
+            ])
+            ->assertStatus(201);
+
+        $this->assertDatabaseHas('locations', [
+            'id' => $root1->id,
+            'lft' => 1,
+            'rgt' => 4,
+        ]);
+
+        $this->assertDatabaseHas('locations', [
+            'id' => $root2->id,
+            'lft' => 5,
+            'rgt' => 8,
+        ]);
+
+        $this->assertDatabaseHas('locations', [
+            'code' => $child1->code,
+            'name' => $child1->name,
+            'parent_id' => $root1->id,
+            'parent_uuid' => $root1->uuid,
+            'lft' => 2,
+            'rgt' => 3,
+        ]);
+
+        $this->assertDatabaseHas('locations', [
+            'code' => $child2->code,
+            'name' => $child2->name,
+            'parent_id' => $root2->id,
+            'parent_uuid' => $root2->uuid,
+            'lft' => 6,
+            'rgt' => 7,
+        ]);
+
+        // create child3 under root1
+        // -------------------------
+        $child3 = factory(Location::class)->make();
+
+        $this->json('POST', route('api.locations.store'),
+            [
+                'code' => $child3->code,
+                'name' => $child3->name,
+                'parent_uuid' => $root1->uuid,
+            ])
+            ->assertStatus(201);
+
+        $this->assertDatabaseHas('locations', [
+            'id' => $root1->id,
+            'lft' => 1,
+            'rgt' => 6,
+        ]);
+
+        $this->assertDatabaseHas('locations', [
+            'id' => $root2->id,
+            'lft' => 7,
+            'rgt' => 10,
+        ]);
+
+        $this->assertDatabaseHas('locations', [
+            'code' => $child1->code,
+            'name' => $child1->name,
+            'parent_id' => $root1->id,
+            'parent_uuid' => $root1->uuid,
+            'lft' => 2,
+            'rgt' => 3,
+        ]);
+
+        $this->assertDatabaseHas('locations', [
+            'code' => $child2->code,
+            'name' => $child2->name,
+            'parent_id' => $root2->id,
+            'parent_uuid' => $root2->uuid,
+            'lft' => 8,
+            'rgt' => 9,
+        ]);
+
+        $this->assertDatabaseHas('locations', [
+            'code' => $child3->code,
+            'name' => $child3->name,
+            'parent_id' => $root1->id,
+            'parent_uuid' => $root1->uuid,
+            'lft' => 4,
+            'rgt' => 5,
+        ]);
+    }
+
     // move a location to be under parent_id
     // delete a child location
     // delete a parent location

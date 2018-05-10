@@ -41,6 +41,8 @@ class LocationApi extends ApiController
         $created = Location::create([
             'code' => request('code'),
             'name' => request('name'),
+            'parent_uuid' => $request['parent_uuid'],
+            'parent_id' => $request['parent_uuid'] ? Location::where('uuid', $request['parent_uuid'])->first()->id : null,
         ]);
 
         return $created;
