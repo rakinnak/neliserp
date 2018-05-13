@@ -68,4 +68,28 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::patch('profiles/account', 'Api\ProfileApi@account_update')->name('api.profiles.account_update');
     Route::patch('profiles/password', 'Api\ProfileApi@password_update')->name('api.profiles.password_update');
     Route::patch('profiles/settings', 'Api\ProfileApi@settings_update')->name('api.profiles.settings_update');
+
+    Route::get('countries', 'Api\CountryApi@index')->name('api.countries.index');
+    Route::post('countries', 'Api\CountryApi@store')->name('api.countries.store');
+    Route::get('countries/{country}', 'Api\CountryApi@show')->name('api.countries.show');
+    Route::patch('countries/{country}', 'Api\CountryApi@update')->name('api.countries.update');
+    Route::delete('countries/{country}', 'Api\CountryApi@destroy')->name('api.countries.destroy');
+
+    Route::get('provinces', 'Api\ProvinceApi@index')->name('api.provinces.index');
+    Route::post('provinces', 'Api\ProvinceApi@store')->name('api.provinces.store');
+    Route::get('provinces/{province}', 'Api\ProvinceApi@show')->name('api.provinces.show');
+    Route::patch('provinces/{province}', 'Api\ProvinceApi@update')->name('api.provinces.update');
+    Route::delete('provinces/{province}', 'Api\ProvinceApi@destroy')->name('api.provinces.destroy');
+
+    Route::get('districts', 'Api\DistrictApi@index')->name('api.districts.index');
+    Route::post('districts', 'Api\DistrictApi@store')->name('api.districts.store');
+    Route::get('districts/{district}', 'Api\DistrictApi@show')->name('api.districts.show');
+    Route::patch('districts/{district}', 'Api\DistrictApi@update')->name('api.districts.update');
+    Route::delete('districts/{district}', 'Api\DistrictApi@destroy')->name('api.districts.destroy');
+
+    Route::get('cities', 'Api\CityApi@index')->name('api.cities.index');
+    Route::post('cities', 'Api\CityApi@store')->name('api.cities.store');
+    Route::get('cities/{city}', 'Api\CityApi@show')->name('api.cities.show');
+    Route::patch('cities/{city}', 'Api\CityApi@update')->name('api.cities.update');
+    Route::delete('cities/{city}', 'Api\CityApi@destroy')->name('api.cities.destroy');
 });

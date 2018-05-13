@@ -15,6 +15,10 @@ use App\Person;
 use App\User;
 use App\Role;
 use App\Permission;
+use App\Country;
+use App\Province;
+use App\District;
+use App\City;
 use App\Policies\CompanyPolicy;
 use App\Policies\DocPolicy;
 use App\Policies\DocItemPolicy;
@@ -25,6 +29,10 @@ use App\Policies\PersonPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\PermissionPolicy;
+use App\Policies\CountryPolicy;
+use App\Policies\ProvincePolicy;
+use App\Policies\DistrictPolicy;
+use App\Policies\CityPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -44,6 +52,10 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Role::class => RolePolicy::class,
         Permission::class => PermissionPolicy::class,
+        Country::class => CountryPolicy::class,
+        Province::class => ProvincePolicy::class,
+        District::class => DistrictPolicy::class,
+        City::class => CityPolicy::class,
     ];
 
     /**

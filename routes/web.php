@@ -71,4 +71,10 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('profiles/password', 'ProfileController@password')->name('profiles.password');
     Route::get('profiles/settings', 'ProfileController@settings')->name('profiles.settings');
     Route::get('profiles/activities', 'ProfileController@activities')->name('profiles.activities');
+
+    Route::get('provinces', 'ProvinceController@index')->name('provinces.index');
+    Route::get('provinces/create', 'ProvinceController@create');
+    Route::get('provinces/{uuid}', 'ProvinceController@show');
+    Route::get('provinces/{uuid}/edit', 'ProvinceController@edit');
+    Route::get('provinces/{uuid}/delete', 'ProvinceController@delete');
 });

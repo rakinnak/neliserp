@@ -25,6 +25,24 @@ class CreateLocationsTable extends Migration
             $table->string('name')->index();
             $table->unsignedInteger('lft')->unique();
             $table->unsignedInteger('rgt')->unique();
+            $table->string('address')->nullable();
+            $table->string('floor')->nullable();
+            $table->string('building')->nullable();
+            $table->string('street')->nullable();
+            $table->string('city')->nullable();             // City, Sub District, Tambon
+            $table->string('district')->nullable();         // Amphone, County, District
+            $table->string('province')->nullable();         // Province, Region, State
+            $table->string('country')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('address_line_1')->nullable();   // custom print address line 1
+            $table->string('address_line_2')->nullable();   // custom print address line 2
+            $table->string('address_line_3')->nullable();   // custom print address line 3
+            $table->decimal('latitude', 8, 6)->nullable();
+            $table->decimal('longitude', 9, 6)->nullable();
+            $table->string('phone')->nullable();
+            $table->string('fax')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
 
             $table->foreign('parent_id')
