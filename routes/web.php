@@ -77,4 +77,8 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('provinces/{uuid}', 'ProvinceController@show');
     Route::get('provinces/{uuid}/edit', 'ProvinceController@edit');
     Route::get('provinces/{uuid}/delete', 'ProvinceController@delete');
+
+    // Route for Printing document Feature
+    Route::get('print/{type}/{uuid}/pdf', 'PrintController@pdf')->name('print.pdf');
+    Route::get('print/{type}/{uuid}/speadsheet', 'PrintController@speadsheet')->name('print.speadsheet');
 });

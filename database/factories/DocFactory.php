@@ -12,7 +12,7 @@ $factory->define(App\Doc::class, function (Faker $faker) {
 
     //$type = $faker->randomElement(['po', 'ro', 'ri', 'so', 'do', 'si']);
     //$type = $faker->randomElement(['po', 'so']);
-    $type = $faker->randomElement(['po']);
+    $type = $faker->randomElement(['so']);
 
     $name = $faker->unique()->bothify(strtoupper($type) . '-####');
 

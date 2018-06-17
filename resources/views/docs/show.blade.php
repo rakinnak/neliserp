@@ -11,6 +11,8 @@
                         <button type="button" class="btn btn-sm btn-outline-primary" @click="doc.moving = true">{{ __('move') }}</button>
                         <a href="/docs/{{ $type }}/{{ $uuid }}/edit" class="btn btn-sm btn-outline-success">{{ __('edit') }}</a>
                         <a href="/docs/{{ $type }}/{{ $uuid }}/delete" class="btn btn-sm btn-outline-danger">{{ __('delete') }}</a>
+                        <a href="/print/{{ $type }}/{{ $uuid }}/pdf" class="btn btn-sm btn-outline-secondary">{{ __('download pdf') }}</a>
+                        <a href="/print/{{ $type }}/{{ $uuid }}/speadsheet" class="btn btn-sm btn-outline-secondary">{{ __('download excel') }}</a>
                     </template>
                 </div>
             </div>

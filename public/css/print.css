@@ -1,0 +1,22 @@
+.banner {
+    background-color: grey;
+    font-size:"18";
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+th{
+    text-align:center;
+    background-color: rgb(228, 228, 228);
+    font-weight: bold;
+}
+
+#pdf-frame{
+    width: 21cm;
+    min-height: 29.7cm;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align:center;
+}

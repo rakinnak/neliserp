@@ -25,9 +25,9 @@ class CreateDistrictsTable extends Migration
             $table->string('name')->index();
             $table->timestamps();
 
-            $table->foreign('province_id')
-                ->references('id')
-                ->on('provinces');
+            //$table->foreign('province_id')
+            //    ->references('id')
+            //    ->on('provinces');
         });
     }
 
