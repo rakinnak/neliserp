@@ -32,9 +32,11 @@ class Location extends Model
 
                 // update others
                 self::where('lft', '>', $parent_location->rgt)
+                    ->orderBy('lft', 'desc')
                     ->increment('lft', 2);
 
-                self::where('lft', '>', $parent_location->rgt)
+                self::where('rgt', '>', $parent_location->rgt)
+                    ->orderBy('rgt', 'desc')
                     ->increment('rgt', 2);
 
                 // update parent

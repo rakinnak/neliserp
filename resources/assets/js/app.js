@@ -87,5 +87,5 @@ window.Form = require('./Form');
 window.getParameterByName = require('./functions');
 
 const app = new Vue({
-    el: '#app',
+    el: '#app'
 });
